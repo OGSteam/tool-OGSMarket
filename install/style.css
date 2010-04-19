@@ -1,0 +1,87 @@
+body
+{
+	text-align : center;
+	margin-top : 20px;
+}
+
+#logo
+{
+	width : 468px;
+	height : 60px;
+	
+	margin : auto;
+	margin-bottom : 50px;
+	
+	background-image : url('../images/logo.jpg');
+}
+
+h2
+{
+	color : lime;
+	font-weight : bold;
+	font-size : 16px;
+}
+
+h3
+{
+	color : yellow;
+}
+
+/* Table */
+
+table
+{
+	margin : auto;
+	width : 800px;
+}
+
+th
+{
+	background-image : url('../skin/img/tab2_bg.gif');
+	border : 1px solid #757575;
+	padding : 3px;
+	font-weight : normal;
+	text-align : left;
+}
+
+td
+{
+	background-color : #04111F;
+	color : #E4E4E4;
+	font-weight : bold;
+}
+
+.taille
+{
+	width : 65%;
+}
+
+/* End Table */
+
+p
+{
+	margin : 30px;
+	color : yellow;
+	font-size : 13px;
+}
+
+form
+{
+	margin : 45px;
+}
+
+label
+{
+	color : orange;
+	font-size : 11px;
+}
+
+a[href="http://ogsteam.fr/OGSpynstall/"]
+{
+	color : orange;
+	font-size : 11px;
+}
+
+.italic { font-style : italic; }
+.bold { font-weight : bold; }
+.error { color : red; }
