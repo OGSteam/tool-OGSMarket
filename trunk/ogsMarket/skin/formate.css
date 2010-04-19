@@ -1,0 +1,641 @@
+﻿/* ______________________________________________________________
+
+ by Erreur32 for OGSpsy
+______________________________________________________________ */
+
+
+.status { background:#000000; }
+#f { color: #ffa0a0; }
+#d { color: #a0ffa0; }
+#v, #iv { color: #87ceeb; }
+#i { color: #999999; }
+#bv { text-decoration: line-through ; }
+
+a { color: #E6EBFB; }
+#i { color: #999999; }
+#f { color: #ffa0a0; }
+#d { color: #a0ffa0; }
+#v, #iv { color: #87ceeb; }
+#b { text-decoration: line-through ; }
+
+.f { color: #ffa0a0; }
+.d { color: #a0ffa0; }
+.v, .iv { color: #87ceeb; }
+.i, .I { color: #999999; }
+.bv { text-decoration: line-through ; }
+
+.titre {
+color: #B4FF00;
+font-weight: bold;
+padding-left: 10px;
+background-image     : url("img/tab2_bg.gif");
+font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+font-size: 11px;
+}
+
+.mp {
+background: #324B67;
+}
+.mp2{
+color:#628ABD;
+}
+
+#, td, th, textarea, body{
+font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+font-size: 11px;
+text-align: center;
+}
+
+img{
+	border               : 0px;
+}
+
+p table{
+  border               : 0px;
+/*   font-family          : Trebuchet MS, Arial, Helvetica, sans-serif;
+ */  font-size            : 11px;
+}
+
+p td {
+  text-align           : center;
+ /*  font-family          : Trebuchet MS, Arial, Helvetica, sans-serif; */
+  font-size            : 11px;
+}
+
+table table {/* fond global des zones descriptifs et temps recherche, construction  et de la barre des ressources en haut au milieu*/
+  border               : 0px; 
+  /* font-family          : Trebuchet MS, Arial, Helvetica, sans-serif;
+ */  font-size            : 11px;
+}
+
+table table td /* police de la zone donnant les ressources sur chaque planète en haut au milieu */{
+  /* font-family          : Trebuchet MS, Arial, Helvetica, sans-serif;
+ */  font-size            : 11px;
+  color : #00FF0D
+}
+
+body /* allg font etc. *//* option du fond et générales */{
+  color                : #E4E4E4;
+  margin-top           : 0px;
+  margin-left          : 0px;
+  background: #000000;
+  background-image     : url("img/si-bg.jpg");
+  background-position : 0% 95%;
+  background-attachment: fixed;
+  background-repeat    : no-repeat;
+  font-family          : Trebuchet MS, Arial, Helvetica, sans-serif;
+  text-align           : left;  
+  font-size            : 11px;
+}
+    
+body.style /* paramétrage barre de menu sur le côté */{
+color                : #E4E4E4;
+margin-top           : 1px;
+margin-left          : 1px;
+background-color     : #000000;
+/* background-image     : url("img/pic.png");
+ */background-repeat    : no-repeat;
+background-position :  14% 7%;
+/* font-family          : Tahoma, Helvetica, sans-serif;
+ */font-size            : 11px; 
+text-align           : left;  
+width                : 172px;     
+} 
+     
+   
+body form table th table input{
+  width: 60px;
+/*   font-family          : Trebuchet MS, Arial, Helvetica, sans-serif;
+ */  font-size            : 11px;
+}
+
+td.a, td.b, td.c, td.f, input, select,
+td.g, td.h, td.i, td.j, td.k, td.l, td.m,
+td.n, td.o, td.q, td.r, td.v, .style td,
+textarea, p td, table.s th img{
+  border               : 1px #757575 solid; 
+  font-family          : Trebuchet MS, Arial, Helvetica, sans-serif;
+  font-size            : 11px;
+}
+
+th, td.a,  td.c, td.f, input, select, td.g,
+td.h, td.i, td.j, td.k, td.m, td.o, td.q, td.r,
+td.v, td.s, .style td, p td{
+background-color: #232E30;
+/* font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+ */font-size: 11px;
+}
+
+td.b /* modifie le fond message */{
+  background-color     : #232E30 ;
+    font-family          : Trebuchet MS, Arial, Helvetica, sans-serif;
+    font-size            : 11px;
+      -moz-opacity         : 0.90; 
+    filter : alpha(opacity=75);    
+}
+
+th {
+   border               : hidden;
+   text-align           : center;
+   padding-left         : 3px;
+   padding-right        : 3px;
+    font-family          : Trebuchet MS, Arial,Helvetica, sans-serif;
+   font-size            : 11px;
+     -moz-opacity         : 0.95; 
+    filter : alpha(opacity=90);
+     Background-color     : #04111F;
+}
+
+td.a{
+  height               : 37px;
+  text-align           : center;
+}
+
+td.b{
+  padding              : 3px;
+}
+
+td.c /* modifie la police des noms de catégorie dans le menu recherche et des titres de certaines pages barress.PNG*/{
+/*  font-weight          : bold;*/
+  color                : #ffffff;
+  padding-left         : 3px; 
+  height               : 22px;
+  background-image     : url("img/tab2_bg.gif");
+}
+
+td.f, input, select, textarea{
+  border:1px solid #606060;
+  color: #ffffff;
+  background-color: #232425;
+}
+
+textarea /*couleur du fond lorsque vous écrivez un message */{
+  width                : 100%;
+ 
+}
+
+td.g  /*font-weight       #B6C6E5   : bold;*/{
+  text-align         : right;
+  color                :#B6C6E5 ;
+}
+
+td.h{
+  text-align           : center;
+  color                : #B6C6E5;
+}
+
+td.i{
+  text-align           : center;
+  color                : #000000;
+}
+
+td.j{
+  text-align           : center;
+  color                : #B6C6E5;
+}
+
+td.k, td.k input /* berechne calculer? button  background-image   : url("img/bl01.PNG");*/{
+    background-image     : url("img/barredroite.PNG");
+    background-color     : #000000;
+     -moz-opacity         : 0.80; 
+    filter : alpha(opacity=80);
+	text-align           : center;
+	color                : #FFFFFF; 
+    background-repeat    : no-repeat;
+}
+
+td.l /* police du texte de description des batiments, chantier spatial et recherche */{
+  background-color     : #000000;
+  color                : #FFFFFF;
+  vertical-align       : top;
+  padding              : 0px;
+  background-image : url("img/grandebarre.PNG") ;
+  -moz-opacity         : 0.80; 
+    filter : alpha(opacity=80);
+   background-repeat   : no-repeat;
+}
+
+td.m{
+/*  font-weight          : bold;*/
+  text-align           : right;
+  width                : 86px;
+  color                : #B6C6E5;
+}
+
+td.n{
+  /*font-weight          : bold;*/
+  text-align           : right;
+  width                : 88px;
+  text-align           : center;
+  color                : #B6C6E5;
+}
+
+td.o{
+  text-align           : center;
+  color                : #B6C6E5;
+}
+
+td.q{
+/* font-weight          : bold;*/
+  font-size            : 11px;
+  text-align           : center;
+  vertical-align       : middle;
+  color                : #B6C6E5;
+}
+
+td.r{
+  text-align           : right;
+  color                : #B6C6E5;
+}
+
+td.v{
+/*  font-weight          : bold;*/
+  text-align           : right;
+  color                : #B6C6E5;
+  /*font-weight          : bold;*/
+}
+
+td.s{
+  color                : #B6C6E5;
+}
+
+table.s th{
+  border               : 0px;
+}
+
+table.s th img{
+  width                : 60px;
+  height               : 60px;
+}
+
+div.z /* réglage du format auquel s'affiche le temps de recherche et construction des batiments */{
+ /*font-weight          : bold;*/
+  color                : #FF6F3C;
+}
+
+/*
+a /* paramétrage des liens 00C8FF*//*
+{
+  color                : #5CCCE8;
+  text-decoration      : none;
+  font-weight          : bold;
+}
+*/
+a.s {
+  color                : #FFFFFF;
+}
+
+a.t {
+  color                : #FFFFFF;
+}
+ /* Planet Title hover */
+a:hover {
+/* font-weight          : bold;*/
+  color                : #A8FF66;
+  text-decoration      : underline;
+  }
+
+.style td /*taille cases barres latérales background-image : url("img/Mod01.jpg")  ;
+ background-position :14% 7%7*/
+{
+
+color                : #08A4FF;
+  border-top            : 0px; 
+  font-size            : 11px;
+font-family          : Tahoma,sans-serif;
+}
+
+.style td:hover/*taille cases barres latérales,color                : #FF0000; ;*/{
+background-image : url("img/Mod01.jpg") ;
+    border-top           : 0px; 
+  font-size            : 11px;
+/*   font-family          : Tahoma,Ringbearer,sans-serif;
+ */  }
+  
+.style div a{
+  height               : 100%;
+  width                : 100%;
+  color                : transparent;/*#FFFFFF;*/
+  font-size            : 11px;
+}
+
+.style div a:link /*police lien internes dans les menus, tous sauf aide et forum*/{
+  height               : 100%;
+  width                : 100%;
+  color                : #FFFFFF;
+  font-size            : 11px;
+}
+
+.style div a:visited /*barre de menu lien forum et aide*/{
+  height               : 100%;
+  width                : 100%;
+  color                : #FFFFFF;
+  font-size            : 11px;
+}
+
+.style div a:hover /*barre de menu quand on est sur le lien*/{
+  background-color     : transparent;/*#111111;*/
+  height               : 100%;
+  width                : 100%;
+  text-decoration      : none;
+  font-size            : 11px;
+  color                : #FFFFFF;
+}
+
+.style /* navigation */{
+  margin-top           : 5px;
+  font-family          : Trebuchet MS, Arial, Helvetica, sans-serif;
+  font-size            : 11px;
+}
+
+h1 /*titre (fenêtre batiments et recherche*/{
+  font-size            : 12px;
+  border-bottom        : 0px #2C2C2C solid;
+  width                : 98%; 
+  text-align           : right;
+  /*font-weight          : bold;*/
+  color                : #CC0000
+}
+
+table.s {
+filter: Alpha(Opacity=100);
+ -moz-opacity : 1.0;
+ }
+
+center {
+color: #ECFF00;
+}
+
+/*********************/
+/*  Section CSS for Ogame  */
+/*********************/
+
+.ownmissile{
+color: #00FFFF;
+font-family: arial;
+font-size: 12px;
+font-weight: bold;
+text-decoration: blink;
+}
+
+.missile{
+color: #FF0080;
+font-family: arial;
+font-size: 12px;
+font-weight: bold;
+text-decoration: blink;
+}
+
+.flight .destroy a:link{
+color : #C80000;
+}
+
+.flight .destroy a:visited{
+color : #C80000;
+}
+
+.flight .owndestroy a:link{
+color : #C6FFFF;
+}
+
+.flight .owndestroy a:visited{
+color : #C6FFFF;
+}
+
+.return .owndestroy a:link{
+color : #ffffff;
+}
+
+.return .owndestroy a:visited{
+color : #ffffff;
+}
+
+.espionage /*espionnage subit*/{
+color: #ff0000;
+font-weight    : bold;
+font-family: Tahoma,sans-serif;
+font-size: 13px;
+text-decoration: blink;
+}
+
+.return .ownespionage /*espionnage retour*/{
+color: #B1B1B1;/*#FFAB73;*/
+font-family: Tahoma;
+font-size: 11px;
+font-style: italic;
+font-weight: normal;
+}
+
+.return .ownespionage a:link{
+color : #FF9200;
+}
+
+.return .ownespionage a:visited{
+color : #FF9200;
+}
+
+.flight .ownespionage a:link{
+color : #FF7600;
+}
+
+.flight .ownespionage a:visited{
+color : #FF7600;
+}	
+
+.flight .espionage a:link{
+color : #C80000;
+}
+
+.flight .espionage a:visited{
+color : #C80000;
+}
+
+.transport /*transport venant d'une autre personne*/{
+color: #00B3FF;
+font-family: arial;
+font-size: 12px;
+text-decoration: blink;
+}
+
+.flight .owntransport /*transport aller*/{
+color: #00A600;
+font-family: arial;
+font-size: 12px;
+
+}
+
+.return .owntransport /*transport retour*/{
+color: #B1B1B1;/*#90F8A1;*/
+font-family: Tahoma;
+font-size: 11px;
+font-style: italic;
+font-weight: normal;
+}
+
+.flight .owntransport a:link{
+color : #00ff00;
+}
+
+.flight .owntransport a:visited{
+color : #00ff00;
+}
+
+.return .owntransport a:link{
+color : #00ff00;
+}
+
+.return .owntransport a:visited{
+color :#00ff00 ;
+}
+
+.attack /*attaque venant d'une personne*/{
+color: #C80000;
+font-weight    : bold;
+font-family: arial;
+font-size: 13px;
+text-decoration: blink;
+}
+
+.flight .attack a:link{
+color :#B40000 ;
+}
+
+.flight .attack a:visited{
+color : #B40000;
+}
+
+.flight .ownattack /*attaque aller ff0000*/{
+color: #FF9200;
+font-family: arial;
+font-size: 12px;
+font-weight: bold;
+}
+
+.return .ownattack /*attaque retour*/{
+color: #B1B1B1;/* #00A600#B40000*/
+font-family: Tahoma;
+font-size: 11px;
+font-style: italic;
+font-weight: normal;
+}
+
+.return .ownattack a:link{
+color : #ff0000;
+}
+
+.return .ownattack a:visited{
+color : #ff0000;
+}
+
+.flight .ownattack a:link{
+color : #ff0000;
+}
+
+.flight .ownattack a:visited{
+color : #ff0000;
+}
+
+.flight .ownharvest /*xploiter aller*/{
+color:  #268EFF;
+font-family: arial;
+font-size: 12px;
+}
+
+.return .ownharvest /*exploiter retour*/{
+color: #B1B1B1;/*#00A600#2A53FF*/
+font-family: Tahoma;
+font-size: 11px;
+font-style: italic;
+font-weight: normal;
+}
+
+.return .ownharvest a:link{
+color : #268EFF; /*#0032FF*/
+}
+
+.flight .ownharvest a:link{
+color : #0032FF;
+}
+
+.flight .ownharvest a:visited{
+color : #0032FF;
+}
+
+.flight .owndeploy /*stationner aller*/{
+color: #ffff00;
+font-family: arial;
+font-size: 11px;
+font-weight: normal;
+}
+
+.return .owndeploy /*stationner retour*/{
+color: rgb(150,150,150);
+font-family: Tahoma;
+font-size: 11px;
+}
+
+.return .owndeploy a:link{
+color : #ffff00;
+}
+
+.return .owndeploy a:visited{
+color : #ffff00;
+}
+
+.flight .owndeploy a:link{
+color : #ffff00;
+}
+
+.flight .owndeploy a:visited{
+color : #ffff00;
+}
+
+.flight .owncolony /*colonisation aller*/{
+color: #8000FF;
+font-family: arial;
+font-size: 12px;
+font-weight: normal;
+}
+
+/* Pop-up pour la creation des marches */
+
+#new_market
+{
+	display : none;
+	z-index: 100;
+	
+	position : fixed;
+	top : 40%;
+	left : 40%;
+}
+
+#new_market table
+{
+	border : 1px #003399 solid;
+	background-color : black;
+}
+
+#new_market th
+{
+	background-image : url('../skin/img/tab2_bg.gif');
+	border : 1px solid #757575;
+	padding : 10px;
+	padding-top : 5px;
+	padding-bottom : 5px;
+	font-weight : bold;
+	text-align : center;
+}
+
+#new_market td
+{
+	background-color : #04111F;
+	color : #E4E4E4;
+	font-weight : normal;
+	padding : 10px;
+	padding-top : 5px;
+	padding-bottom : 5px;
+}
+
+#new_market .center { text-align : center; }
+
+/* End Pop-up */
