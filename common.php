@@ -35,7 +35,7 @@ if (!isset($HTTP_POST_VARS) && isset($_POST))
     }
 }
 
-//Récupération des paramètres de connexion à la base de données
+//RÃ©cupÃ©ration des paramÃ¨tres de connexion Ã  la base de donnÃ©es
 if (file_exists("parameters/id.php")) 
 	require_once("parameters/id.php");
 
@@ -54,8 +54,8 @@ require_once("includes/user.php");
 require_once("includes/modmarket.php");
 require_once("includes/ogamecalc.php");
 
-//Récupération des valeur GET, POST, COOKIE
-@import_request_variables('GP', "pub_");
+//RÃ©cupÃ©ration des valeur GET, POST, COOKIE
+extract($_REQUEST, EXTR_PREFIX_ALL|EXTR_REFS, 'pub');
 
 foreach ($_GET as $k => $secvalue) {
     if ( ! check_getvalue ( $secvalue ) && $k!='message' ) {
