@@ -11,13 +11,15 @@ if (!defined('IN_OGSMARKET')) {
 
 function taux_echange($M,$C,$D,$OM,$OC,$OD) {
 	
-	if ($M > 0 && $C == 0 && $D == 0) { $sens="offre"; }
+	$sens="";
+
+	if ($M > 0 && $C == 0 && $D == 0)  	  $sens="offre"; 
 	elseif ($M == 0 && $C > 0 && $D == 0) $sens="offre";
 	elseif ($M == 0 && $C == 0 && $D > 0) $sens="offre";
-	elseif ($M > 0 && $C > 0 && $D == 0) $sens="demande";
-	elseif ($M == 0 && $C > 0 && $D > 0) $sens="demande";
-	elseif ($M > 0 && $C == 0 && $D > 0) $sens="demande";
-	elseif ($M > 0 && $C > 0 && $D > 0)  $sens = "nul";
+	elseif ($M > 0 && $C > 0 && $D == 0)  $sens="demande";
+	elseif ($M == 0 && $C > 0 && $D > 0)  $sens="demande";
+	elseif ($M > 0 && $C == 0 && $D > 0)  $sens="demande";
+	elseif ($M > 0 && $C > 0 && $D > 0)   $sens="nul";
 		
 	switch ($sens){
 		case "offre":
@@ -26,30 +28,31 @@ function taux_echange($M,$C,$D,$OM,$OC,$OD) {
 				if ($OC) {
 					$ret .= " ".number_format($OC/$M,2)."C  ";
 				}
-				if ($OD){
-		
+				if ($OD){		
 					$ret .= " ".number_format($OD/$M,2)."D  ";
 				}
-			}elseif ($C) {
+			}
+			elseif ($C) {
 				$ret="1C :";
 				if ($OM) {
 					$ret .= " ".number_format($OM/$C,2)."M  ";
 				}
-				if ($OD){
-		
+				if ($OD){		
 					$ret .= " ".number_format($OD/$C,2)."D  ";
 				}
-			}elseif ($D){
+			}
+			elseif ($D){
 				$ret="1D :";
 				if ($OM) {
 					$ret .= " ".number_format($OM/$D,2)."M  ";
 				}
-				if ($OC){
-		
+				if ($OC){		
 					$ret .= " ".number_format($OC/$D,2)."C  ";
 				}
-			}else $ret ="Pas de taux calculable";
-		Break;
+			}
+			else 
+				$ret ="Pas de taux calculable";
+			break;
 	
 		case "demande":
 			if ($OM) {
@@ -57,36 +60,40 @@ function taux_echange($M,$C,$D,$OM,$OC,$OD) {
 				if ($C) {
 					$ret .= " ".number_format($C/$OM,2)."C  ";
 				}
-				if ($D){
-		
+				if ($D){		
 					$ret .= " ".number_format($D/$OM,2)."D  ";
 				}
-			}elseif ($OC) {
+			}
+			elseif ($OC) {
 				$ret="1C :";
 				if ($M) {
 					$ret .= " ".number_format($M/$OC,2)."M  ";
 				}
-				if ($D){
-		
+				if ($D){		
 					$ret .= " ".number_format($D/$OC,2)."D  ";
 				}
-			}elseif ($OD){
+			}
+			elseif ($OD){
 				$ret="1D :";
 				if ($M) {
 					$ret .= " ".number_format($M/$OD,2)."M  ";
 				}
-				if ($C){
-		
+				if ($C){		
 					$ret .= " ".number_format($C/$OD,2)."C  ";
 				}
-			}else $ret ="Pas de taux calculable";
-		break;
+			}
+			else 
+				$ret ="Pas de taux calculable";
+			break;
 	
 		case "nul":
 			$ret ="Pas de taux calculable";
-		break;
+			break;
+
+		default :
+			$ret="";
 	}	
-		return $ret;
+	return $ret;
 }
 
 function rapport($M,$C,$D,$OM,$OC,$OD) {
@@ -107,29 +114,30 @@ function rapport($M,$C,$D,$OM,$OC,$OD) {
 					$ret .= "- C = ".number_format(($OC/$M)*100,0)." % du M -";
 				}
 				if ($OD){
-		
 					$ret .= "- D = ".number_format(($OD/$M)*100,0)." % du M -";
 				}
-			}elseif ($C) {
+			}
+			elseif ($C) {
 				$ret="Coeff :";
 				if ($OM) {
 					$ret .= "- M = ".number_format(($OM/$C)*100,0)." % du C -";
 				}
-				if ($OD){
-		
+				if ($OD){		
 					$ret .= "- D = ".number_format(($OD/$C)*100,0)." % du C -";
 				}
-			}elseif ($D){
+			}
+			elseif ($D){
 				$ret="Coeff :";
 				if ($OM) {
 					$ret .= "- M = ".number_format(($OM/$D)*100,0)." % du D -";
 				}
-				if ($OC){
-		
+				if ($OC){		
 					$ret .= "- C = ".number_format(($OC/$D)*100,0)." % du D -";
 				}
-			}else $ret ="Pas de taux calculable";
-		break;
+			}
+			else 
+				$ret ="Pas de taux calculable";
+			break;
 	
 		case "demande":
 			if ($OM) {
@@ -137,35 +145,38 @@ function rapport($M,$C,$D,$OM,$OC,$OD) {
 				if ($C) {
 					$ret .= "- C = ".number_format(($C/$OM)*100,0)." % du M -";
 				}
-				if ($D){
-		
+				if ($D){		
 					$ret .= "- D = ".number_format(($D/$OM)*100,0)." % du M -";
 				}
-			}elseif ($OC) {
+			}
+			elseif ($OC) {
 				$ret="Coeff :";
 				if ($M) {
 					$ret .= "- M = ".number_format(($M/$OC)*100,0)." % du C -";
 				}
-				if ($D){
-		
+				if ($D){		
 					$ret .= "- D = ".number_format(($D/$OC)*100,0)." % du C -";
 				}
-			}elseif ($OD){
+			}
+			elseif ($OD){
 				$ret="Coeff :";
 				if ($M) {
 					$ret .= "- M = ".number_format(($M/$OD)*100,0)." % du D -";
 				}
-				if ($C) {
-		
+				if ($C) {		
 					$ret .= "- C = ".number_format(($C/$OD)*100,0)." % du D -";
 				}
-			}else $ret ="Pas de taux calculable";
-		break;
+			}
+			else 
+				$ret ="Pas de taux calculable";
+			break;
 		
 		case "nul":
 			$ret ="Pas de taux calculable";
-		break;
+			break;
+
+		default :
+			$ret="";
 	}
 	return $ret;
 }
-?>

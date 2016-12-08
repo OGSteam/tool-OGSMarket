@@ -18,21 +18,29 @@ class cModMarket{
 	}
 	function checkURLAuth($pub_ogspyurl,$type_acces){
 		global $db;
+		$champ_concerne="";
 		switch ($type_acces){
 			case "read":
 				$champ_concerne="read_access";
 				break;
 			case "write":
 				$champ_concerne="write_access";
+				break;
 			default:
 				return false;
 		}
-		$query="select ".$champ_concerne." from ".TABLE_OGSPY_AUTH." where url='".$pub_ogspyurl."' and active='1' LIMIT 1;";
-		$result=$db->sql_query($query);
-		if (!(list($acces)=$db->sql_fetch_row($result))) return false;
-		if ($acces=="1") {return true;}
-		else {return false;}
+		
+		$result=$db->sql_query("select ".$champ_concerne." from ".TABLE_OGSPY_AUTH." where url='".$pub_ogspyurl."' and active='1' LIMIT 1;");
+		if (!(list($acces)=$db->sql_fetch_row($result))) {
+			return false;
+		}
+
+		if ($acces=="1") {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 		
 }
-?>

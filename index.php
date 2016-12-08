@@ -257,5 +257,3 @@ switch ($pub_action) {
 		break;
 
 }
-
-?>

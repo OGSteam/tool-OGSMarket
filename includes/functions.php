@@ -12,15 +12,16 @@ if (!defined('IN_OGSMARKET')) {
 
 /* Redirection Page web (kyser)*/
 function redirection($url){
-	if (headers_sent()) {
+	if(headers_sent()) {
 		die('<meta http-equiv="refresh" content="2; URL='.$url.'">');
-	} else {
+	} 
+	else{
 		header("Location: ".$url);
 		exit();
 	}
 }
 
-/* fonctions nessesaires aux cookies */
+/* fonctions necessaires aux cookies */
 function serialise($data){
 	return str_replace('"', '`', serialize($data));
 }
@@ -47,10 +48,11 @@ function check_getvalue($secvalue) {
 		    return false;
     	}
     }
-    else {
+    else { // tableau de valeur => Récursivité
         foreach ( $secvalue as $subsecvalue ) {
-            if ( ! check_getvalue ( $subsecvalue ) )
+            if ( ! check_getvalue ( $subsecvalue ) ){
                 return false;
+            }
         }
     }
     return true;
@@ -65,10 +67,11 @@ function check_postvalue($secvalue) {
 		    return false;
     	}
     }
-    else {
+    else { // tableau de valeur => Récursivité
         foreach ( $secvalue as $subsecvalue ) {
-            if ( ! check_postvalue ( $subsecvalue ) )
+            if ( ! check_postvalue ( $subsecvalue ) ){
                 return false;
+            }
         }
     }
     return true;
@@ -76,32 +79,30 @@ function check_postvalue($secvalue) {
 
 /*image oui/non */
 function affiche_icone($ouinon) {
-	if ($ouinon == 1)
+	if ($ouinon == 1){
 		return "<img src=\"images/graphic_ok.gif\" width=\"20\"/>";
-	else
+	}
+	else{
 		return "<img src=\"images/graphic_cancel.gif\" width=\"20\"/>";
+	}
 }
 
 /* recuperation des univers */
 function get_universe($universeid) {
+	global $db;
 
-		global $db;
-		$sql =   "SELECT id,info,name"
-			." FROM ".TABLE_UNIVERS
-			." WHERE id=".intval($universeid);
+	$result = $db->sql_query("SELECT id,info,name FROM ".TABLE_UNIVERS." WHERE id=".intval($universeid));
 
-		$result = $db->sql_query( $sql );
+	if (list($id,$info,$name) = $db->sql_fetch_row($result)) {
+		$uni=Array();
 
-		if ( list($id,$info,$name) = $db->sql_fetch_row( $result)) {
-			$uni=Array();
+		$uni["id"] = $id;
+		$uni["info"] = $info;
+		$uni["name"] = $name;
 
-			$uni["id"] = $id;
-			$uni["info"] = $info;
-			$uni["name"] = $name;
-
-			return $uni;			
-		}
-		return false;
+		return $uni;			
+	}
+	return false;
 }
 
 /* Chronometrage des fonctions (kyser) */
@@ -113,36 +114,42 @@ function benchmark() {
 	return $mtime;
 }
 
+/* Chargement des configuration de la DB */
 function init_serverconfig() {
-    global $db, $server_config, $infos_config;
+    global $db;
+    global $server_config;
+    global $infos_config;
 
-    $request_config = "select name,value from ".TABLE_CONFIG;
-    $result_config = $db->sql_query($request_config);
-    $request_infos = "select name,value from ".TABLE_INFOS;
-    $result_infos = $db->sql_query($request_infos);
-
-    while (list($name, $value) = $db->sql_fetch_row($result_config)) {
-        $server_config[$name] = $value;
-        
+    $result_config = $db->sql_query("SELECT name,value FROM ".TABLE_CONFIG);
+    while(list($name, $value) = $db->sql_fetch_row($result_config)) {
+        $server_config[$name] = $value;  
     }
-    while (list($name, $value) = $db->sql_fetch_row($result_infos)) {
+
+    $result_infos = $db->sql_query("SELECT name,value FROM ".TABLE_INFOS);
+    while(list($name, $value) = $db->sql_fetch_row($result_infos)) {
         $infos_config[$name] = $value;
     }
 }
 
+/* Calcul d'une durée entre 2 date (today par défaut) & formatage en "00j 00h 00min 00sec" */
 function text_datediff($fromtime,$totime=''){
 	$Delay=bib_datediff($fromtime,$totime);
 	$retvals='';
-	if ($Delay["days"]) $retvals .= $Delay["days"]." j ";
-	if ($Delay["hours"]) $retvals .= $Delay["hours"]." h ";
+	if ($Delay["days"])    $retvals .= $Delay["days"]." j ";
+	if ($Delay["hours"])   $retvals .= $Delay["hours"]." h ";
 	if ($Delay["minutes"]) $retvals .= $Delay["minutes"]." min ";
 	if ($Delay["seconds"]) $retvals .= $Delay["seconds"]." sec ";
 	return $retvals;
 }
+
 // http://fr3.php.net/manual/fr/function.mktime.php#61259
 function bib_datediff($fromtime, $totime=''){
-	if($totime=='')        $totime = time();
+	$ret = array();
 
+	if($totime=='')        
+		$totime = time();
+
+	// En cas d'inversion des from/to on remet à l'endroit
 	if($fromtime>$totime){
 		$tmp = $totime;
 		$totime = $fromtime;
@@ -150,24 +157,26 @@ function bib_datediff($fromtime, $totime=''){
 	}
 
 	$timediff = $totime-$fromtime;
-	//check for leap years in the middle
+
+	//Vérification des années bissextiles
 	for($i=date('Y',$fromtime); $i<=date('Y',$totime); $i++){
 		if ((($i%4 == 0) && ($i%100 != 0)) || ($i%400 == 0)) {
-			$timediff -= 24*60*60;
+			$timediff -= 24*60*60; // Si elle est bissextiles, elle conptera un jour de plus
 		}
 	}
-	$remain = $timediff;
-	$ret['years']    = intval($remain/(365*24*60*60));
-	$remain            = $remain%(365*24*60*60);
-	$ret['days']    = intval($remain/(24*60*60));
-	$remain            = $remain%(24*60*60);
 
+	$remain = $timediff;
+	$ret['years']   = intval($remain/(365*24*60*60));
+	$remain         = $remain%(365*24*60*60);
+	$ret['days']    = intval($remain/(24*60*60));
+	$remain         = $remain%(24*60*60);
+
+	$m= array();
 	$m[0]    = 31;        $m[1]    = 28;        $m[2]    = 31;        $m[3]    = 30;
 	$m[4]    = 31;        $m[5]    = 30;        $m[6]    = 31;        $m[7]    = 31;
 	$m[8]    = 30;        $m[9]    = 31;        $m[10]    = 30;        $m[11]    = 31;
 	//if leap year, february has 29 days
 	if (((date('Y',$totime)%4 == 0) && (date('Y',$totime)%100 != 0)) || (date('Y',$totime)%400 == 0)){
-
 		$m[1] = 29;
 	}
 	$ret['months']        = 0;
@@ -185,6 +194,8 @@ function bib_datediff($fromtime, $totime=''){
 	$ret['seconds']    = $remain%60;
 	return $ret;
 }
+
+/* Protection - Préparation des chaines pour les caractères HTML Complexes */
 function get_htmlspecialchars( $given, $quote_style = ENT_QUOTES ){
    return htmlspecialchars( html_entity_decode( $given, $quote_style ), $quote_style );
 }
@@ -211,7 +222,9 @@ function write_file($file, $mode, $text) {
 		fclose($fp);
 		return true;
 	}
-	else return false;
+	else{
+		return false;
+	}
 }
 
 /**
@@ -219,17 +232,15 @@ function write_file($file, $mode, $text) {
 * @param string $ip L'ip en entr&eacute;e sous la forme '192.168.0.1'
 * @return string Encodage hexadecimale sous la forme 'B0AA0001'
 */
-
 function encode_ip($ip) {
 	$ip_sep = explode('.', $ip);
 	return sprintf('%02x%02x%02x%02x', $ip_sep[0], $ip_sep[1], $ip_sep[2], $ip_sep[3]);
 }
 /**
 * Transforme une ip de la notation hexadecimale en deecimal
-* @param string $ip L'ip en entr&eacute;e sous la forme 'B0AA0001'
+* @param string $ip_encode L'ip en entr&eacute;e sous la forme 'B0AA0001'
 * @return string DesEncodage decimal sous la forme '192.168.0.1'
 */
-
 function decode_ip($ip_encode) {
 	$hexipbang = explode('.', chunk_split($ip_encode, 2, '.'));
 	return hexdec($hexipbang[0]). '.' . hexdec($hexipbang[1]) . '.' . hexdec($hexipbang[2]) . '.' . hexdec($hexipbang[3]);
@@ -239,17 +250,15 @@ function decode_ip($ip_encode) {
  * Formate un nombre a la francaise
  * Pas le choix pour les decimal car les ressources appartiennent a |N ^^
  */
-
 function formate_number ($number)
 {
 	return number_format ($number, '0', ',', ' ');
 }
 
 /**
-* Verification des donn&eacute;es envoy&eacute;s par l'utilisateur
+* Verification des données envoyées par l'utilisateur
 * @return bool true si correct 
 */
-
 function check_var($value, $type_check, $mask = "", $auth_null = true) {
 	if ($auth_null && $value == "") {
 		return true;
@@ -258,85 +267,85 @@ function check_var($value, $type_check, $mask = "", $auth_null = true) {
 	switch ($type_check) {
 		//Pseudo des membres
 		case "Pseudo_Groupname" :
-		if (!preg_match("#^[\w\s\-]{3,15}$#", $value)) {
-			log_("check_var", array("Pseudo_Groupname", $value));
-			return false;
-		}
-		break;
+			if (!preg_match("#^[\w\s\-]{3,15}$#", $value)) {
+				log_("check_var", array("Pseudo_Groupname", $value));
+				return false;
+			}
+			break;
 
 		//Mot de passe des membres
 		case "Password" :
-		if (!preg_match("#^[\w\s\-]{6,15}$#", $value)) {
-			return false;
-		}
-		break;
+			if (!preg_match("#^[\w\s\-]{6,15}$#", $value)) {
+				return false;
+			}
+			break;
 
 		//Chaîne de caract&egrave;res avec espace
 		case "Text" :
-		if (!preg_match("#^[\w'\s\.\*\-]+$#", $value)) {
-			log_("check_var", array("Text", $value));
-			return false;
-		}
-		break;
+			if (!preg_match("#^[\w'\s\.\*\-]+$#", $value)) {
+				log_("check_var", array("Text", $value));
+				return false;
+			}
+			break;
 
 		//Chaîne de caract&egrave;res et  chiffre
 		case "CharNum" :
-		if (!preg_match("#^[\w\.\*\-]+$#", $value)) {
-			log_("check_var", array("CharNum", $value));
-			return false;
-		}
-		break;
+			if (!preg_match("#^[\w\.\*\-]+$#", $value)) {
+				log_("check_var", array("CharNum", $value));
+				return false;
+			}
+			break;
 
 		//Caract&egrave;res
 		case "Char" :
-		if (!preg_match("#^[[:alpha:]_\.\*\-]+$#", $value)) {
-			log_("check_var", array("Char", $value));
-			return false;
-		}
-		break;
+			if (!preg_match("#^[[:alpha:]_\.\*\-]+$#", $value)) {
+				log_("check_var", array("Char", $value));
+				return false;
+			}
+			break;
 
 		//Chiffres
 		case "Num" :
-		if (!preg_match("#^[[:digit:]]+$#", $value)) {
-			log_("check_var", array("Num", $value));
-			return false;
-		}
-		break;
+			if (!preg_match("#^[[:digit:]]+$#", $value)) {
+				log_("check_var", array("Num", $value));
+				return false;
+			}
+			break;
 
 		//Adresse internet
 		case "URL":
-		if (!preg_match("#^(((?:http?)://)?(?(2)(www\.)?|(www\.){1})[-a-z0-9~_]{2,}\.[-a-z0-9~._]{2,}[-a-z0-9~_\/&\?=.]{2,})$#i", $value)) {
-			log_("check_var", array("URL", $value));
-			return false;
-		}
-		break;
+			if (!preg_match("#^(((?:http?)://)?(?(2)(www\.)?|(www\.){1})[-a-z0-9~_]{2,}\.[-a-z0-9~._]{2,}[-a-z0-9~_\/&\?=.]{2,})$#i", $value)) {
+				log_("check_var", array("URL", $value));
+				return false;
+			}
+			break;
 
 		//Plan&egrave;te, Joueur et alliance
 		case "Galaxy":
-//		if (!preg_match("#^[\w\s\.\*\-]+$#", $value)) {
-//			log_("check_var", array("Galaxy", $value));
-//			return false;
-//		}
-		break;
+	//		if (!preg_match("#^[\w\s\.\*\-]+$#", $value)) {
+	//			log_("check_var", array("Galaxy", $value));
+	//			return false;
+	//		}
+			break;
 
 		//Rapport d'espionnage
 		case "Spyreport":
-//		if (!preg_match("#^[\w\s\[\]\:\-'%\.\*]+$#", $value)) {
-//			log_("check_var", array("Spyreport", $value));
-//			return false;
-//		}
-		break;
+	//		if (!preg_match("#^[\w\s\[\]\:\-'%\.\*]+$#", $value)) {
+	//			log_("check_var", array("Spyreport", $value));
+	//			return false;
+	//		}
+			break;
 
 		//Masque param&eacute;trable
 		case "Special":
-		if (!preg_match($mask, $value)) {
-			log_("check_var", array("Special", $value));
-			return false;
-		}
-		break;
+			if (!preg_match($mask, $value)) {
+				log_("check_var", array("Special", $value));
+				return false;
+			}
+			break;
 
 		default:
-		return false;
+			return false;
 	}
 
 	return true;
@@ -386,7 +395,7 @@ function safe_glob($pattern, $flags=0) {
 //A better "fnmatch" alternative for windows that converts a fnmatch pattern into a preg one. It should work on PHP >= 4.0.0
 if (!function_exists('fnmatch')) {
    function fnmatch($pattern, $string) {
-       return @preg_match('/^' . strtr(addcslashes($pattern, '\\.+^$(){}=!<>|'), array('*' => '.*', '?' => '.?')) . '$/i', $string);
+       return preg_match('/^' . strtr(addcslashes($pattern, '\\.+^$(){}=!<>|'), array('*' => '.*', '?' => '.?')) . '$/i', $string);
    }
 }
 
@@ -395,7 +404,6 @@ if (!function_exists('fnmatch')) {
 */
 function affiche_liste($sortby,$current_uni){
 	global $Trades;
-	echo "\n		<offers_list>\n";
 	switch ($sortby){
 		case "offermetal":
 			$orderby="offer_metal desc";
@@ -422,6 +430,8 @@ function affiche_liste($sortby,$current_uni){
 			$orderby="creation_date desc";
 			break;
 	}
+
+	echo "\n		<offers_list>\n";
 	echo "			".$Trades->trades_array_xml($current_uni["id"],$orderby,false);
 	echo "		</offers_list>\n";
 }
@@ -435,7 +445,10 @@ function admin_config_set () {
 		$pub_users_inscription_ur, $pub_mail_nom_expediteur, $pub_mail_expediteur, $pub_mail_object, $pub_mail_message, $pub_servername, $pub_skin, $pub_logo_server, $pub_menuprive, $pub_menulogout, $pub_menuautre,
 		$pub_menuforum, $pub_nomforum, $pub_adresseforum, $pub_home, $pub_market_read_access, $pub_market_write_access, $pub_market_password;
 	
-  if ($pub_users_auth_type == "" || $pub_skin == "" || $pub_servername == "") redirection("index.php?action=manque_info&goto=admin");
+  	if ($pub_users_auth_type == "" || $pub_skin == "" || $pub_servername == ""){
+  		redirection("index.php?action=manque_info&goto=admin");
+  	}
+	
 	$pub_users_active = (is_null($pub_member_auto_activ)) ? "0" : "1";
 
 	$queries = array();
@@ -480,7 +493,7 @@ function admin_config_set () {
 }
 
 /*
-*Enregistreement des données général du market
+*Enregistrement des données général du market
 */
 function admin_market_set () {
 	global $db;
@@ -511,6 +524,7 @@ function admin_market_set () {
 *Création d'offres par le module market
 */
 function market_create(){
+	$user=array();
 	global $db, $server_config, $user_data;
 	global $pub_name, $pub_mdp, $pub_om, $pub_oc, $pub_od, $pub_dm, $pub_dc, $pub_dd, $pub_duree, $pub_note, $pub_id,
 		$pub_og1, $pub_og2, $pub_og3, $pub_og4, $pub_og5, $pub_og6, $pub_og7, $pub_og8, $pub_og9,
@@ -518,16 +532,21 @@ function market_create(){
 			
 	$sql="SELECT id,is_active FROM ".TABLE_USER." WHERE name like '".mysql_real_escape_string($pub_name)."'";
 	$db->sql_query($sql);
+
 	// L'utilisateur existe pas
-	if (!(list($id,$is_active)=$db->sql_fetch_row())) return false;
+	if (!(list($id,$is_active)=$db->sql_fetch_row())){
+		return false;
+	}
+
 	if ($is_active == 1){
 		$sql="SELECT * FROM ".TABLE_USER." WHERE id = '".$id."'";	
 		$db->sql_query($sql);
 		$user=$db->sql_fetch_assoc();
-		if ($user["password"] != $pub_mdp) return false;
+		if ($user["password"] != $pub_mdp) 
+			return false;
 	}
-	$_SESSION["username"] = $form_username;
-	$_SESSION["userpass"] = $form_userpass;
+	//$_SESSION["username"] = $form_username;
+	//$_SESSION["userpass"] = $form_userpass;
 
 	$user_data = $user;
 	return $user_data;
@@ -562,4 +581,3 @@ function market_create(){
 	$alert = "creer";
 	require_once("includes/mail.php");
 }
-?>

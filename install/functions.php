@@ -20,7 +20,7 @@ function installation_db($sgbd_server, $sgbd_dbname, $sgbd_username, $sgbd_passw
 	
 	// Cr&eacute;ation de la structure de la base de donn&eacute;es
 	
-	$sql_query = @fread (@fopen ('schemas/database.sql', 'r'), @filesize ('schemas/database.sql')) or die ('<h1>Le script SQL d\'installation est introuvable !</h1>');
+	$sql_query = fread (fopen ('schemas/database.sql', 'r'), filesize ('schemas/database.sql')) or die ('<h1>Le script SQL d\'installation est introuvable !</h1>');
 	$sql_query = preg_replace ("#market_#", $sgbd_tableprefix, $sql_query);
 	
 	$sql_query = explode (';', $sql_query);

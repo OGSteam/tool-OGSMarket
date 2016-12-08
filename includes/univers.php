@@ -6,15 +6,14 @@
 *	created		: 	05/06/2006
 ***************************************************************************/
 
-if (!defined('IN_OGSMARKET'))
+if (!defined('IN_OGSMARKET')){
 	exit('Hacking attempt');
+}
 
 class cUniverses
 {
-	// Variable
-	private $Universes = false;
-	
-	
+	private $Universes = array();
+		
 	// Retourne le nombre d'univers crees
 	public function count()
 	{
@@ -170,7 +169,5 @@ class cUniverses
 			setcookie('ogsmarket_uni', $pub_uni, time() + 3600 * 24);
 	}
 }
-
 // Creation d'un objet cUniverses
 $Universes = new cUniverses();
-?>
