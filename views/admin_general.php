@@ -78,7 +78,7 @@ $member_activ_auto = ($server_config["users_active"]) == 1 ? "checked" : "";
 					<th><input type="text" name="mail_message" size="100%" value="<?php echo $server_config["mail_message"]?>"/></th>
 				</tr>
 
-<!--catégorie-->
+<!--catÃ©gorie-->
 
 				<tr>
 					<td class="c" colspan="2" align="center">Nom des Cat&eacute;gories</td>

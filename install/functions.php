@@ -71,7 +71,7 @@ function generate_id($sgbd_server, $sgbd_dbname, $sgbd_username, $sgbd_password,
 	$id_php[] = 'define("OGSMARKET_INSTALLED", TRUE);';
 	$id_php[] = '?>';
 	if (!write_file("../parameters/id.php", "w", $id_php)) {
-		die("Echec installation, impossible de générer le fichier 'parameters/id.php'");
+		die("Echec installation, impossible de gÃ©nÃ©rer le fichier 'parameters/id.php'");
 	}
 
 	echo "<h3 align='center'><font color='yellow'>Installation du serveur OGSMarket ".$version." effectu&eacute;e avec succ&egrave;s</font></h3>";

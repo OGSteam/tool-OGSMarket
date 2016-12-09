@@ -9,7 +9,7 @@
 	if (!defined('IN_OGSMARKET'))
 		exit('Hacking attempt');
 
-	// Définitions des noms des tables de la BDD
+	// DÃ©finitions des noms des tables de la BDD
 	if (!defined('INSTALL_IN_PROGRESS') || defined('UPGRADE_IN_PROGRESS'))
 	{
 		define('TABLE_COMMENT'	 , $table_prefix .'comment');

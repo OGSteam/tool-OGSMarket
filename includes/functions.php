@@ -48,7 +48,7 @@ function check_getvalue($secvalue) {
 		    return false;
     	}
     }
-    else { // tableau de valeur => Récursivité
+    else { // tableau de valeur => RÃ©cursivitÃ©
         foreach ( $secvalue as $subsecvalue ) {
             if ( ! check_getvalue ( $subsecvalue ) ){
                 return false;
@@ -67,7 +67,7 @@ function check_postvalue($secvalue) {
 		    return false;
     	}
     }
-    else { // tableau de valeur => Récursivité
+    else { // tableau de valeur => RÃ©cursivitÃ©
         foreach ( $secvalue as $subsecvalue ) {
             if ( ! check_postvalue ( $subsecvalue ) ){
                 return false;
@@ -131,7 +131,7 @@ function init_serverconfig() {
     }
 }
 
-/* Calcul d'une durée entre 2 date (today par défaut) & formatage en "00j 00h 00min 00sec" */
+/* Calcul d'une durÃ©e entre 2 date (today par dÃ©faut) & formatage en "00j 00h 00min 00sec" */
 function text_datediff($fromtime,$totime=''){
 	$Delay=bib_datediff($fromtime,$totime);
 	$retvals='';
@@ -149,7 +149,7 @@ function bib_datediff($fromtime, $totime=''){
 	if($totime=='')        
 		$totime = time();
 
-	// En cas d'inversion des from/to on remet à l'endroit
+	// En cas d'inversion des from/to on remet Ã  l'endroit
 	if($fromtime>$totime){
 		$tmp = $totime;
 		$totime = $fromtime;
@@ -158,7 +158,7 @@ function bib_datediff($fromtime, $totime=''){
 
 	$timediff = $totime-$fromtime;
 
-	//Vérification des années bissextiles
+	//VÃ©rification des annÃ©es bissextiles
 	for($i=date('Y',$fromtime); $i<=date('Y',$totime); $i++){
 		if ((($i%4 == 0) && ($i%100 != 0)) || ($i%400 == 0)) {
 			$timediff -= 24*60*60; // Si elle est bissextiles, elle conptera un jour de plus
@@ -195,7 +195,7 @@ function bib_datediff($fromtime, $totime=''){
 	return $ret;
 }
 
-/* Protection - Préparation des chaines pour les caractères HTML Complexes */
+/* Protection - PrÃ©paration des chaines pour les caractÃ¨res HTML Complexes */
 function get_htmlspecialchars( $given, $quote_style = ENT_QUOTES ){
    return htmlspecialchars( html_entity_decode( $given, $quote_style ), $quote_style );
 }
@@ -256,7 +256,7 @@ function formate_number ($number)
 }
 
 /**
-* Verification des données envoyées par l'utilisateur
+* Verification des donnÃ©es envoyÃ©es par l'utilisateur
 * @return bool true si correct 
 */
 function check_var($value, $type_check, $mask = "", $auth_null = true) {
@@ -280,7 +280,7 @@ function check_var($value, $type_check, $mask = "", $auth_null = true) {
 			}
 			break;
 
-		//Chaîne de caract&egrave;res avec espace
+		//ChaÃ®ne de caract&egrave;res avec espace
 		case "Text" :
 			if (!preg_match("#^[\w'\s\.\*\-]+$#", $value)) {
 				log_("check_var", array("Text", $value));
@@ -288,7 +288,7 @@ function check_var($value, $type_check, $mask = "", $auth_null = true) {
 			}
 			break;
 
-		//Chaîne de caract&egrave;res et  chiffre
+		//ChaÃ®ne de caract&egrave;res et  chiffre
 		case "CharNum" :
 			if (!preg_match("#^[\w\.\*\-]+$#", $value)) {
 				log_("check_var", array("CharNum", $value));
@@ -437,7 +437,7 @@ function affiche_liste($sortby,$current_uni){
 }
 
 /*
-*Enregistreement des données générales du market
+*Enregistreement des donnÃ©es gÃ©nÃ©rales du market
 */
 function admin_config_set () {
 	global $db;
@@ -493,7 +493,7 @@ function admin_config_set () {
 }
 
 /*
-*Enregistrement des données général du market
+*Enregistrement des donnÃ©es gÃ©nÃ©ral du market
 */
 function admin_market_set () {
 	global $db;
@@ -521,7 +521,7 @@ function admin_market_set () {
 }
 
 /*
-*Création d'offres par le module market
+*CrÃ©ation d'offres par le module market
 */
 function market_create(){
 	$user=array();

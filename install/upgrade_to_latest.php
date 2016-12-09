@@ -174,7 +174,7 @@ switch ($version) {
 foreach ($requests as $request) {
 	if(!($result = $db->sql_query($request)))
 	{
-		$out = "La requéte : ".$request." est non exécutée, erreur de version!!!";
+		$out = "La requÃ©te : ".$request." est non exÃ©cutÃ©e, erreur de version!!!";
 		echo  $out;
 	}
 }
