@@ -11,24 +11,24 @@ if (!defined('IN_OGSMARKET')) die ('Hacking attempt');
 
 require_once ('views/page_header.php');
 
-if(isset($pub_id) && $pub_id != ""){
+if (isset($pub_id) && $pub_id != "") {
 	$user = $Users->get_user($pub_id);
 
-	if(!$user) 
+	if (!$user) 
 		echo '<p>Aucun profil n\'a &eacute;t&eacute; trouv&eacute; !</p>';
 	else {
 ?>
 <table width='300' class='convertisseur'>
 	<tr>
-		<th colspan="2">Profil utilisateur de <?php echo $user["name"];?></th>
+		<th colspan="2">Profil utilisateur de <?php echo $user["name"]; ?></th>
 	</tr>
 	<tr>
 		<td>Enregistrement</td>
-		<td><?php echo strftime("%a %d %b %H:%M:%S",$user["regdate"]); ?></td>
+		<td><?php echo strftime("%a %d %b %H:%M:%S", $user["regdate"]); ?></td>
 	</tr>
 	<tr>
 		<td>Derni&egrave;re connexion</td>
-		<td><?php echo strftime("%a %d %b %H:%M:%S",$user["lastvisit"]); ?></td>
+		<td><?php echo strftime("%a %d %b %H:%M:%S", $user["lastvisit"]); ?></td>
 	</tr>
 	<tr>
 		<td>Adresse e-mail</td>
@@ -36,7 +36,7 @@ if(isset($pub_id) && $pub_id != ""){
 				if (empty($user['email']))
 					echo 'Non renseign&eacute;';
 				else
-					echo '<a href=\'mailto://' . $user['email'] . '\'>' . $user['email'] . '</a>';
+					echo '<a href=\'mailto://'.$user['email'].'\'>'.$user['email'].'</a>';
 			?>
 		</td>
 	</tr>
@@ -117,11 +117,11 @@ if(isset($pub_id) && $pub_id != ""){
 		</tr>
 		<tr>
 			<th>Alerte par e-mail lors d'une nouvelle offre ?</th>
-			<th><input type='checkbox' name='alert_mail' value='1' <?php if ($user_data["alert_mail"] == '1') {echo 'checked="checked"';} ?> /></th>
+			<th><input type='checkbox' name='alert_mail' value='1' <?php if ($user_data["alert_mail"] == '1') {echo 'checked="checked"'; } ?> /></th>
 		</tr>
 		<tr>
 			<th>Présélection du mode de saisie des ressources demandées</th>
-			<th>- % - <input type='radio' name='modepq' value='p' <?php if ($user_data["modepq"] == 'p') {echo 'checked="checked"';} ?> /> - Q - <input type='radio' name='modepq' value='q' <?php if ($user_data["modepq"] == 'q') {echo 'checked="checked"';} ?> /></th>
+			<th>- % - <input type='radio' name='modepq' value='p' <?php if ($user_data["modepq"] == 'p') {echo 'checked="checked"'; } ?> /> - Q - <input type='radio' name='modepq' value='q' <?php if ($user_data["modepq"] == 'q') {echo 'checked="checked"'; } ?> /></th>
 		</tr>
 		<tr>
 			<th>

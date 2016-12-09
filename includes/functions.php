@@ -11,6 +11,9 @@ if (!defined('IN_OGSMARKET')) {
 }
 
 /* Redirection Page web (kyser)*/
+/**
+ * @param string $url
+ */
 function redirection($url){
 	if(headers_sent()) {
 		die('<meta http-equiv="refresh" content="2; URL='.$url.'">');
@@ -34,7 +37,7 @@ function unserialise($data){
  * Verifie qu'il n'y a aucun code HTML dans la variable $secvalue.
  */
 function check_getvalue($secvalue) {
-    if ( ! is_array ( $secvalue ) ) {
+    if (!is_array($secvalue)) {
     	if ((preg_match("/<[^>]*script*\"?[^>]*>/i", $secvalue)) ||
 	    (preg_match("/<[^>]*object*\"?[^>]*>/i", $secvalue)) ||
     	(preg_match("/<[^>]*iframe*\"?[^>]*>/i", $secvalue)) ||
@@ -49,8 +52,8 @@ function check_getvalue($secvalue) {
     	}
     }
     else { // tableau de valeur => Récursivité
-        foreach ( $secvalue as $subsecvalue ) {
-            if ( ! check_getvalue ( $subsecvalue ) ){
+        foreach ($secvalue as $subsecvalue) {
+            if (!check_getvalue($subsecvalue)) {
                 return false;
             }
         }
@@ -62,14 +65,14 @@ function check_getvalue($secvalue) {
  * Verifie qu'il n'y a aucun code HTML dans la variable $secvalue.
  */
 function check_postvalue($secvalue) {
-    if ( ! is_array ( $secvalue ) ) {
-        if ((preg_match("/<[^>]*script*\"?[^>]*>/i", $secvalue)) ||    (preg_match("/<[^>]*style*\"?[^>]*>/", $secvalue))) {
+    if (!is_array($secvalue)) {
+        if ((preg_match("/<[^>]*script*\"?[^>]*>/i", $secvalue)) || (preg_match("/<[^>]*style*\"?[^>]*>/", $secvalue))) {
 		    return false;
     	}
     }
     else { // tableau de valeur => Récursivité
-        foreach ( $secvalue as $subsecvalue ) {
-            if ( ! check_postvalue ( $subsecvalue ) ){
+        foreach ($secvalue as $subsecvalue) {
+            if (!check_postvalue($subsecvalue)) {
                 return false;
             }
         }
@@ -79,10 +82,10 @@ function check_postvalue($secvalue) {
 
 /*image oui/non */
 function affiche_icone($ouinon) {
-	if ($ouinon == 1){
+	if ($ouinon == 1) {
 		return "<img src=\"images/graphic_ok.gif\" width=\"20\"/>";
 	}
-	else{
+	else {
 		return "<img src=\"images/graphic_cancel.gif\" width=\"20\"/>";
 	}
 }
@@ -93,8 +96,8 @@ function get_universe($universeid) {
 
 	$result = $db->sql_query("SELECT id,info,name FROM ".TABLE_UNIVERS." WHERE id=".intval($universeid));
 
-	if (list($id,$info,$name) = $db->sql_fetch_row($result)) {
-		$uni=Array();
+	if (list($id, $info, $name) = $db->sql_fetch_row($result)) {
+		$uni = Array();
 
 		$uni["id"] = $id;
 		$uni["info"] = $info;
@@ -108,7 +111,7 @@ function get_universe($universeid) {
 /* Chronometrage des fonctions (kyser) */
 function benchmark() {
 	$mtime = microtime();
-	$mtime = explode(" ",$mtime);
+	$mtime = explode(" ", $mtime);
 	$mtime = $mtime[1] + $mtime[0];
 
 	return $mtime;
@@ -121,20 +124,20 @@ function init_serverconfig() {
     global $infos_config;
 
     $result_config = $db->sql_query("SELECT name,value FROM ".TABLE_CONFIG);
-    while(list($name, $value) = $db->sql_fetch_row($result_config)) {
+    while (list($name, $value) = $db->sql_fetch_row($result_config)) {
         $server_config[$name] = $value;  
     }
 
     $result_infos = $db->sql_query("SELECT name,value FROM ".TABLE_INFOS);
-    while(list($name, $value) = $db->sql_fetch_row($result_infos)) {
+    while (list($name, $value) = $db->sql_fetch_row($result_infos)) {
         $infos_config[$name] = $value;
     }
 }
 
 /* Calcul d'une durée entre 2 date (today par défaut) & formatage en "00j 00h 00min 00sec" */
-function text_datediff($fromtime,$totime=''){
-	$Delay=bib_datediff($fromtime,$totime);
-	$retvals='';
+function text_datediff($fromtime, $totime = '') {
+	$Delay = bib_datediff($fromtime, $totime);
+	$retvals = '';
 	if ($Delay["days"])    $retvals .= $Delay["days"]." j ";
 	if ($Delay["hours"])   $retvals .= $Delay["hours"]." h ";
 	if ($Delay["minutes"]) $retvals .= $Delay["minutes"]." min ";
@@ -143,23 +146,23 @@ function text_datediff($fromtime,$totime=''){
 }
 
 // http://fr3.php.net/manual/fr/function.mktime.php#61259
-function bib_datediff($fromtime, $totime=''){
+function bib_datediff($fromtime, $totime = '') {
 	$ret = array();
 
-	if($totime=='')        
+	if ($totime == '')        
 		$totime = time();
 
 	// En cas d'inversion des from/to on remet à l'endroit
-	if($fromtime>$totime){
+	if ($fromtime > $totime) {
 		$tmp = $totime;
 		$totime = $fromtime;
 		$fromtime = $tmp;
 	}
 
-	$timediff = $totime-$fromtime;
+	$timediff = $totime - $fromtime;
 
 	//Vérification des années bissextiles
-	for($i=date('Y',$fromtime); $i<=date('Y',$totime); $i++){
+	for ($i = date('Y', $fromtime); $i <= date('Y', $totime); $i++) {
 		if ((($i%4 == 0) && ($i%100 != 0)) || ($i%400 == 0)) {
 			$timediff -= 24*60*60; // Si elle est bissextiles, elle conptera un jour de plus
 		}
@@ -171,24 +174,24 @@ function bib_datediff($fromtime, $totime=''){
 	$ret['days']    = intval($remain/(24*60*60));
 	$remain         = $remain%(24*60*60);
 
-	$m= array();
-	$m[0]    = 31;        $m[1]    = 28;        $m[2]    = 31;        $m[3]    = 30;
-	$m[4]    = 31;        $m[5]    = 30;        $m[6]    = 31;        $m[7]    = 31;
-	$m[8]    = 30;        $m[9]    = 31;        $m[10]    = 30;        $m[11]    = 31;
+	$m = array();
+	$m[0]    = 31; $m[1]    = 28; $m[2]    = 31; $m[3]    = 30;
+	$m[4]    = 31; $m[5]    = 30; $m[6]    = 31; $m[7]    = 31;
+	$m[8]    = 30; $m[9]    = 31; $m[10] = 30; $m[11] = 31;
 	//if leap year, february has 29 days
-	if (((date('Y',$totime)%4 == 0) && (date('Y',$totime)%100 != 0)) || (date('Y',$totime)%400 == 0)){
+	if (((date('Y', $totime)%4 == 0) && (date('Y', $totime)%100 != 0)) || (date('Y', $totime)%400 == 0)) {
 		$m[1] = 29;
 	}
-	$ret['months']        = 0;
-	foreach($m as $value){
-		if($ret['days']>$value){
+	$ret['months'] = 0;
+	foreach ($m as $value) {
+		if ($ret['days'] > $value) {
 			$ret['months']++;
-			$ret['days'] -=$value;
+			$ret['days'] -= $value;
 		} else {
 			break;
 		}
 	}
-	$ret['hours']    = intval($remain/(60*60));
+	$ret['hours'] = intval($remain/(60*60));
 	$remain            = $remain%(60*60);
 	$ret['minutes']    = intval($remain/60);
 	$ret['seconds']    = $remain%60;
@@ -196,8 +199,8 @@ function bib_datediff($fromtime, $totime=''){
 }
 
 /* Protection - Préparation des chaines pour les caractères HTML Complexes */
-function get_htmlspecialchars( $given, $quote_style = ENT_QUOTES ){
-   return htmlspecialchars( html_entity_decode( $given, $quote_style ), $quote_style );
+function get_htmlspecialchars($given, $quote_style = ENT_QUOTES) {
+   return htmlspecialchars(html_entity_decode($given, $quote_style), $quote_style);
 }
 
 /**
@@ -222,7 +225,7 @@ function write_file($file, $mode, $text) {
 		fclose($fp);
 		return true;
 	}
-	else{
+	else {
 		return false;
 	}
 }
@@ -243,16 +246,16 @@ function encode_ip($ip) {
 */
 function decode_ip($ip_encode) {
 	$hexipbang = explode('.', chunk_split($ip_encode, 2, '.'));
-	return hexdec($hexipbang[0]). '.' . hexdec($hexipbang[1]) . '.' . hexdec($hexipbang[2]) . '.' . hexdec($hexipbang[3]);
+	return hexdec($hexipbang[0]).'.'.hexdec($hexipbang[1]).'.'.hexdec($hexipbang[2]).'.'.hexdec($hexipbang[3]);
 }
 
 /*
  * Formate un nombre a la francaise
  * Pas le choix pour les decimal car les ressources appartiennent a |N ^^
  */
-function formate_number ($number)
+function formate_number($number)
 {
-	return number_format ($number, '0', ',', ' ');
+	return number_format($number, '0', ',', ' ');
 }
 
 /**
@@ -367,17 +370,17 @@ function check_var($value, $type_check, $mask = "", $auth_null = true) {
 //On the final hand, safe_glob() supports basic wildcards on one directory.
 //Supported flags: GLOB_MARK. GLOB_NOSORT, GLOB_ONLYDIR
 //Return false if path doesn't exist, and an empty array is no file matches the pattern
-function safe_glob($pattern, $flags=0) {
-   $split=explode('/',$pattern);
-   $match=array_pop($split);
-   $path=implode('/',$split);
-   if (($dir=opendir($path))!==false) {
-       $glob=array();
-       while(($file=readdir($dir))!==false) {
-           if (fnmatch($match,$file)) {
-               if ((is_dir("$path/$file"))||(!($flags&GLOB_ONLYDIR))) {
-                   if ($flags&GLOB_MARK) $file.='/';
-                   $glob[]=$file;
+function safe_glob($pattern, $flags = 0) {
+   $split = explode('/', $pattern);
+   $match = array_pop($split);
+   $path = implode('/', $split);
+   if (($dir = opendir($path)) !== false) {
+       $glob = array();
+       while (($file = readdir($dir)) !== false) {
+           if (fnmatch($match, $file)) {
+               if ((is_dir("$path/$file")) || (!($flags&GLOB_ONLYDIR))) {
+                   if ($flags&GLOB_MARK) $file .= '/';
+                   $glob[] = $file;
                }
            }
        }
@@ -394,97 +397,101 @@ function safe_glob($pattern, $flags=0) {
 //17-Jul-2006 10:12
 //A better "fnmatch" alternative for windows that converts a fnmatch pattern into a preg one. It should work on PHP >= 4.0.0
 if (!function_exists('fnmatch')) {
+
+   /**
+    * @param string $string
+    */
    function fnmatch($pattern, $string) {
-       return preg_match('/^' . strtr(addcslashes($pattern, '\\.+^$(){}=!<>|'), array('*' => '.*', '?' => '.?')) . '$/i', $string);
+       return preg_match('/^'.strtr(addcslashes($pattern, '\\.+^$(){}=!<>|'), array('*' => '.*', '?' => '.?')).'$/i', $string);
    }
 }
 
 /**
 * Fonction pour le xml
 */
-function affiche_liste($sortby,$current_uni){
+function affiche_liste($sortby, $current_uni) {
 	global $Trades;
-	switch ($sortby){
+	switch ($sortby) {
 		case "offermetal":
-			$orderby="offer_metal desc";
+			$orderby = "offer_metal desc";
 			break;
 		case "offercrystal":
-			$orderby="offer_crystal desc";
+			$orderby = "offer_crystal desc";
 			break;
 		case "offerdeut":
-			$orderby="offer_deuterium desc";
+			$orderby = "offer_deuterium desc";
 			break;
 		case "wantmetal":
-			$orderby="want_metal desc";
+			$orderby = "want_metal desc";
 			break;
 		case "wantcrystal":
-			$orderby="want_crystal desc";
+			$orderby = "want_crystal desc";
 			break;
 		case "wantdeut":
-			$orderby="want_deuterium desc";
+			$orderby = "want_deuterium desc";
 			break;
 		case "player":
-			$orderby="username desc";
+			$orderby = "username desc";
 			break;
 		default:
-			$orderby="creation_date desc";
+			$orderby = "creation_date desc";
 			break;
 	}
 
 	echo "\n		<offers_list>\n";
-	echo "			".$Trades->trades_array_xml($current_uni["id"],$orderby,false);
+	echo "			".$Trades->trades_array_xml($current_uni["id"], $orderby, false);
 	echo "		</offers_list>\n";
 }
 
 /*
 *Enregistreement des données générales du market
 */
-function admin_config_set () {
+function admin_config_set() {
 	global $db;
 	global $pub_member_auto_activ, $pub_users_auth_type, $pub_users_adr_auth_db, $pub_users_auth_db, $pub_users_auth_dbuser, $pub_users_auth_dbpasswor, $pub_users_auth_table,
 		$pub_users_inscription_ur, $pub_mail_nom_expediteur, $pub_mail_expediteur, $pub_mail_object, $pub_mail_message, $pub_servername, $pub_skin, $pub_logo_server, $pub_menuprive, $pub_menulogout, $pub_menuautre,
 		$pub_menuforum, $pub_nomforum, $pub_adresseforum, $pub_home, $pub_market_read_access, $pub_market_write_access, $pub_market_password;
 	
-  	if ($pub_users_auth_type == "" || $pub_skin == "" || $pub_servername == ""){
+  	if ($pub_users_auth_type == "" || $pub_skin == "" || $pub_servername == "") {
   		redirection("index.php?action=manque_info&goto=admin");
   	}
 	
 	$pub_users_active = (is_null($pub_member_auto_activ)) ? "0" : "1";
 
 	$queries = array();
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_auth_type."' WHERE name='users_auth_type' LIMIT 1;" ;
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_adr_auth_db."' WHERE name='users_adr_auth_db' LIMIT 1;" ;
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_auth_db."' WHERE name='users_auth_db' LIMIT 1;" ;
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_auth_dbuser."' WHERE name='users_auth_dbuser' LIMIT 1;" ;
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_auth_dbpasswor."' WHERE name='users_auth_dbpasswor' LIMIT 1;" ;
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_auth_table."' WHERE name='users_auth_table' LIMIT 1;" ;
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_inscription_ur."' WHERE name='users_inscription_ur' LIMIT 1;" ;
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_auth_type."' WHERE name='users_auth_type' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_adr_auth_db."' WHERE name='users_adr_auth_db' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_auth_db."' WHERE name='users_auth_db' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_auth_dbuser."' WHERE name='users_auth_dbuser' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_auth_dbpasswor."' WHERE name='users_auth_dbpasswor' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_auth_table."' WHERE name='users_auth_table' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_inscription_ur."' WHERE name='users_inscription_ur' LIMIT 1;";
 
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_mail_nom_expediteur."' WHERE name='mail_nom_expediteur' LIMIT 1;" ;
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_mail_expediteur."' WHERE name='mail_expediteur' LIMIT 1;" ;
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_mail_object."' WHERE name='mail_object' LIMIT 1;" ;
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_mail_message."' WHERE name='mail_message' LIMIT 1;" ;
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_mail_nom_expediteur."' WHERE name='mail_nom_expediteur' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_mail_expediteur."' WHERE name='mail_expediteur' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_mail_object."' WHERE name='mail_object' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_mail_message."' WHERE name='mail_message' LIMIT 1;";
 
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_servername."' WHERE name='servername' LIMIT 1;" ;
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_skin."' WHERE name='skin' LIMIT 1;" ;
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_logo_server."' WHERE name='logo_server' LIMIT 1;" ;
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_active."' WHERE name='users_active' LIMIT 1;" ;
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_servername."' WHERE name='servername' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_skin."' WHERE name='skin' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_logo_server."' WHERE name='logo_server' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_active."' WHERE name='users_active' LIMIT 1;";
 
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_menuprive."' WHERE name='menuprive' LIMIT 1;" ;
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_menulogout."' WHERE name='menulogout' LIMIT 1;" ;
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_menuautre."' WHERE name='menuautre' LIMIT 1;" ;;
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_menuforum."' WHERE name='menuforum' LIMIT 1;" ;
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_menuprive."' WHERE name='menuprive' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_menulogout."' WHERE name='menulogout' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_menuautre."' WHERE name='menuautre' LIMIT 1;"; ;
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_menuforum."' WHERE name='menuforum' LIMIT 1;";
 
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_nomforum."' WHERE name='nomforum' LIMIT 1;" ;
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_adresseforum."' WHERE name='adresseforum' LIMIT 1;" ;
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_nomforum."' WHERE name='nomforum' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_adresseforum."' WHERE name='adresseforum' LIMIT 1;";
 
-	$queries[] = "UPDATE ".TABLE_INFOS." SET value='".$pub_home."' WHERE name='home' LIMIT 100000;" ;
+	$queries[] = "UPDATE ".TABLE_INFOS." SET value='".$pub_home."' WHERE name='home' LIMIT 100000;";
 
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_market_read_access."' WHERE name='market_read_access' LIMIT 1;" ;
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_market_write_access."' WHERE name='market_write_access' LIMIT 1;" ;
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_market_password."' WHERE name='market_password' LIMIT 1;" ;
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_market_read_access."' WHERE name='market_read_access' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_market_write_access."' WHERE name='market_write_access' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_market_password."' WHERE name='market_password' LIMIT 1;";
 
-	foreach($queries as $query){
+	foreach ($queries as $query) {
 		$db->sql_query($query);
 		
 	}
@@ -495,24 +502,24 @@ function admin_config_set () {
 /*
 *Enregistrement des données général du market
 */
-function admin_market_set () {
+function admin_market_set() {
 	global $db;
 	global $pub_max_trade_delay_hours, $pub_max_trade_by_univers, $pub_tauxmetal, $pub_tauxcristal, $pub_tauxdeuterium, $pub_view_trade;
 	
 	//Conversion en heures
 	$pub_max_trade_delay_seco = ($pub_max_trade_delay_hours)*60*60;
 			
-	$queries=array();
-	$queries[]="UPDATE ".TABLE_CONFIG." SET value='".$pub_max_trade_by_univers."' WHERE name='max_trade_by_univers' LIMIT 1;" ;
-	$queries[]="UPDATE ".TABLE_CONFIG." SET value='".$pub_max_trade_delay_seco."' WHERE name='max_trade_delay_seco' LIMIT 1;" ;
+	$queries = array();
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_max_trade_by_univers."' WHERE name='max_trade_by_univers' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_max_trade_delay_seco."' WHERE name='max_trade_delay_seco' LIMIT 1;";
 
-	$queries[]="UPDATE ".TABLE_CONFIG." SET value='".$pub_tauxmetal."' WHERE name='tauxmetal' LIMIT 1;" ;
-	$queries[]="UPDATE ".TABLE_CONFIG." SET value='".$pub_tauxcristal."' WHERE name='tauxcristal' LIMIT 1;" ;
-	$queries[]="UPDATE ".TABLE_CONFIG." SET value='".$pub_tauxdeuterium."' WHERE name='tauxdeuterium' LIMIT 1;" ;
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_tauxmetal."' WHERE name='tauxmetal' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_tauxcristal."' WHERE name='tauxcristal' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_tauxdeuterium."' WHERE name='tauxdeuterium' LIMIT 1;";
 
-	$queries[]="UPDATE ".TABLE_CONFIG." SET value='".$pub_view_trade."' WHERE name='view_trade' LIMIT 1;" ;
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_view_trade."' WHERE name='view_trade' LIMIT 1;";
 
-	foreach($queries as $query)
+	foreach ($queries as $query)
 	{
 		$result = $db->sql_query($query);
 	}
@@ -523,25 +530,25 @@ function admin_market_set () {
 /*
 *Création d'offres par le module market
 */
-function market_create(){
-	$user=array();
+function market_create() {
+	$user = array();
 	global $db, $server_config, $user_data;
 	global $pub_name, $pub_mdp, $pub_om, $pub_oc, $pub_od, $pub_dm, $pub_dc, $pub_dd, $pub_duree, $pub_note, $pub_id,
 		$pub_og1, $pub_og2, $pub_og3, $pub_og4, $pub_og5, $pub_og6, $pub_og7, $pub_og8, $pub_og9,
 		$pub_dg1, $pub_dg2, $pub_dg3, $pub_dg4, $pub_dg5, $pub_dg6, $pub_dg7, $pub_dg8, $pub_dg9;
 			
-	$sql="SELECT id,is_active FROM ".TABLE_USER." WHERE name like '".mysql_real_escape_string($pub_name)."'";
+	$sql = "SELECT id,is_active FROM ".TABLE_USER." WHERE name like '".mysql_real_escape_string($pub_name)."'";
 	$db->sql_query($sql);
 
 	// L'utilisateur existe pas
-	if (!(list($id,$is_active)=$db->sql_fetch_row())){
+	if (!(list($id, $is_active) = $db->sql_fetch_row())) {
 		return false;
 	}
 
-	if ($is_active == 1){
-		$sql="SELECT * FROM ".TABLE_USER." WHERE id = '".$id."'";	
+	if ($is_active == 1) {
+		$sql = "SELECT * FROM ".TABLE_USER." WHERE id = '".$id."'";	
 		$db->sql_query($sql);
-		$user=$db->sql_fetch_assoc();
+		$user = $db->sql_fetch_assoc();
 		if ($user["password"] != $pub_mdp) 
 			return false;
 	}
@@ -551,7 +558,7 @@ function market_create(){
 	$user_data = $user;
 	return $user_data;
 	
-	$Trades->insert_new( $user_data["id"],$pub_id,
+	$Trades->insert_new($user_data["id"], $pub_id,
 									intval($pub_om),
 									intval($pub_oc),
 									intval($pub_od),

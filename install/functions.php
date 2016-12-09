@@ -9,21 +9,21 @@ function error_sql($message) {
 function installation_db($sgbd_server, $sgbd_dbname, $sgbd_username, $sgbd_password, $sgbd_tableprefix, $admin_username, $admin_password, $admin_password2)
 {
 	global $version;
-	$db = new sql_db ($sgbd_server, $sgbd_username, $sgbd_password, $sgbd_dbname);
+	$db = new sql_db($sgbd_server, $sgbd_username, $sgbd_password, $sgbd_dbname);
 	
 	if (!$db->db_connect_id)
 	 	error_sql('Impossible de se connecter &agrave; la base de donn&eacute;es');
 	
-	$admin_username = mysql_real_escape_string ($admin_username);
+	$admin_username = mysql_real_escape_string($admin_username);
 	$admin_password = md5($admin_password);
-	$time = time ();
+	$time = time();
 	
 	// Cr&eacute;ation de la structure de la base de donn&eacute;es
 	
-	$sql_query = fread (fopen ('schemas/database.sql', 'r'), filesize ('schemas/database.sql')) or die ('<h1>Le script SQL d\'installation est introuvable !</h1>');
-	$sql_query = preg_replace ("#market_#", $sgbd_tableprefix, $sql_query);
+	$sql_query = fread(fopen('schemas/database.sql', 'r'), filesize('schemas/database.sql')) or die ('<h1>Le script SQL d\'installation est introuvable !</h1>');
+	$sql_query = preg_replace("#market_#", $sgbd_tableprefix, $sql_query);
 	
-	$sql_query = explode (';', $sql_query);
+	$sql_query = explode(';', $sql_query);
 	
 	$sql_query[]  = "INSERT INTO ".$sgbd_tableprefix."user (`name`, `password`, `regdate`, `lastvisit`, `countconnect`, `account_type`, `is_admin`, `is_moderator`, `is_active`, `alert_mail`, `skin`)  VALUES ('$admin_username', '$admin_password', '$time', '$time', '1', 'internal', '1', '1', '1', '1', 'skin/')";
 
@@ -42,11 +42,11 @@ function installation_db($sgbd_server, $sgbd_dbname, $sgbd_username, $sgbd_passw
 			if (!($result = $db->sql_query($request, false, false)))
 			{
 				$error = $db->sql_error($result);
-				error_sql ($error['message']);
+				error_sql($error['message']);
 			}
 		}
 	}
-	generate_id ($sgbd_server, $sgbd_dbname, $sgbd_username, $sgbd_password, $sgbd_tableprefix);
+	generate_id($sgbd_server, $sgbd_dbname, $sgbd_username, $sgbd_password, $sgbd_tableprefix);
 }
 
 function generate_id($sgbd_server, $sgbd_dbname, $sgbd_username, $sgbd_password, $sgbd_tableprefix) {

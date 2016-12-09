@@ -121,10 +121,10 @@ $member_activ_auto = ($server_config["users_active"]) == 1 ? "checked" : "";
 				<th width="50%">Type Authentification:</th>
 				<th>
 					<select name="users_auth_type">
-						<option value="internal" <?php if ($server_config["users_auth_type"]=="internal"){echo " SELECTED";} ?>>Internal</option>
-						<option value="punbb" <?php if ($server_config["users_auth_type"]=="punbb"){echo " SELECTED";} ?>>PunBB</option>
-						<option value="smf" <?php if ($server_config["users_auth_type"]=="smf"){echo " SELECTED";} ?>>SMF</option>
-						<option value="phpbb2" <?php if ($server_config["users_auth_type"]=="phpbb2"){echo " SELECTED";} ?>>PHPBB2</option>
+						<option value="internal" <?php if ($server_config["users_auth_type"] == "internal") {echo " SELECTED"; } ?>>Internal</option>
+						<option value="punbb" <?php if ($server_config["users_auth_type"] == "punbb") {echo " SELECTED"; } ?>>PunBB</option>
+						<option value="smf" <?php if ($server_config["users_auth_type"] == "smf") {echo " SELECTED"; } ?>>SMF</option>
+						<option value="phpbb2" <?php if ($server_config["users_auth_type"] == "phpbb2") {echo " SELECTED"; } ?>>PHPBB2</option>
 					</select>
 				</th>
 			</tr>
@@ -161,10 +161,10 @@ $member_activ_auto = ($server_config["users_active"]) == 1 ? "checked" : "";
 			<th width="50%">Lecture des offres:</th>
 				<th>
 						<select name="market_read_access">
-							<option value="0" <?php if ($server_config["market_read_access"]=="0"){echo " SELECTED";} ?>>0 - Public</option>
-							<option value="1" <?php if ($server_config["market_read_access"]=="1"){echo " SELECTED";} ?>>1 - Mot de passe</option>
-							<option value="2" <?php if ($server_config["market_read_access"]=="2"){echo " SELECTED";} ?>>2 - URI</option>
-							<option value="3" <?php if ($server_config["market_read_access"]=="3"){echo " SELECTED";} ?>>3 - URI + Mot de passe</option>
+							<option value="0" <?php if ($server_config["market_read_access"] == "0") {echo " SELECTED"; } ?>>0 - Public</option>
+							<option value="1" <?php if ($server_config["market_read_access"] == "1") {echo " SELECTED"; } ?>>1 - Mot de passe</option>
+							<option value="2" <?php if ($server_config["market_read_access"] == "2") {echo " SELECTED"; } ?>>2 - URI</option>
+							<option value="3" <?php if ($server_config["market_read_access"] == "3") {echo " SELECTED"; } ?>>3 - URI + Mot de passe</option>
 						</select>
 					</th>
 				</tr>
@@ -172,10 +172,10 @@ $member_activ_auto = ($server_config["users_active"]) == 1 ? "checked" : "";
 					<th>Cr&eacute;ation d'offre:</th>
 					<th>
 						<select name="market_write_access">
-							<option value="0" <?php if ($server_config["market_write_access"]=="0"){echo " SELECTED";} ?>>0 - Public</option>
-							<option value="1" <?php if ($server_config["market_write_access"]=="1"){echo " SELECTED";} ?>>1 - Mot de passe</option>
-							<option value="2" <?php if ($server_config["market_write_access"]=="2"){echo " SELECTED";} ?>>2 - URI</option>
-							<option value="3" <?php if ($server_config["market_write_access"]=="3"){echo " SELECTED";} ?>>3 - URI + Mot de passe</option>
+							<option value="0" <?php if ($server_config["market_write_access"] == "0") {echo " SELECTED"; } ?>>0 - Public</option>
+							<option value="1" <?php if ($server_config["market_write_access"] == "1") {echo " SELECTED"; } ?>>1 - Mot de passe</option>
+							<option value="2" <?php if ($server_config["market_write_access"] == "2") {echo " SELECTED"; } ?>>2 - URI</option>
+							<option value="3" <?php if ($server_config["market_write_access"] == "3") {echo " SELECTED"; } ?>>3 - URI + Mot de passe</option>
 						</select>
 					</th>
 				</tr>
@@ -208,8 +208,8 @@ $member_activ_auto = ($server_config["users_active"]) == 1 ? "checked" : "";
 			</tr>
 <?php
 			$query = "SELECT `id`, `url`, `read_access`, `write_access`, `active`, `description` from ".TABLE_OGSPY_AUTH.";";
-			$result	=	$db->sql_query($query);
-			while (list( $id, $url, $read_access, $write_access, $active, $description) = $db->sql_fetch_row($result)) {
+			$result = $db->sql_query($query);
+			while (list($id, $url, $read_access, $write_access, $active, $description) = $db->sql_fetch_row($result)) {
 				echo "<tr><th>$url</th><th>$description</th><th>$read_access</th><th>$write_access</th><th>$active</th></tr>";
 			}
 ?>

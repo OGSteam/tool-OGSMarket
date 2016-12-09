@@ -9,7 +9,7 @@
 
 	define('IN_OGSMARKET', true);
 	define('INSTALL_IN_PROGRESS', true);
-	if(isset($_POST['upgrade']) && !defined("UPGRADE_IN_PROGRESS")) define("UPGRADE_IN_PROGRESS", true);
+	if (isset($_POST['upgrade']) && !defined("UPGRADE_IN_PROGRESS")) define("UPGRADE_IN_PROGRESS", true);
   
 	require_once('../common.php');
 	require_once('functions.php');

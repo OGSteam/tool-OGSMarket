@@ -13,7 +13,7 @@ require_once("views/page_header.php");
 // DÈfinition du ouvert
 if (isset($pub_ouvert)) $ouvert = $pub_ouvert;
 else $ouvert = "0";
-if ($ouvert == "1"){
+if ($ouvert == "1") {
 	//dÈfinition des variables
 	$metal = $pub_metal;
 	$cristal = $pub_cristal;
@@ -29,32 +29,32 @@ if ($ouvert == "1"){
 	if ($base == "p") {
 // Calcul par poucentage
 		//message d'erreures
-		$total_pourc = ($combienm)+($combienc)+($combiend);
+		$total_pourc = ($combienm) + ($combienc) + ($combiend);
 		if ($total_pourc != "100") {
 			echo "Le total des pourcentages doit donner 100%";
 			$error = "1";
 		}
-		elseif ($metal == "0" && $cristal == "0" && $deuterium == "0"){
+		elseif ($metal == "0" && $cristal == "0" && $deuterium == "0") {
 			echo "Vous devez mettre au moins une ressource que vous souhaitez &eacute;changer";
 			$error = "1";
 		}
-		else{
+		else {
 		//On fait les totaux des taux
-			if($tauxm != "0" && $tauxc != "0" && $tauxd != "0")
-			$Valleur = ($metal)/($tauxm)+($cristal)/($tauxc)+($deuterium)/($tauxd);
-			else $Valleur=0;
+			if ($tauxm != "0" && $tauxc != "0" && $tauxd != "0")
+			$Valleur = ($metal)/($tauxm) + ($cristal)/($tauxc) + ($deuterium)/($tauxd);
+			else $Valleur = 0;
 		//on calcule
-			if ($tauxm != "0" && $tauxm != "" && $combienm != "0" && $combienm != ""){
-				$pourcM=($combienm)/100;
-				$TotalM=($Valleur)*($pourcM)*($tauxm);
+			if ($tauxm != "0" && $tauxm != "" && $combienm != "0" && $combienm != "") {
+				$pourcM = ($combienm)/100;
+				$TotalM = ($Valleur)*($pourcM)*($tauxm);
 			}
-			if ($tauxc != "0" && $tauxc != ""  && $combienc != "0"  && $combienc != ""){
-				$pourcC=($combienc)/100;
-				$TotalC=($Valleur)*($pourcC)*($tauxc);
+			if ($tauxc != "0" && $tauxc != "" && $combienc != "0" && $combienc != "") {
+				$pourcC = ($combienc)/100;
+				$TotalC = ($Valleur)*($pourcC)*($tauxc);
 			}
-			if ($tauxd != "0" && $combiend!="0" && $tauxd != "" && $combiend != ""){
-				$pourcD=($combiend)/100;
-				$TotalD=($Valleur)*($pourcD)*($tauxd);
+			if ($tauxd != "0" && $combiend != "0" && $tauxd != "" && $combiend != "") {
+				$pourcD = ($combiend)/100;
+				$TotalD = ($Valleur)*($pourcD)*($tauxd);
 			}
 		}
 	}
@@ -62,11 +62,11 @@ if ($ouvert == "1"){
 	if ($base == "q") {
 //ou quantité
 		//message d'erreur
-		if ($metal == "0" && $cristal == "0" && $deuterium == "0"){
+		if ($metal == "0" && $cristal == "0" && $deuterium == "0") {
 			echo "Vous devez mettre au moins une ressource que vous souhaitez échanger";
 			$error = "1";
 		}
-		else{
+		else {
 		//On transpose les valeurs
 			$TotalM = $combienm;
 			$TotalC = $combienc;
@@ -88,7 +88,7 @@ if ($ouvert == "1"){
 		</td>
 	</tr>
 </table>
-<?php if ($value == "Creer"){ ?>
+<?php if ($value == "Creer") { ?>
 <form action="index.php?action=newtrade" method="post">
 	<input type="hidden" name="ouvert" value="1"/> 
 <table width="60%">
@@ -130,7 +130,7 @@ if ($ouvert == "1"){
 				<tr>
 					<td class="c">M&eacute;tal</td>
 					<td class="l">
-						<input type="text" name="tauxm" value="<?php echo (isset($tauxm) ? $tauxm :  $server_config["tauxmetal"]); ?>" />
+						<input type="text" name="tauxm" value="<?php echo (isset($tauxm) ? $tauxm : $server_config["tauxmetal"]); ?>" />
 					</td>
 				</tr>
 				<tr>	
@@ -190,7 +190,7 @@ if ($ouvert == "1"){
 //tableaux des rÈsultats 
 
 //on doit tout d'abord s'assurer que le formulaire est ouvert
-if ($ouvert == 1 && !isset($error)){
+if ($ouvert == 1 && !isset($error)) {
 	//Avant de poster les variables ils vous faut dÈfinir les variable non dÈfini
 	if (!isset($metal)) $metal = 0;
 	if (!isset($cristal)) $cristal = 0;
@@ -206,7 +206,7 @@ if ($ouvert == 1 && !isset($error)){
 		<td colspan="3" class="c">Calcul de votre Offre - Vous pouvez encore modifier votre offre &agrave; votre convenance.</td>
 	</tr>
 	<tr>
-		<th><?php echo (rapport(round($metal),round($cristal),round($deuterium),round($TotalM),round($TotalC),round($TotalD))); ?></th>
+		<th><?php echo (rapport(round($metal), round($cristal), round($deuterium), round($TotalM), round($TotalC), round($TotalD))); ?></th>
 		<th>votre offre (K)</th>
 		<th>votre demande (K)</th>
 	</tr>
@@ -329,11 +329,11 @@ elseif ($value == "Modifier")
 	</tr>
 	<tr>
 		<td class='c'>Cr&eacute;ation</td>
-		<td align="center" colspan='2'><?php echo(strftime("%a %d %b %H:%M:%S",$trade["creation_date"])); ?></td>				   
+		<td align="center" colspan='2'><?php echo(strftime("%a %d %b %H:%M:%S", $trade["creation_date"])); ?></td>				   
 	</tr>
 	<tr>
 		<td class='c'>Expiration</td>
-		<td align="center" colspan='2'><?php echo(strftime("%a %d %b %H:%M:%S",$trade["expiration_date"])); ?></td>
+		<td align="center" colspan='2'><?php echo(strftime("%a %d %b %H:%M:%S", $trade["expiration_date"])); ?></td>
 	</tr>
 	<tr>
 		<td class="c">Prolonger</td>
@@ -342,7 +342,7 @@ elseif ($value == "Modifier")
 	$quartemps = (intval($trade["expiration_date"]) - intval($trade["creation_date"]))/4;
 	$now = time();
 		if ($now < intval($trade["expiration_date"]) - $quartemps)
-			echo "\t<td class=\"l\" colspan=\"2\"><center><font color=\"lime\">A partir de ".strftime("%a %d %b %H:%M:%S",($trade["expiration_date"] - $quartemps))."</font></centrer></td>\n";
+			echo "\t<td class=\"l\" colspan=\"2\"><center><font color=\"lime\">A partir de ".strftime("%a %d %b %H:%M:%S", ($trade["expiration_date"] - $quartemps))."</font></centrer></td>\n";
 		else 
 			echo "\t<td align=\"center\" colspan=\"2\"><input type='text' size='5' name='expiration_hours' value='0'>h (MAXI ".intval($server_config["max_trade_delay_seco"]/(60*60))." heures)</td>\n";
 ?> 

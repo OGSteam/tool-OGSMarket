@@ -37,18 +37,18 @@ if (!defined('IN_OGSMARKET')) {
 		{
 			$id = $universe['id'];
 		
-			echo "\n" .'<tr>';
-			echo "\n\t" .'<th>'. $id .'</th>';
-			echo "\n\t" .'<th id="name_'. $id .'">'. $universe['name'] .'</th>';
-			echo "\n\t" .'<th id="info_'. $id .'">'. $universe['info']. '</th>';
-			echo "\n\t" .'<th id="g_'. $id .'">'. $universe['g'] .'</th>';
-			echo "\n\t" .'<th><input type="image" src="images/help_2.png" title="Modifier le march&eacute; : '. $universe['name'] .'" id="edit_market_'. $id .'" /></th>';
-			echo "\n\t" .'<th>';
-			echo "\n\t\t" .'<form method="post" action="index.php?action=admin_delete_univers&universeid='. $id .'" onsubmit="return confirm(\'Êtes-vous s&ucirc;r de vouloir supprimer '. $universe['name'] .'\');">';
-			echo "\n\t\t\t" .'<input type="image" src="images/drop.png" title="Supprimer le march&eacute; : '. $universe['name'] .'" />';
-			echo "\n\t\t" .'</form>';
-			echo "\n\t" .'</th>';
-			echo "\n" .'</tr>';
+			echo "\n".'<tr>';
+			echo "\n\t".'<th>'.$id.'</th>';
+			echo "\n\t".'<th id="name_'.$id.'">'.$universe['name'].'</th>';
+			echo "\n\t".'<th id="info_'.$id.'">'.$universe['info'].'</th>';
+			echo "\n\t".'<th id="g_'.$id.'">'.$universe['g'].'</th>';
+			echo "\n\t".'<th><input type="image" src="images/help_2.png" title="Modifier le march&eacute; : '.$universe['name'].'" id="edit_market_'.$id.'" /></th>';
+			echo "\n\t".'<th>';
+			echo "\n\t\t".'<form method="post" action="index.php?action=admin_delete_univers&universeid='.$id.'" onsubmit="return confirm(\'Êtes-vous s&ucirc;r de vouloir supprimer '.$universe['name'].'\');">';
+			echo "\n\t\t\t".'<input type="image" src="images/drop.png" title="Supprimer le march&eacute; : '.$universe['name'].'" />';
+			echo "\n\t\t".'</form>';
+			echo "\n\t".'</th>';
+			echo "\n".'</tr>';
 		}
 	?>
 </table>

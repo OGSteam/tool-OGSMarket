@@ -10,9 +10,9 @@ if (!defined('IN_OGSMARKET')) {
 	die("Hacking attempt");
 }
 
-if ($Users->login($pub_name,$pub_password)){
+if ($Users->login($pub_name, $pub_password)) {
 	redirection("index.php");
-}else{
+} else {
 unset($_SESSION["username"]);
 unset($_SESSION["userpass"]);
 

@@ -35,7 +35,7 @@ switch ($pub_action) {
 
 	case "newaccount":
 		$result = $Users->newaccount($pub_password, $pub_name, $pub_repassword, $pub_email, $pub_email_msn, $pub_pm_link, $pub_irc_nick, $pub_note, $pub_active);
-		if($result !== true){
+		if ($result !== true) {
 			$pub_info = $result;
 			include("views/inscription.php");
 		} else {
@@ -46,7 +46,7 @@ switch ($pub_action) {
 		break;
 
 	case "login":
-		if ($Users->login($pub_name,$pub_password)){
+		if ($Users->login($pub_name, $pub_password)) {
 			redirection("index.php");
 		} else {
 			unset($_SESSION["username"]);
@@ -70,7 +70,7 @@ switch ($pub_action) {
 	break;
 	
 	case "change_uni":
-		if(isset($pub_uni))
+		if (isset($pub_uni))
 			$Universes->init_current_uni();
 		redirection("index.php?action=listtrade");
 	break;
@@ -100,7 +100,7 @@ switch ($pub_action) {
 		break;
 
 	case "pingxml":
-		$sub= "ping";
+		$sub = "ping";
 		require_once("views/xml.php");
 		break;
 
@@ -173,19 +173,19 @@ switch ($pub_action) {
 		break;
 	
 	case "admin_new_univers_execute":
-		$message = $Universes->insert_new( $pub_info, $pub_name, $pub_g);
+		$message = $Universes->insert_new($pub_info, $pub_name, $pub_g);
 		$retour = "index.php?action=admin&subaction=uni";
 		require_once("views/message.php");
 		break;
 		
 	case "admin_edit_univers_execute":
-		$message = $Universes->edit_universe( $pub_id, $pub_info, $pub_name, $pub_g );
+		$message = $Universes->edit_universe($pub_id, $pub_info, $pub_name, $pub_g);
 		$retour = "index.php?action=admin&subaction=uni";
 		require_once("views/message.php");
 		break;
 
 	case "admin_delete_univers":
-		$message = $Universes->delete_universe( $pub_universeid );
+		$message = $Universes->delete_universe($pub_universeid);
 		$retour = "index.php?action=admin&subaction=uni";
 		require_once("views/message.php");
 		break;
@@ -246,7 +246,7 @@ switch ($pub_action) {
 	
 	case "manque_info" :
 		$message = "Il manque des informations!";
-		if($pub_goto != "") $retour = "index.php?action=".$pub_goto;
+		if ($pub_goto != "") $retour = "index.php?action=".$pub_goto;
 		require_once("views/message.php");
 		break;
 	

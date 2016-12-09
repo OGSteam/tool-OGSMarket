@@ -22,7 +22,7 @@ require_once("views/page_header.php");
 
 <table width="400">
 <?php 
-	if(isset($pub_info)) echo "<tr><th class='c' colspan='2'><h2>".$pub_info."</h2></th></tr>";
+	if (isset($pub_info)) echo "<tr><th class='c' colspan='2'><h2>".$pub_info."</h2></th></tr>";
 ?>
 <tr><td class="c" colspan="2" align="center">Param&egrave;tres de connexion</td></tr>
 <tr><th>login*</th><th><input type="text" name="name" value="<?php echo $pub_name; ?>" /></tr>

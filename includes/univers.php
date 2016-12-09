@@ -6,7 +6,7 @@
 *	created		: 	05/06/2006
 ***************************************************************************/
 
-if (!defined('IN_OGSMARKET')){
+if (!defined('IN_OGSMARKET')) {
 	exit('Hacking attempt');
 }
 
@@ -19,7 +19,7 @@ class cUniverses
 	{
 		global $db;
 		
-		$result = $db->sql_query('SELECT COUNT(*) FROM '. TABLE_UNIVERS);
+		$result = $db->sql_query('SELECT COUNT(*) FROM '.TABLE_UNIVERS);
 		$rowcount = $db->sql_fetch_row($result);
 		
 		return $rowcount[0];
@@ -36,15 +36,15 @@ class cUniverses
 			return 'Il manque des informations !';
 		
 		// L'univers existe deja
-		$result = $db->sql_query('SELECT COUNT(*) FROM '. TABLE_UNIVERS .' WHERE name = \''. mysql_real_escape_string($name) .'\'');
+		$result = $db->sql_query('SELECT COUNT(*) FROM '.TABLE_UNIVERS.' WHERE name = \''.mysql_real_escape_string($name).'\'');
 		$rowcount = $db->sql_fetch_row($result);
 		
 		if ($rowcount[0] != 0)
 			return 'Cet univers existe d&eacute;j&agrave;';
 		
 		// Insertion dans la BDD
-		$sql =	'INSERT INTO '. TABLE_UNIVERS .'
-				VALUES(\'\', \''. mysql_real_escape_string($info) .'\', \''. mysql_real_escape_string($name) .'\', \''. intval($g) .'\')';
+		$sql = 'INSERT INTO '.TABLE_UNIVERS.'
+				VALUES(\'\', \''. mysql_real_escape_string($info).'\', \''.mysql_real_escape_string($name).'\', \''.intval($g).'\')';
 		
 		// Renvoie des resultats
 		if ($db->sql_query($sql) != false)
@@ -61,7 +61,7 @@ class cUniverses
 		{
 			$error = $db->sql_error();
 			
-			return 'Erreur MySQL ('. $error['code'] .') : "'. $error['message'] .'".';
+			return 'Erreur MySQL ('.$error['code'].') : "'.$error['message'].'".';
 		}
 	}
 	
@@ -72,7 +72,7 @@ class cUniverses
 		global $db;
 		
 		$this->Universes = array();
-		$result = $db->sql_query('SELECT * FROM '. TABLE_UNIVERS .' ORDER BY name ASC');
+		$result = $db->sql_query('SELECT * FROM '.TABLE_UNIVERS.' ORDER BY name ASC');
 		
 		while (list($id, $info, $name, $g) = $db->sql_fetch_row($result))
 		{
@@ -92,7 +92,7 @@ class cUniverses
 	{
 		global $db;
 		
-		$result = $db->sql_query('SELECT * FROM '. TABLE_UNIVERS .' WHERE id = \''. intval($universeid) .'\'');
+		$result = $db->sql_query('SELECT * FROM '.TABLE_UNIVERS.' WHERE id = \''.intval($universeid).'\'');
 		
 		if (list($id, $info, $name, $g) = $db->sql_fetch_row($result))
 		{
@@ -114,7 +114,7 @@ class cUniverses
 	{
 		global $db;
 		
-		$sql = 'DELETE FROM '. TABLE_UNIVERS .' WHERE id = \''. intval($universeid) .'\'';
+		$sql = 'DELETE FROM '.TABLE_UNIVERS.' WHERE id = \''.intval($universeid).'\'';
 		
 		if ($db->sql_query($sql) != false)
 			return 'L\'univers a bien &eacute;t&eacute; supprim&eacute;.';
@@ -128,12 +128,12 @@ class cUniverses
 	{
 		global $db;
 		
-		$sql = 'UPDATE '. TABLE_UNIVERS .' 
+		$sql = 'UPDATE '.TABLE_UNIVERS.' 
 				SET 
-					info = \''. $universeinfo .'\',
-					name = \''. $universename .'\',
-					g = \''. intval($g) .'\'
-				WHERE id = \''. intval($universeid) .'\'';
+					info = \''. $universeinfo.'\',
+					name = \''. $universename.'\',
+					g = \''. intval($g).'\'
+				WHERE id = \''. intval($universeid).'\'';
 		
 		if ($db->sql_query($sql) != false)
 			return 'L\'univers a bien &eacute;t&eacute; modifi&eacute;.';
@@ -145,11 +145,11 @@ class cUniverses
 	// Retourne un univers au format XML
 	public function get_universe_xml($universe)
 	{
-		$univers_xml =	"\n\t" .'<universe>';
-		$univers_xml .=	"\n\t\t" .'<id>'. $universe['id'] .'</id>';
-		$univers_xml .=	"\n\t\t" .'<url>'. $universe['info'] .'</url>';
-		$univers_xml .=	"\n\t\t" .'<name>'. $universe['name'] .'</name>';
-		$univers_xml .=	"\n\t" .'</universe>';
+		$univers_xml = "\n\t".'<universe>';
+		$univers_xml .= "\n\t\t".'<id>'.$universe['id'].'</id>';
+		$univers_xml .= "\n\t\t".'<url>'.$universe['info'].'</url>';
+		$univers_xml .= "\n\t\t".'<name>'.$universe['name'].'</name>';
+		$univers_xml .= "\n\t".'</universe>';
 		
 		return $univers_xml;
 	}
@@ -166,7 +166,7 @@ class cUniverses
 			setcookie('ogsmarket_uni', $pub_uni, $cookie['validate']);
 		}
 		else
-			setcookie('ogsmarket_uni', $pub_uni, time() + 3600 * 24);
+			setcookie('ogsmarket_uni', $pub_uni, time() + 3600*24);
 	}
 }
 // Creation d'un objet cUniverses
