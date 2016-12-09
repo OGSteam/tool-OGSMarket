@@ -26,7 +26,7 @@ $univers = $Universes->universes_array();
 	</tr>
 	<tr>
 		<td align="center">
-			<img src="<?php echo $link_css;?>gfx/ogame-produktion.jpg" />
+			<img src="<?php echo $link_css; ?>gfx/ogame-produktion.jpg" />
 		</td>
 	</tr>
 	<tr>
@@ -37,7 +37,7 @@ $univers = $Universes->universes_array();
 //sélection des univers
 	foreach ($univers as $uni) {
 		echo "\t\t<option value='".$uni["id"]."'";
-		if ($current_uni["id"]==$uni["id"]) echo " selected ";
+		if ($current_uni["id"] == $uni["id"]) echo " selected ";
 		echo ">".$uni["name"]."</option>";
 	}
 ?>
@@ -48,7 +48,7 @@ $univers = $Universes->universes_array();
 	<tr>
 		<td><div align="center"><a href="index.php?action=listtrade">Voir les Offres</a></div></td>
 	</tr>
-<?php if (isset($user_data)){ ?>
+<?php if (isset($user_data)) { ?>
 	<tr>
 		<td>
 			<div align="center"><a href="index.php?action=listtrade&subaction=usertrades">Voir mes Offres</a></div>
@@ -57,7 +57,7 @@ $univers = $Universes->universes_array();
 	<tr>
 		<td>
 			<div align='center'>
-				<?php if($univers == Array()){ ?>
+				<?php if ($univers == Array()) { ?>
 				<blink><font color="red"><b>Paramétrer Univers!</b></font></blink>
 				<?php } else { ?>
 				<a href='index.php?action=newtrade'>Nouvelle Offre</a>
@@ -72,10 +72,10 @@ $univers = $Universes->universes_array();
 	</tr>
 	<tr>
 		<td  class='c' align="center">
-			<?php echo $server_config["menuprive"];?>
+			<?php echo $server_config["menuprive"]; ?>
 		</td>
 	</tr>
-<?php if ($user_data["is_admin"] == 1){ ?>
+<?php if ($user_data["is_admin"] == 1) { ?>
 	<tr>
 		<td>
 			<div align='center'><a href='index.php?action=admin'>Administration</a></div>
@@ -97,7 +97,7 @@ $univers = $Universes->universes_array();
     echo "\t<tr>\n\t<td align='center'><input type='submit' value='Envoyer'></td></tr>\n";
     echo "</form>\n";
 
-    if ($server_config["users_auth_type"]=="internal")
+    if ($server_config["users_auth_type"] == "internal")
 		echo "<tr><td><div align=\"center\"><a href=\"index.php?action=inscription\">Inscription</a></div></td></tr>\n";
     else
 		echo "\t<tr><td><div align=\"center\"><a href=\"".$server_config["users_inscription_ur"]."\" target=\"_blank\">Inscription</a></div></td></tr>\n";
@@ -105,12 +105,12 @@ $univers = $Universes->universes_array();
 ?>
 	<tr>
 		<td class='c' align="center">
-			<?php echo $server_config["menuforum"];?>
+			<?php echo $server_config["menuforum"]; ?>
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<div align='center'><a href=<?php echo $server_config["adresseforum"];?> target="_blank"><?php echo $server_config["nomforum"];?></a></div>
+			<div align='center'><a href=<?php echo $server_config["adresseforum"]; ?> target="_blank"><?php echo $server_config["nomforum"]; ?></a></div>
 		</td>
 	</tr>
 	<tr>
@@ -132,7 +132,7 @@ $univers = $Universes->universes_array();
 <?php if (isset($user_data)) { ?>
 	<tr>
 		<td class='c' align="center">
-			<?php echo $server_config["menulogout"];?>
+			<?php echo $server_config["menulogout"]; ?>
 		</td>
 	</tr>
 	<tr>
@@ -143,7 +143,7 @@ $univers = $Universes->universes_array();
 <?php } ?>
 	<tr>
 		<td class='c' align="center">
-			<?php echo $server_config["menuautre"];?>
+			<?php echo $server_config["menuautre"]; ?>
 		</td>
 	</tr>
 	<tr>
@@ -163,7 +163,7 @@ $univers = $Universes->universes_array();
 	</tr>
 	<tr align="center">
 		<td  class='c'>
-			Online <?php echo "(".count($UserArray).")";?>
+			Online <?php echo "(".count($UserArray).")"; ?>
 		</td>
 	</tr>
 	<tr>
@@ -171,7 +171,7 @@ $univers = $Universes->universes_array();
 <?php
 	if (isset($user_data) && $UserArray) {
 		$i = 0;
-		foreach ($UserArray as $User){
+		foreach ($UserArray as $User) {
 			if ($i == 0) 
 				echo $User["name"];
 			else

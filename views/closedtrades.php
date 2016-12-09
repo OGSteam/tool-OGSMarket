@@ -68,7 +68,7 @@ else
 		</tr>
 
 <?php
-	foreach($Trades->trades_array($action, $action_id, $order) as $trade)
+	foreach ($Trades->trades_array($action, $action_id, $order) as $trade)
 	{
 	  $seller = $Users->get_user($trade["traderid"]);
 	  $buyer  = $Users->get_user($trade["pos_user"]);
@@ -78,8 +78,8 @@ else
 		echo "\t      <td class='k'  rowspan='2' align='center'><img src='".$seller["avatar_link"]."' alt='No avatar' /><br />";
 		echo "\t<a href='index.php?action=profile&amp;id=".$seller["traderid"]."'>".$seller["name"]."</a>\n";
 		echo "</td>\n";
-		echo "\t      <td class='c' style='width: 40%;'><b>Date de cr&eacute;ation: ".strftime("%a %d %b",$trade["creation_date"])." ".strftime("%H:%M:%S",$trade["creation_date"])."</b></td>\n";
-		echo "\t      <td class='c' style='width: 40%;'><b>Date de vente: <font color=\"green\">".strftime("%a %d %b %H:%M:%S",$trade["pos_date"]);
+		echo "\t      <td class='c' style='width: 40%;'><b>Date de cr&eacute;ation: ".strftime("%a %d %b", $trade["creation_date"])." ".strftime("%H:%M:%S", $trade["creation_date"])."</b></td>\n";
+		echo "\t      <td class='c' style='width: 40%;'><b>Date de vente: <font color=\"green\">".strftime("%a %d %b %H:%M:%S", $trade["pos_date"]);
 		echo"</font></b></td>\n";
 		//On affiche l'acheteur à droite
     echo "\t      <td class='k'  rowspan='2' align='center'>Vendeur<img src='".$buyer["avatar_link"]."' alt='No avatar' /><br />";
@@ -89,14 +89,14 @@ else
 		echo "\t<tr>\n";
 		echo "\t<th colspan='2' class='c' style='width: 40%;font-size:normal;'>\n";
 		echo "\t".$trade["username"]." a échangé ";
-			if (intval($trade["offer_metal"])>0) echo number_format($trade["offer_metal"], 0, ',', ' ')." K de M&eacute;tal ";
-			if (intval($trade["offer_crystal"])>0) echo number_format($trade["offer_crystal"], 0, ',', ' ')." K de Cristal ";
-			if (intval($trade["offer_deuterium"])>0) echo number_format($trade["offer_deuterium"], 0, ',', ' ')." K de Deut&eacute;rium ";
-		  echo " contre " ;
-			if (intval($trade["want_metal"])>0) echo " ".number_format($trade["want_metal"], 0, ',', ' ')." K de M&eacute;tal ";
-			if (intval($trade["want_crystal"])>0) echo " ".number_format($trade["want_crystal"], 0, ',', ' ')." K de Crystal ";
-			if (intval($trade["want_deuterium"])>0) echo " ".number_format($trade["want_deuterium"], 0, ',', ' ')." K de Deut ";
-		  echo "(".taux_echange($trade["offer_metal"],$trade["offer_crystal"],$trade["offer_deuterium"],$trade["want_metal"],$trade["want_crystal"],$trade["want_deuterium"]).")</th>";
+			if (intval($trade["offer_metal"]) > 0) echo number_format($trade["offer_metal"], 0, ',', ' ')." K de M&eacute;tal ";
+			if (intval($trade["offer_crystal"]) > 0) echo number_format($trade["offer_crystal"], 0, ',', ' ')." K de Cristal ";
+			if (intval($trade["offer_deuterium"]) > 0) echo number_format($trade["offer_deuterium"], 0, ',', ' ')." K de Deut&eacute;rium ";
+		  echo " contre ";
+			if (intval($trade["want_metal"]) > 0) echo " ".number_format($trade["want_metal"], 0, ',', ' ')." K de M&eacute;tal ";
+			if (intval($trade["want_crystal"]) > 0) echo " ".number_format($trade["want_crystal"], 0, ',', ' ')." K de Crystal ";
+			if (intval($trade["want_deuterium"]) > 0) echo " ".number_format($trade["want_deuterium"], 0, ',', ' ')." K de Deut ";
+		  echo "(".taux_echange($trade["offer_metal"], $trade["offer_crystal"], $trade["offer_deuterium"], $trade["want_metal"], $trade["want_crystal"], $trade["want_deuterium"]).")</th>";
 		echo "\t</tr>\n";
 		echo "\t<tr>\n";
 		echo "\t<th />";

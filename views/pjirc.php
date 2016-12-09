@@ -14,7 +14,7 @@ require_once("views/page_header.php");
 <applet name="applet" codebase="pjirc/" code=IRCApplet.class archive="irc.jar,pixx.jar" width=640 height=400>
 <param name="CABINETS" value="irc.cab,securedirc.cab,pixx.cab">
 
-<param name="nick" value="<?php if (isset($user_data)) echo $user_data["name"];?>">
+<param name="nick" value="<?php if (isset($user_data)) echo $user_data["name"]; ?>">
 <param name="alternatenick" value="OgsmUser???">
 <param name="name" value="Java User">
 <param name="host" value="irc.sorcery.net">

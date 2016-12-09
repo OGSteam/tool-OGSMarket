@@ -16,12 +16,12 @@
 *  @author Kyser
 *  @link http://ogsteam.fr
 */
-if (!defined('IN_OGSMARKET')){
+if (!defined('IN_OGSMARKET')) {
 	die("Hacking attempt");
 }
 
 // PHP5 with register_long_arrays off?
-if (!isset($HTTP_POST_VARS) && isset($_POST)){
+if (!isset($HTTP_POST_VARS) && isset($_POST)) {
     $HTTP_POST_VARS   = $_POST;
     $HTTP_GET_VARS 	  = $_GET;
     $HTTP_SERVER_VARS = $_SERVER;
@@ -30,13 +30,13 @@ if (!isset($HTTP_POST_VARS) && isset($_POST)){
     $HTTP_POST_FILES  = $_FILES;
 
     // _SESSION is the only superglobal which is conditionally set
-    if (isset($_SESSION)){
+    if (isset($_SESSION)) {
         $HTTP_SESSION_VARS = $_SESSION;
     }
 }
 
 //Récupération des paramètres de connexion à la base de données
-if (file_exists("parameters/id.php")){
+if (file_exists("parameters/id.php")) {
 	require_once("parameters/id.php");
 }
 
@@ -58,14 +58,14 @@ require_once("includes/ogamecalc.php");
 
 // Protection - Vérifier l'absence de code HTML dans les GET
 foreach ($_GET as $k => $secvalue) {
-    if ( ! check_getvalue ( $secvalue ) && $k!='message' ) {
+    if (!check_getvalue($secvalue) && $k != 'message') {
         die ("I don't like you...");
     }
 }
 
 // Protection - Vérifier l'absence de code HTML dans les POST
 foreach ($_POST as $secvalue) {
-    if ( ! check_postvalue ( $secvalue ) ) {
+    if (!check_postvalue($secvalue)) {
         Header("Location: index.php");
         die();
     }
@@ -79,7 +79,7 @@ if (!defined("INSTALL_IN_PROGRESS") || defined("UPGRADE_IN_PROGRESS")) {
 	$db = false;
 
 	if (is_array($db_host)) { // Si plusieurs hosts, on prends le premier de la liste qui fonctionne
-		for ($i=0 ; $i<sizeof($db_host) ; $i++) {
+		for ($i = 0; $i < sizeof($db_host); $i++) {
 			$db = new sql_db($db_host[$i], $db_user[$i], $db_password[$i], $db_database[$i]);
 			if ($db->db_connect_id) {
 				break;
@@ -102,11 +102,11 @@ if (!defined("INSTALL_IN_PROGRESS") || defined("UPGRADE_IN_PROGRESS")) {
 	init_serverconfig();
 
 	// Chargement des données stockées en COOKIE & SESSION
-	if(isset($_COOKIE["ogsmarket_session"])){
+	if (isset($_COOKIE["ogsmarket_session"])) {
 		$user_data = $Users->init_user();
 	}
 
-	if(isset($_COOKIE["ogsmarket_uni"])){
+	if (isset($_COOKIE["ogsmarket_uni"])) {
 		$current_uni = $Universes->get_universe($_COOKIE["ogsmarket_uni"]);
 	}
 	else {

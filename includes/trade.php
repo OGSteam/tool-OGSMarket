@@ -13,14 +13,14 @@ if (!defined('IN_OGSMARKET')) {
 //Classe gÈrant les diffÈrents trades
 class cTrades {
 	//Nombre de Trades dans la base de donnÈe pour un univers donnÈ
-	function count($universeid,$include_expired=false) {
+	function count($universeid, $include_expired = false) {
 		global $db;
 
-		$sql="SELECT count(*) FROM ".TABLE_TRADE." WHERE universid=".intval($universeid);
+		$sql = "SELECT count(*) FROM ".TABLE_TRADE." WHERE universid=".intval($universeid);
 		if (!$include_expired) {
-			$sql .=" AND expiration_date>".time();
+			$sql .= " AND expiration_date>".time();
 		}
-		$result=$db->sql_query($sql);
+		$result = $db->sql_query($sql);
 
 		if (list($rowcount) = $db->sql_fetch_row($result)) {
 			return $rowcount;
@@ -32,7 +32,7 @@ class cTrades {
 	function last($universeid) {
 		global $db;
 
-		$sql="select t.*,u.name as username from ".TABLE_TRADE." t LEFT JOIN ".TABLE_USER." u ON u.id=t.traderid "
+		$sql = "select t.*,u.name as username from ".TABLE_TRADE." t LEFT JOIN ".TABLE_USER." u ON u.id=t.traderid "
 			." WHERE t.universid=".intval($universeid)." AND expiration_date>".time()." AND t.`trade_closed` = 0"
 			." ORDER BY t.creation_date desc limit 1";
 		$db->sql_query($sql);
@@ -40,82 +40,82 @@ class cTrades {
 		return $db->sql_fetch_assoc();
 	}
 //Reservation de l'offre	
-	function pos_new($tradeid,$userid){
+	function pos_new($tradeid, $userid) {
 		global $db;
 
-		$now=time();
-		$out="effectué";
+		$now = time();
+		$out = "effectué";
 		$sql = "UPDATE ".TABLE_TRADE." SET `pos_user`=".$userid.", `pos_date`=".$now." WHERE `id`=".$tradeid;
 		
-		if(!($result=$db->sql_query($sql))) {
+		if (!($result = $db->sql_query($sql))) {
 			$out = "Erreur";
 		}
 		return $out;
 	}
 //Annulation de la réservation	
-	function unpos_new($tradeid){
+	function unpos_new($tradeid) {
 		global $db;
 
-		$out="effectué";
+		$out = "effectué";
 		$sql = "UPDATE ".TABLE_TRADE." SET `pos_user`=0 , `pos_date`=NULL WHERE `id`=".$tradeid;
 		
-		if(!($result=$db->sql_query($sql))) {
+		if (!($result = $db->sql_query($sql))) {
 			$out = "Erreur";
 		}
 		return $out;
 	}
  //Fin de la transaction et Archivage de l'offre.	
-	function close_trade($tradeid){
+	function close_trade($tradeid) {
 		global $db;
 
-		$out="Archivé";
+		$out = "Archivé";
 		$sql = "UPDATE ".TABLE_TRADE." SET `trade_closed`=1 WHERE `id`=".$tradeid;
 		
-		if(!($result=$db->sql_query($sql))) {
+		if (!($result = $db->sql_query($sql))) {
 			$out = "Erreur";
 		}
 		return $out;
 	}
 
 	//Ajoute un nouveau trade renvoie un tableau sur ce nouvel univers
-	function insert_new( $traderid,$universid,$offer_metal,$offer_crystal,$offer_deuterium,$want_metal,$want_crystal,$want_deuterium,$secs_duration,$note,$deliver,$refunding) {
+	function insert_new($traderid, $universid, $offer_metal, $offer_crystal, $offer_deuterium, $want_metal, $want_crystal, $want_deuterium, $secs_duration, $note, $deliver, $refunding) {
 		global $db;
-		$now=time();
-		$expiration=$now+intval($secs_duration);
-		$sql=	 " INSERT INTO ".TABLE_TRADE
+		$now = time();
+		$expiration = $now + intval($secs_duration);
+		$sql = " INSERT INTO ".TABLE_TRADE
 			." (`id`,`traderid`,`universid`,`offer_metal`,`offer_crystal`,`offer_deuterium`,`want_metal`,`want_crystal`,`want_deuterium`,`creation_date`,`expiration_date`,`note`,`deliver`,`refunding`)"
 			." VALUES(null,".intval($traderid).",".intval($universid).",".intval($offer_metal).",".intval($offer_crystal).",".intval($offer_deuterium).",".intval($want_metal).",".intval($want_crystal).",".intval($want_deuterium).",$now,$expiration,'".mysql_escape_string($note)."','".implode("_", $deliver)."','".implode("_", $refunding)."')";
 
-		$result=$db->sql_query($sql);	
+		$result = $db->sql_query($sql);	
 
 		$newvalues = Array();
-		$newvalues["id"] 				= $db->sql_insertid();
+		$newvalues["id"] = $db->sql_insertid();
 		$newvalues["traderid"] 			= $traderid;
 		$newvalues["universid"] 		= $universid;
-		$newvalues["offer_metal"] 		= $offer_metal;
+		$newvalues["offer_metal"] = $offer_metal;
 		$newvalues["offer_crystal"] 	= $offer_crystal;
-		$newvalues["offer_deuterium"] 	= $offer_deuterium;
-		$newvalues["want_metal"] 		= $want_metal;
+		$newvalues["offer_deuterium"] = $offer_deuterium;
+		$newvalues["want_metal"] = $want_metal;
 		$newvalues["want_crystal"] 		= $want_crystal;
-		$newvalues["want_deuterium"] 	= $want_deuterium;
+		$newvalues["want_deuterium"] = $want_deuterium;
 		$newvalues["creation_date"] 	= $now;
-		$newvalues["expiration_date"] 	= $expiration;
-		$newvalues["note"]				= $note;
+		$newvalues["expiration_date"] = $expiration;
+		$newvalues["note"] = $note;
 
 		return $newvalues;
 	}
 	
 	//Mettre a jour une trade renvoie un tableau sur ce nouvel univers
-	function upd_trade( $id,$traderid,$universid,$offer_metal,$offer_crystal,$offer_deuterium,$want_metal,$want_crystal,$want_deuterium,$expiration_date,$note,$deliver,$refunding) {
+	function upd_trade($id, $traderid, $universid, $offer_metal, $offer_crystal, $offer_deuterium, $want_metal, $want_crystal, $want_deuterium, $expiration_date, $note, $deliver, $refunding) {
 		global $db;
 			
-		$sql=	 " UPDATE ".TABLE_TRADE." SET "
+		$sql = " UPDATE ".TABLE_TRADE." SET "
 			."`offer_metal`=".intval($offer_metal).",`offer_crystal`=".intval($offer_crystal).",`offer_deuterium`=".intval($offer_deuterium).","
 			."`want_metal`=".intval($want_metal).",`want_crystal`=".intval($want_crystal).",`want_deuterium`=".intval($want_deuterium).","
 			."`expiration_date`=".$expiration_date.",`note`='".mysql_escape_string($note)."',"
 			."`deliver`='".implode('_', $deliver)."', `refunding`='".implode('_', $refunding)."' WHERE `id`=".intval($id)." ";
 
-		if (!$result=$db->sql_query($sql)){
+		if (!$result = $db->sql_query($sql)) {
 			return 0;
 		}
 		else {
@@ -124,11 +124,11 @@ class cTrades {
 		
 	}
 	//Réactivation d'une offre
-	function reactive_trade($id,$creation_date,$expiration_date){
+	function reactive_trade($id, $creation_date, $expiration_date) {
 		global $db;
-		$sql= " UPDATE ".TABLE_TRADE." SET `creation_date`=".$creation_date.",`expiration_date`=".$expiration_date.",`pos_user`='0',`pos_date`='0' WHERE id = ".intval($id);
+		$sql = " UPDATE ".TABLE_TRADE." SET `creation_date`=".$creation_date.",`expiration_date`=".$expiration_date.",`pos_user`='0',`pos_date`='0' WHERE id = ".intval($id);
 		
-		if (!$result=$db->sql_query($sql)){
+		if (!$result = $db->sql_query($sql)) {
 			return 0;
 		}
 		else {
@@ -137,6 +137,10 @@ class cTrades {
 	}
 	
 	//Tableau de trades d'un univers donnÈ, eventuellement classÈs 
+
+	/**
+	 * @param string $action_id
+	 */
 	function trades_array($action, $action_id, $order="id") {
 		global $db;
 		global $user_data;
@@ -257,7 +261,7 @@ class cTrades {
 	}
 
 	// Affichage d'un trade sous format rss
-	function get_trade_rss($trade,$universe) {
+	function get_trade_rss($trade, $universe) {
 		$xmlTrade = "\n<item>";
 		$xmlTrade .= "\n\t<guid>"."http://".$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."?action=viewtrade&amp;tradeid=".$trade["id"]."</guid>";
 		$xmlTrade .= "\n\t<title>Vends ".$trade["offer_metal"]."M/".$trade["offer_crystal"]."C/".$trade["offer_deuterium"]."D sur ".$universe["name"]." par ".$trade["username"]."</title>";
@@ -265,16 +269,16 @@ class cTrades {
 		//$xmlTrade .= "\n\t<author>"..$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."?action=viewtrade&amp;tradeid=".$trade["id"]."</author>";
 		$xmlTrade .= "\n\t<description>".utf8_encode("Dans ".$universe["name"].", ".$trade["username"]." vend ".$trade["offer_metal"]."M/".$trade["offer_crystal"]."C/".$trade["offer_deuterium"]."D contre ".$trade["want_metal"]."M/".$trade["want_crystal"]."C/".$trade["want_deuterium"]."D")."</description>";
 		$xmlTrade .= "\n\t<comments>".utf8_encode($trade["note"])."</comments>";
-		$xmlTrade .= "\n\t<pubDate>".date("D, j F Y g:i:s T",$trade["creation_date"])."</pubDate>";
+		$xmlTrade .= "\n\t<pubDate>".date("D, j F Y g:i:s T", $trade["creation_date"])."</pubDate>";
 		$xmlTrade .= "\n</item>";
 
 		return $xmlTrade;			
 	}
 
 	// RÈcupÈration sous forme XML de la liste des offres d'un Univers
-	function trades_array_xml($universeid,$order="creation_date desc",$limit="LIMIT 30",$excludeexpired=true) {
-		$ret="";
-		foreach($this->trades_array($universeid,$order,$limit,$excludeexpired) as $trade)
+	function trades_array_xml($universeid, $order = "creation_date desc", $limit = "LIMIT 30", $excludeexpired = true) {
+		$ret = "";
+		foreach ($this->trades_array($universeid, $order, $limit, $excludeexpired) as $trade)
 		{
 			$ret .= "\n<offer>\n".$this->get_trade_xml($trade)."</offer>\n";
 		}
@@ -282,22 +286,22 @@ class cTrades {
 	}
 
 	// RÈcupÈration sous format RSS de la liste des offres d'un Univers
-	function trades_array_rss($universe,$limit="LIMIT 30") {
-		$ret="";
-		foreach($this->trades_array($universe["id"],"creation_date desc",$limit,true) as $trade)
+	function trades_array_rss($universe, $limit = "LIMIT 30") {
+		$ret = "";
+		foreach ($this->trades_array($universe["id"], "creation_date desc", $limit, true) as $trade)
 		{
-			$ret .= "\n".$this->get_trade_rss($trade,$universe);
+			$ret .= "\n".$this->get_trade_rss($trade, $universe);
 		}
 		return $ret;
 	}
 	
 	// RÈcupÈration sous format RSS de la liste des offres d'un Univers
-	function trades_array_all_uni_rss($limit="LIMIT 30") {
-		$ret="";
-		foreach($this->trades_array(null,"creation_date desc",$limit,true) as $trade)
+	function trades_array_all_uni_rss($limit = "LIMIT 30") {
+		$ret = "";
+		foreach ($this->trades_array(null, "creation_date desc", $limit, true) as $trade)
 		{
-			$universe=cUniverses::get_universe($trade["universid"]);
-			$ret .= "\n".$this->get_trade_rss($trade,$universe);
+			$universe = cUniverses::get_universe($trade["universid"]);
+			$ret .= "\n".$this->get_trade_rss($trade, $universe);
 		}
 		return $ret;
 	}
@@ -312,10 +316,10 @@ class cTrades {
 	
 }
 
-$Trades=new cTrades();
+$Trades = new cTrades();
 
 //Réservation d'une offre
-function beton_trade($tradeid){
+function beton_trade($tradeid) {
 	global $db;
 	global $Users;
 	global $Trades;
@@ -325,21 +329,21 @@ function beton_trade($tradeid){
 	$Trade = $Trades->trades_array("uniquetrade", $tradeid);
 
 	if ($Trade) {
-		if ($Trade["expiration_date"]<time()) {
+		if ($Trade["expiration_date"] < time()) {
 			return "Cette offre n'est plus valide, sa date d'expiration est atteinte";
 		}
-		else{
-			if ($Trade["pos_user"]<>0){
-				$user2=$Users->get_user($Trade["pos_user"]);
-				if(!$user2) {
+		else {
+			if ($Trade["pos_user"] <> 0) {
+				$user2 = $Users->get_user($Trade["pos_user"]);
+				if (!$user2) {
 					return "<div>Profil non trouv&eacute;</div>";
 				}
-				else{
+				else {
 					return "Cette offre est d&eacute;j&agrave; r&eacute;serv&eacute; par l'utilsateur ".$user2["name"];
 				}
 			}
-			else{	
-				$out = $Trades->pos_new($Trade["id"],$user_data["id"]);
+			else {	
+				$out = $Trades->pos_new($Trade["id"], $user_data["id"]);
 				$alert = "booktrade";
 				require_once("includes/mail.php");
 				return "<b>La r&eacute;servation sur l'offre n° ".$tradeid." par l'utilisateur ".$user_data["name"]." est ".$out."</b>";
@@ -350,7 +354,7 @@ function beton_trade($tradeid){
 }
 
 //Libaration d'une offre
-function unbeton_trade($tradeid){
+function unbeton_trade($tradeid) {
 	global $db;
 	global $Users;
 	global $Trades;
@@ -359,11 +363,11 @@ function unbeton_trade($tradeid){
 	
 	$Trade = $Trades->trades_array("uniquetrade", $tradeid);
 	if ($Trade) {
-		if ($Trade["expiration_date"]<time()) {
+		if ($Trade["expiration_date"] < time()) {
 			return "Cette offre n'est plus valide, sa date d'expiration est atteinte";
 		}
-		else{
-			if ($Trade["pos_user"]<>0){
+		else {
+			if ($Trade["pos_user"] <> 0) {
 				$out = $Trades->unpos_new($Trade["id"]);
 				$alert = "liberer";
 				require_once("includes/mail.php");
@@ -374,12 +378,12 @@ function unbeton_trade($tradeid){
 }
 
 //suppression d'offre
-function del_trade($tradeid){
+function del_trade($tradeid) {
 	global $db, $Trades, $user_data;
 	
 	$trade = $Trades->trades_array("uniquetrade", $tradeid);
-	if ($trade){
-		if ($trade["traderid"] == $user_data["id"] || $user_data["is_admin"]){
+	if ($trade) {
+		if ($trade["traderid"] == $user_data["id"] || $user_data["is_admin"]) {
 			$Trades->close_trade($tradeid);
 			return "L'offre a été archivée";
 		} 
@@ -393,7 +397,7 @@ function del_trade($tradeid){
 }
 
 //reactivation de l'offre
-function reactive_trade($trade_id){
+function reactive_trade($trade_id) {
 	global $db;
 	global $Trades;
 	global $server_config;
@@ -411,34 +415,34 @@ function reactive_trade($trade_id){
 }
 
 //mise a jour de l'offre
-function update_trade (){
+function update_trade() {
 	global $db, $user_data, $server_config, $Trades, $current_uni;
 	global $pub_offer_metal, $pub_offer_crystal, $pub_offer_deuterium, $pub_want_metal, $pub_want_crystal, $pub_want_deuterium,
 			$pub_deliver, $pub_refunding, $pub_expiration_hours, $pub_expiration_date, $pub_creation_date, $pub_note, $pub_tradeid, $pub_traderid;
 	
-	if(!isset($pub_expiration_hours)) {
+	if (!isset($pub_expiration_hours)) {
 		$pub_expiration_hours = 0;
 	}
-	if ($user_data["is_active"] !=1 ) {
+	if ($user_data["is_active"] != 1) {
 		return "Impossible de modifer cette offre, l'utilisateur est inactif.";
 	}
 	else {
-		if (((intval($pub_offer_metal)<0) || intval($pub_offer_crystal)<0 || intval($pub_offer_deuterium)<0) || (intval($pub_want_metal)<0 || intval($pub_want_crystal)<0 || intval($pub_want_deuterium)<0)){
+		if (((intval($pub_offer_metal) < 0) || intval($pub_offer_crystal) < 0 || intval($pub_offer_deuterium) < 0) || (intval($pub_want_metal) < 0 || intval($pub_want_crystal) < 0 || intval($pub_want_deuterium) < 0)) {
 			return "Vos offres et demandes en ressources ne peuvent etre n&eacute;gatives :";
 		}
 		else {
-			$totalressources=intval($pub_offer_metal)+intval($pub_offer_crystal)+intval($pub_offer_deuterium);
-			if ($totalressources<=0) {
+			$totalressources = intval($pub_offer_metal) + intval($pub_offer_crystal) + intval($pub_offer_deuterium);
+			if ($totalressources <= 0) {
 				return "Le total des ressources offertes est &eacute;gal à 0.<br>Vous devez fournir une valeur valide >0 pour , au moins, une de vos ressources offertes.";
 			}
 			else {
-				$totalressources=intval($pub_want_metal)+intval($pub_want_crystal)+intval($pub_want_deuterium);
-				if ($totalressources<=0) {
+				$totalressources = intval($pub_want_metal) + intval($pub_want_crystal) + intval($pub_want_deuterium);
+				if ($totalressources <= 0) {
 					return "Le total des ressources demand&eacute;es est &eacute;gal à 0.<br>Vous devez fournir une valeur valide >0 pour , au moins, une de vos ressources demand&eacute;es";
 				}
 				else {
-					if (intval($pub_expiration_hours)*60*60>$server_config["max_trade_delay_seco"]){
-						return "Le d&eacute;lai de prolongation ne doit d&eacute;passer ".intval($server_config["max_trade_delay_seco"]/(60*60))." heures (".text_datediff(time()+$server_config["max_trade_delay_seco"]).")";
+					if (intval($pub_expiration_hours)*60*60 > $server_config["max_trade_delay_seco"]) {
+						return "Le d&eacute;lai de prolongation ne doit d&eacute;passer ".intval($server_config["max_trade_delay_seco"]/(60*60))." heures (".text_datediff(time() + $server_config["max_trade_delay_seco"]).")";
 					}
 					else {
 						// Calcul de la prolongation
@@ -446,13 +450,13 @@ function update_trade (){
 
 						if ($pub_expiration_hours == '0') 
 							$expiration = $pub_expiration_date;
-						else if (intval($pub_expiration_date)-intval($pub_creation_date) + (intval($pub_expiration_hours)*60*60) < $maxi)
-							$expiration = intval($pub_expiration_date)+(intval($pub_expiration_hours)*60*60);
+						else if (intval($pub_expiration_date) - intval($pub_creation_date) + (intval($pub_expiration_hours)*60*60) < $maxi)
+							$expiration = intval($pub_expiration_date) + (intval($pub_expiration_hours)*60*60);
 						else
-							$expiration = intval($pub_creation_date)+$maxi;
+							$expiration = intval($pub_creation_date) + $maxi;
 
 						//Update de l'offre
-						$Trades->upd_trade( $pub_tradeid,$user_data["id"],$current_uni["id"],
+						$Trades->upd_trade($pub_tradeid, $user_data["id"], $current_uni["id"],
 									intval($pub_offer_metal),
 									intval($pub_offer_crystal),
 									intval($pub_offer_deuterium),
@@ -475,30 +479,30 @@ function update_trade (){
 }
 
 //ajout d'un offre
-function add_trade (){
+function add_trade() {
 	global $db, $user_data, $server_config, $Trades, $current_uni;
 	global $pub_offer_metal, $pub_offer_crystal, $pub_offer_deuterium, $pub_want_metal, $pub_want_crystal, $pub_want_deuterium,
 		$pub_expiration_hours, $pub_note, $pub_deliver, $pub_refunding;
 	
-	if ($user_data["is_active"]!=1) return "Impossible d'ajouter une nouvelle offre, l'utilisateur est inactif.";
+	if ($user_data["is_active"] != 1) return "Impossible d'ajouter une nouvelle offre, l'utilisateur est inactif.";
 	else {
-		if (((intval($pub_offer_metal)<0) || intval($pub_offer_crystal)<0 || intval($pub_offer_deuterium)<0) ||
-			(intval($pub_want_metal)<0 || intval($pub_want_crystal)<0 || intval($pub_want_deuterium)<0))
+		if (((intval($pub_offer_metal) < 0) || intval($pub_offer_crystal) < 0 || intval($pub_offer_deuterium) < 0) ||
+			(intval($pub_want_metal) < 0 || intval($pub_want_crystal) < 0 || intval($pub_want_deuterium) < 0))
 			return "Vos offres et demandes en ressources ne peuvent etre négatives :";
 		else {
-			$totalressources = intval($pub_offer_metal)+intval($pub_offer_crystal)+intval($pub_offer_deuterium);
+			$totalressources = intval($pub_offer_metal) + intval($pub_offer_crystal) + intval($pub_offer_deuterium);
 			if ($totalressources <= 0)
 				return "Le total des ressources offertes est égal à 0.<br>Vous devez fournir une valeur valide >0 pour , au moins, une de vos ressources offertes.";
 			else {
-				$totalressources = intval($pub_want_metal)+intval($pub_want_crystal)+intval($pub_want_deuterium);
+				$totalressources = intval($pub_want_metal) + intval($pub_want_crystal) + intval($pub_want_deuterium);
 				if ($totalressources <= 0)
 					return "Le total des ressources demandés est égal à 0.<br>Vous devez fournir une valeur valide >0 pour , au moins, une de vos ressources demandés";
 				else {
-					if (intval($pub_expiration_hours)<1 || intval($pub_expiration_hours)*60*60>$server_config["max_trade_delay_seco"])
+					if (intval($pub_expiration_hours) < 1 || intval($pub_expiration_hours)*60*60 > $server_config["max_trade_delay_seco"])
 						return "Le delai de validité doit etre compris entre 1 heure et ".intval($server_config["max_trade_delay_seco"]/(60*60))." heures "
-						."(".text_datediff(time()+$server_config["max_trade_delay_seco"]).")";
-					else{							
-						$Trades->insert_new( $user_data["id"],$current_uni["id"],
+						."(".text_datediff(time() + $server_config["max_trade_delay_seco"]).")";
+					else {							
+						$Trades->insert_new($user_data["id"], $current_uni["id"],
 									intval($pub_offer_metal),
 									intval($pub_offer_crystal),
 									intval($pub_offer_deuterium),

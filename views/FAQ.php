@@ -26,13 +26,13 @@ require_once("views/page_header.php");
 			<span style="font-family: Tahoma;">Pour proposer une offre:</span></span></strong></span><br>
 			<br>
 
-			<?php if ($Utype=="internal") { ?>
-				<strong>Première chose à faire: s'inscrire sur la cartographie: <font color="#FF0000"><?php echo $servername;?></font><br><br>
+			<?php if ($Utype == "internal") { ?>
+				<strong>Première chose à faire: s'inscrire sur la cartographie: <font color="#FF0000"><?php echo $servername; ?></font><br><br>
 				<img alt="http://img364.imageshack.us/img364/9620/faq00mx8.jpg" src="http://img364.imageshack.us/img364/9620/faq00mx8.jpg" width="402" height="279"><br>
 				Rien de très compliqué<br><br>
 			<?php } else { ?>
-				<strong>Première chose à faire: s'inscrire sur le forum de <?php echo $NForum;?>:
-				<a href="<?php echo $AForum;?>"><?php echo $AForum;?></a></strong><br>
+				<strong>Première chose à faire: s'inscrire sur le forum de <?php echo $NForum; ?>:
+				<a href="<?php echo $AForum; ?>"><?php echo $AForum; ?></a></strong><br>
 				<strong>L'administrateur a  décidé de ne pas donner a ce OGmarket un propre base de donnée de membres.</strong><br>
 				<br>
 				<a href="http://membres.lycos.fr/tibbo30/TutoOGSMarket/OGSMarket02bis.JPG">

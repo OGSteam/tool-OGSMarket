@@ -19,7 +19,7 @@ $tauxd = $server_config['tauxdeuterium'];
 /* (1) - Initialisation des valeurs, radio aucun checked par defaut */
 	
 $valAucun = 'checked';
-$valPT = '' ;
+$valPT = '';
 $valGT = '';
 	
 /* On defini si l'utilisateur a cliquer sur Calculer ! */
@@ -31,9 +31,9 @@ if (isset ($pub_ouvert)) {
 	
 	if (isset ($pub_metal) || isset ($pub_cristal) || isset ($pub_deuterium))
 	{
-		$metal = round ($pub_metal);
-		$cristal = round ($pub_cristal);
-		$deut = round ($pub_deuterium);
+		$metal = round($pub_metal);
+		$cristal = round($pub_cristal);
+		$deut = round($pub_deuterium);
 	}
 	else
 	{
@@ -63,17 +63,17 @@ if (isset ($pub_ouvert)) {
 	
 	if (isset ($pub_combienm) || isset ($pub_combienc) || isset ($pub_combiend))
 	{
-		$totalPourcentage = $pub_combienm  + $pub_combienc + $pub_combiend;
+		$totalPourcentage = $pub_combienm + $pub_combienc + $pub_combiend;
 		
 		if ($totalPourcentage == 100)
 		{
-			$combienm = intval ($pub_combienm);
-			$combienc = intval ($pub_combienc);
-			$combiend = intval ($pub_combiend);
+			$combienm = intval($pub_combienm);
+			$combienc = intval($pub_combienc);
+			$combiend = intval($pub_combiend);
 			
-			$totalM = round (($combienm / 100) * ($metal + $cristal * ($tauxm / $tauxc) + $deut * ($tauxm / $tauxd)));
-			$totalC = round (($combienc / 100) * ($cristal + $metal * ($tauxc / $tauxm) + $deut * ($tauxc / $tauxd)));
-			$totalD = round (($combiend / 100) * ($deut + $metal * ($tauxd / $tauxm) + $cristal * ($tauxd / $tauxc)));
+			$totalM = round(($combienm/100)*($metal + $cristal*($tauxm/$tauxc) + $deut*($tauxm/$tauxd)));
+			$totalC = round(($combienc/100)*($cristal + $metal*($tauxc/$tauxm) + $deut*($tauxc/$tauxd)));
+			$totalD = round(($combiend/100)*($deut + $metal*($tauxd/$tauxm) + $cristal*($tauxd/$tauxc)));
 		}
 		else
 		{
@@ -93,19 +93,19 @@ if (isset ($pub_ouvert)) {
 		if ($pub_transporteur == "aucun")
 		{
 			$valAucun = 'checked';
-			$valPT = '' ;
+			$valPT = '';
 			$valGT = '';
 		}
 		elseif ($pub_transporteur == "PT")
 		{
 			$valAucun = '';
-			$valPT = 'checked' ;
+			$valPT = 'checked';
 			$valGT = '';
 		}
 		elseif ($pub_transporteur == "GT")
 		{
 			$valAucun = '';
-			$valPT = '' ;
+			$valPT = '';
 			$valGT = 'checked';
 		}
 	}
@@ -113,7 +113,7 @@ if (isset ($pub_ouvert)) {
 	
 /* (1) - On cree la fonction qu'on utilisera dans le form */
 	
-function checkTranspo ($valCheck)
+function checkTranspo($valCheck)
 {
 	if ($valCheck != '')
 	{
@@ -141,23 +141,23 @@ $transporteur = (isset($pub_transporteur) ? $pub_transporteur : 0);
 		<th>Pourcentage</th>
 	</tr>
 	<tr>
-		<th><label><input type="radio" name="transporteur" value="aucun" <?php checkTranspo ($valAucun);  ?> /> Aucun</label></th>
+		<th><label><input type="radio" name="transporteur" value="aucun" <?php checkTranspo($valAucun); ?> /> Aucun</label></th>
 		<th>M&eacute;tal</th>
-		<th><input type="text" name="metal" value="<?php echo formate_number ((isset($metal) ? $metal : 0)); ?>" tabindex="1" /></th>
+		<th><input type="text" name="metal" value="<?php echo formate_number((isset($metal) ? $metal : 0)); ?>" tabindex="1" /></th>
 		<th><input type="text" name="tauxm" value="<?php echo $tauxm; ?>" tabindex="4" /></th>
 		<th><input type="text" name="combienm" value="<?php echo (isset($combienm) ? $combienm : 0); ?>" tabindex="7" /></th>
 	</tr>
 	<tr>
-		<th><label><input type="radio" name="transporteur" value="PT" <?php checkTranspo ($valPT);  ?> /> PT</label></th>
+		<th><label><input type="radio" name="transporteur" value="PT" <?php checkTranspo($valPT); ?> /> PT</label></th>
 		<th>Cristal</th>
-		<th><input type="text" name="cristal" value="<?php echo formate_number ((isset($cristal) ? $cristal : 0)); ?>" tabindex="2" /></th>
+		<th><input type="text" name="cristal" value="<?php echo formate_number((isset($cristal) ? $cristal : 0)); ?>" tabindex="2" /></th>
 		<th><input type="text" name="tauxc" value="<?php echo $tauxc; ?>" tabindex="5" /></th>
 		<th><input type="text" name="combienc" value="<?php echo (isset($combienc) ? $combienc : 0); ?>" tabindex="8" /></th>
 	</tr>
 	<tr>
-		<th><label><input type="radio" name="transporteur" value="GT" <?php checkTranspo ($valGT);  ?> /> GT</label></th>
+		<th><label><input type="radio" name="transporteur" value="GT" <?php checkTranspo($valGT); ?> /> GT</label></th>
 		<th>Deut&eacute;rium</th>
-		<th><input type="text" name="deuterium" value="<?php echo formate_number ((isset($deuterium) ? $deuterium : 0)); ?>" tabindex="3" /></th>
+		<th><input type="text" name="deuterium" value="<?php echo formate_number((isset($deuterium) ? $deuterium : 0)); ?>" tabindex="3" /></th>
 		<th><input type="text" name="tauxd" value="<?php echo $tauxd; ?>" tabindex="6" /></th>
 		<th><input type="text" name="combiend" value="<?php echo (isset($combiend) ? $combiend : 0); ?>" tabindex="9" /></th>
 	</tr>
@@ -184,18 +184,18 @@ if (isset($pub_ouvert)) // On defini si l'utilisateur a cliquer sur Calculer !
 	</tr>
 	<tr>
 		<th>M&eacute;tal</th>
-		<th><?php echo formate_number ($metal); ?></th>
-		<th><?php echo formate_number ($totalM); ?></th>
+		<th><?php echo formate_number($metal); ?></th>
+		<th><?php echo formate_number($totalM); ?></th>
 	</tr>
 	<tr>
 		<th>Cristal</th>
-		<th><?php echo formate_number ($cristal); ?></th>
-		<th><?php echo formate_number ($totalC); ?></th>
+		<th><?php echo formate_number($cristal); ?></th>
+		<th><?php echo formate_number($totalC); ?></th>
 	</tr>
 	<tr>
 		<th>Deut&eacute;rium</th>
-		<th><?php echo formate_number ($deut); ?></th>
-		<th><?php echo formate_number ($totalD); ?></th>
+		<th><?php echo formate_number($deut); ?></th>
+		<th><?php echo formate_number($totalD); ?></th>
 	</tr>
 	
 	<?php
@@ -206,13 +206,13 @@ if (isset($pub_ouvert)) // On defini si l'utilisateur a cliquer sur Calculer !
 			
 			if ($transporteur == "PT")
 			{
-				$transporteurenvoyer = ceil ($totalaenvoyer / 5000);
-				$transporteurressus = ceil ($totalaressevoir / 5000);
+				$transporteurenvoyer = ceil($totalaenvoyer/5000);
+				$transporteurressus = ceil($totalaressevoir/5000);
 			}
 			elseif ($transporteur == "GT")
 			{
-				$transporteurenvoyer = ceil ($totalaenvoyer / 25000);
-				$transporteurressus = ceil ($totalaressevoir / 25000);
+				$transporteurenvoyer = ceil($totalaenvoyer/25000);
+				$transporteurressus = ceil($totalaressevoir/25000);
 			}
 	?>
 	
@@ -234,30 +234,30 @@ if (isset($pub_ouvert)) // On defini si l'utilisateur a cliquer sur Calculer !
 			<?php $BBcode = '[center][size=18][b][color=red]Offre via OGSMarket[/color][/b][/size]';	
 			$BBcode .= "\n";
 			$BBcode .= "\n";
-			$BBcode .= '[i][b][color=green]Offre[/color][/b][/i]' . "\n";
-			$BBcode .= 'M&eacute;tal : [b]' . formate_number ($metal) . '[/b]' . "\n";
-			$BBcode .= 'Cristal : [b]' . formate_number ($cristal) . '[/b]' . "\n";
-			$BBcode .= 'Deut&eacute;rium : [b]' . formate_number ($deut) . '[/b]' . "\n";
+			$BBcode .= '[i][b][color=green]Offre[/color][/b][/i]'."\n";
+			$BBcode .= 'M&eacute;tal : [b]'.formate_number($metal).'[/b]'."\n";
+			$BBcode .= 'Cristal : [b]'.formate_number($cristal).'[/b]'."\n";
+			$BBcode .= 'Deut&eacute;rium : [b]'.formate_number($deut).'[/b]'."\n";
 
 			if ($transporteur == "PT")
-				$BBcode .= 'Le nombre de [b]PT[/b] n&eacute;ccessaires est de [b]' . $transporteurenvoyer . '[/b].' . "\n";
+				$BBcode .= 'Le nombre de [b]PT[/b] n&eacute;ccessaires est de [b]'.$transporteurenvoyer.'[/b].'."\n";
 			elseif ($transporteur == "GT")
-				$BBcode .= 'Le nombre de [b]GT[/b] n&eacute;ccessaires est de [b]' . $transporteurenvoyer . '[/b].' . "\n";
+				$BBcode .= 'Le nombre de [b]GT[/b] n&eacute;ccessaires est de [b]'.$transporteurenvoyer.'[/b].'."\n";
 				
 			$BBcode .= "\n";
-			$BBcode .= '[i][b][color=green]Demande[/color][/b][/i]' . "\n";
-			$BBcode .= 'M&eacute;tal : [b]' . formate_number ($totalM) . '[/b]' . "\n";
-			$BBcode .= 'Cristal : [b]' . formate_number ($totalC) . '[/b]' . "\n";
-			$BBcode .= 'Deut&eacute;rium : [b]' . formate_number ($totalD) . '[/b]' . "\n";
+			$BBcode .= '[i][b][color=green]Demande[/color][/b][/i]'."\n";
+			$BBcode .= 'M&eacute;tal : [b]'.formate_number($totalM).'[/b]'."\n";
+			$BBcode .= 'Cristal : [b]'.formate_number($totalC).'[/b]'."\n";
+			$BBcode .= 'Deut&eacute;rium : [b]'.formate_number($totalD).'[/b]'."\n";
 
 			if ($transporteur == "PT")
-				$BBcode .= 'Le nombre de [b]PT[/b] n&eacute;ccessaires est de [b]' . $transporteurressus . '[/b].' . "\n";
+				$BBcode .= 'Le nombre de [b]PT[/b] n&eacute;ccessaires est de [b]'.$transporteurressus.'[/b].'."\n";
 			elseif ($transporteur == "GT")
-				$BBcode .= 'Le nombre de [b]GT[/b] n&eacute;ccessaires est de [b]' . $transporteurressus . '[/b].' . "\n";
+				$BBcode .= 'Le nombre de [b]GT[/b] n&eacute;ccessaires est de [b]'.$transporteurressus.'[/b].'."\n";
 				
 			$BBcode .= "\n";
-			$BBcode .= 'Le taux impos&eacute; est : [b]' . $tauxm . ' / ' . $tauxc . ' / ' . $tauxd . '[/b].' . "\n";
-			$BBcode .= "\n" . "\n" . "\n" . '[size=6][url=ogsteam.fr]OGSMarket - Plateforme de Commerce[/url][/size]';
+			$BBcode .= 'Le taux impos&eacute; est : [b]'.$tauxm.' / '.$tauxc.' / '.$tauxd.'[/b].'."\n";
+			$BBcode .= "\n"."\n"."\n".'[size=6][url=ogsteam.fr]OGSMarket - Plateforme de Commerce[/url][/size]';
 			$BBcode .= '[/center]'; ?>
 			<textarea name="bbcode" rows="10" cols="20"><?php echo $BBcode; ?></textarea>
 		</th>

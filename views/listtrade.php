@@ -85,15 +85,15 @@ else
 		</tr>
 
 <?php
-	foreach($Trades->trades_array($action, $action_id, $order) as $trade)
+	foreach ($Trades->trades_array($action, $action_id, $order) as $trade)
 	{
 		echo "<tr style='height: 5px;' />"; //Espace entre chaque offre
 		echo "\t    <tr>\n";
 		echo "\t      <td class='k' colspan='1' rowspan='3' align='center'><img src='".$trade["avatar_link"]."' alt='No avatar' /><br />";
 		echo "\t<a href='index.php?action=profile&amp;id=".$trade["traderid"]."'>".$trade["username"]."</a>\n";
 		echo "</td>\n";
-		echo "\t      <td class='c'><b>Date de cr&eacute;ation: ".strftime("%a %d %b",$trade["creation_date"])." ".strftime("%H:%M:%S",$trade["creation_date"])."</b></td>\n";
-		echo "\t      <td class='c' style='width: 40%;'><b>Date de fin: <font color=\"green\">".strftime("%a %d %b %H:%M:%S",$trade["expiration_date"]);
+		echo "\t      <td class='c'><b>Date de cr&eacute;ation: ".strftime("%a %d %b", $trade["creation_date"])." ".strftime("%H:%M:%S", $trade["creation_date"])."</b></td>\n";
+		echo "\t      <td class='c' style='width: 40%;'><b>Date de fin: <font color=\"green\">".strftime("%a %d %b %H:%M:%S", $trade["expiration_date"]);
 		if ($trade["expiration_date"] < time()) {
 			echo " (Offre Expir&eacute;e)";
 ?>
@@ -110,14 +110,14 @@ else
 		echo "\t<tr>\n";
 		echo "\t<th colspan='2' rowspan='1' class='c' style='height: 50px; width: 40%;font-size:large;'>\n";
 		echo "\t".$trade["username"]." offre ";
-			if (intval($trade["offer_metal"])>0) echo number_format($trade["offer_metal"], 0, ',', ' ')." K de M&eacute;tal ";
-			if (intval($trade["offer_crystal"])>0) echo number_format($trade["offer_crystal"], 0, ',', ' ')." K de Cristal ";
-			if (intval($trade["offer_deuterium"])>0) echo number_format($trade["offer_deuterium"], 0, ',', ' ')." K de Deut&eacute;rium ";
-		  echo " contre " ;
-			if (intval($trade["want_metal"])>0) echo " ".number_format($trade["want_metal"], 0, ',', ' ')." K de M&eacute;tal ";
-			if (intval($trade["want_crystal"])>0) echo " ".number_format($trade["want_crystal"], 0, ',', ' ')." K de Crystal ";
-			if (intval($trade["want_deuterium"])>0) echo " ".number_format($trade["want_deuterium"], 0, ',', ' ')." K de Deut ";
-		  echo "(".taux_echange($trade["offer_metal"],$trade["offer_crystal"],$trade["offer_deuterium"],$trade["want_metal"],$trade["want_crystal"],$trade["want_deuterium"]).")</th>";
+			if (intval($trade["offer_metal"]) > 0) echo number_format($trade["offer_metal"], 0, ',', ' ')." K de M&eacute;tal ";
+			if (intval($trade["offer_crystal"]) > 0) echo number_format($trade["offer_crystal"], 0, ',', ' ')." K de Cristal ";
+			if (intval($trade["offer_deuterium"]) > 0) echo number_format($trade["offer_deuterium"], 0, ',', ' ')." K de Deut&eacute;rium ";
+		  echo " contre ";
+			if (intval($trade["want_metal"]) > 0) echo " ".number_format($trade["want_metal"], 0, ',', ' ')." K de M&eacute;tal ";
+			if (intval($trade["want_crystal"]) > 0) echo " ".number_format($trade["want_crystal"], 0, ',', ' ')." K de Crystal ";
+			if (intval($trade["want_deuterium"]) > 0) echo " ".number_format($trade["want_deuterium"], 0, ',', ' ')." K de Deut ";
+		  echo "(".taux_echange($trade["offer_metal"], $trade["offer_crystal"], $trade["offer_deuterium"], $trade["want_metal"], $trade["want_crystal"], $trade["want_deuterium"]).")</th>";
 		echo "\t</tr>\n";
 		echo "\t<tr>\n";
 		echo "\t<th  colspan='2' rowspan='1' style='height: 86px; width: 40%;'>".stripslashes($trade["note"])."</th>";
@@ -126,30 +126,30 @@ else
 		echo "\t<td  class='c'>\n";
 		//Menu
 		echo "\t<div align='center'>";
-		if (isset($user_data)){ 
-			if (($user_data["id"] == $trade["traderid"] || $user_data["is_admin"]) && $trade["pos_user"] == 0  && $trade["expiration_date"] > time()){
+		if (isset($user_data)) { 
+			if (($user_data["id"] == $trade["traderid"] || $user_data["is_admin"]) && $trade["pos_user"] == 0 && $trade["expiration_date"] > time()) {
 				echo "\t<div align='center'>";		
-				if($user_data["id"] != $trade["traderid"]) echo "[a]";
+				if ($user_data["id"] != $trade["traderid"]) echo "[a]";
 				echo "\t<a href='index.php?action=modifytrade&amp;tradeid=".$trade["id"]."'>Modifier</a></div>";
 			}
-			if ($user_data["id"] == $trade["traderid"] || $user_data["is_admin"] == 1){
+			if ($user_data["id"] == $trade["traderid"] || $user_data["is_admin"] == 1) {
 				echo "\t<div align='center'>";
-				if($user_data["id"] != $trade["traderid"]) echo "[a]";
+				if ($user_data["id"] != $trade["traderid"]) echo "[a]";
 				echo "\t<a href='index.php?action=deletetrade&amp;tradeid=".$trade["id"]."'>Effacer</a></div>";
 			}
 			if ($user_data["id"] != $trade["traderid"] && $trade["pos_user"] == 0) {
 				echo "\t<div align='center'>";
 				echo "\t<a href='index.php?action=betontrade&amp;tradeid=".$trade["id"]."'>R&eacute;server</a></div>";
 			}
-			if (($user_data["id"] == $trade["pos_user"] || $user_data["is_admin"] == 1) && $trade["pos_user"] != 0)	{
+			if (($user_data["id"] == $trade["pos_user"] || $user_data["is_admin"] == 1) && $trade["pos_user"] != 0) {
 				echo "\t<div align='center'>";
-				if($user_data["id"] != $trade["traderid"] && $user_data["is_admin"] == 1) echo "[a]";
+				if ($user_data["id"] != $trade["traderid"] && $user_data["is_admin"] == 1) echo "[a]";
 				echo "\t<a href='index.php?action=unbetontrade&amp;tradeid=".$trade["id"]."'>Lib&eacute;rer</a></div>";
 			}
 		}// Fin menu
-		if ($trade["pos_user"]<>0){
-			$user2=$Users->get_user($trade["pos_user"]);
-			if(!$user2) 
+		if ($trade["pos_user"] <> 0) {
+			$user2 = $Users->get_user($trade["pos_user"]);
+			if (!$user2) 
 				echo "\tMembre Inconnu\n";
 			else 
 				echo "\t<a href='index.php?action=profile&amp;id=".$trade["pos_user"]."'>R&eacute;serv&eacute; par: ".$user2["name"]."</a>\n";
@@ -157,16 +157,16 @@ else
 		echo "\t</td>\n";
 		echo "\t<td class='c' style='height: 0px; width: 40%;'>Livraison vers:<br />";
 		echo "<table><tr>";
-		for($i = 1; $i <= $trade["g"]; $i++) echo "<td>G".$i."</td>";
+		for ($i = 1; $i <= $trade["g"]; $i++) echo "<td>G".$i."</td>";
 		echo "</tr><tr>";
-		for($i = 1; $i <= $trade["g"]; $i++) echo "<td>".affiche_icone($trade["deliver"][$i])."</td>";
+		for ($i = 1; $i <= $trade["g"]; $i++) echo "<td>".affiche_icone($trade["deliver"][$i])."</td>";
 		echo "</tr></table>";
 		echo "\n\t</td>\n";
 		echo "\n\t<td class='c' style='height: 0px; width: 40%;'>R&eacute;ception possible en:<br />";
 		echo "<table><tr>";
-		for($i = 1; $i <= $trade["g"]; $i++) echo "<td>G".$i."</td>";
+		for ($i = 1; $i <= $trade["g"]; $i++) echo "<td>G".$i."</td>";
 		echo "</tr><tr>";
-		for($i = 1; $i <= $trade["g"]; $i++) echo "<td>".affiche_icone($trade["refunding"][$i])."</td>";
+		for ($i = 1; $i <= $trade["g"]; $i++) echo "<td>".affiche_icone($trade["refunding"][$i])."</td>";
 		echo "</tr></table>";        
 		echo "\n\t</td>\n";
 		echo "\t</td>\n";

@@ -16,7 +16,7 @@ if ($user_data["is_admin"] != 1) {
 	die();
 }
 
-if(!isset($pub_subaction)) $pub_subaction = "";
+if (!isset($pub_subaction)) $pub_subaction = "";
 require_once("views/page_header.php");
 ?>
 <table width="80%">

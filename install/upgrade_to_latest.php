@@ -8,9 +8,9 @@
 ***************************************************************************/
 if (!defined('IN_OGSMARKET')) die("Hacking attempt");
 
-if (file_exists("../parameters/id.php")){
+if (file_exists("../parameters/id.php")) {
 	require_once("../parameters/id.php");
-}else
+} else
   die("Config file id.php is not present");
 
 $db = new sql_db($db_host, $db_user, $db_password, $db_database);
@@ -18,14 +18,14 @@ $db = new sql_db($db_host, $db_user, $db_password, $db_database);
 if (!$db->db_connect_id)
 	error_sql('Impossible de se connecter &agrave; la base de donn&eacute;es');
 
-		define('TABLE_COMMENT', $table_prefix .'comment');
-		define('TABLE_CONFIG', $table_prefix .'config');
-		define('TABLE_INFOS', $table_prefix .'infos');
-		define('TABLE_SESSIONS', $table_prefix .'sessions');
-		define('TABLE_TRADE', $table_prefix .'trade');
-		define('TABLE_UNIVERS', $table_prefix .'univers');
-		define('TABLE_USER', $table_prefix .'user');
-		define('TABLE_OGSPY_AUTH', $table_prefix .'ogspy_auth');
+		define('TABLE_COMMENT', $table_prefix.'comment');
+		define('TABLE_CONFIG', $table_prefix.'config');
+		define('TABLE_INFOS', $table_prefix.'infos');
+		define('TABLE_SESSIONS', $table_prefix.'sessions');
+		define('TABLE_TRADE', $table_prefix.'trade');
+		define('TABLE_UNIVERS', $table_prefix.'univers');
+		define('TABLE_USER', $table_prefix.'user');
+		define('TABLE_OGSPY_AUTH', $table_prefix.'ogspy_auth');
 
 $request = "SELECT value FROM ".TABLE_CONFIG." WHERE name = 'version'";
 $result = $db->sql_query($request);
@@ -62,7 +62,7 @@ switch ($version) {
 
 	case "0.3" :
 		$request = "SELECT MAX(pos_user)  FROM ".TABLE_TRADE." ";
-		if(!($result = $db->sql_query($request))){
+		if (!($result = $db->sql_query($request))) {
 			$requests[] = "ALTER TABLE `".TABLE_TRADE."` ADD `pos_user` INT NOT NULL DEFAULT '0'";
 			$requests[] = "ALTER TABLE `".TABLE_TRADE."` ADD `pos_date` INT NOT NULL ";
 		}
@@ -82,7 +82,7 @@ switch ($version) {
 		$requests[] = "INSERT INTO ".TABLE_CONFIG." VALUES('users_active', '0')";
 		
 		$request = "SELECT *  FROM ".TABLE_INFOS." WHERE `name` = 'home'";
-		if(!($result = $db->sql_query($request))){
+		if (!($result = $db->sql_query($request))) {
 			
 			$requests[] = "CREATE TABLE `".TABLE_INFOS."` (".
 				"`id` int(11) NOT NULL auto_increment COMMENT 'Identificateur de la variable infos',".
@@ -172,14 +172,14 @@ switch ($version) {
 }
 
 foreach ($requests as $request) {
-	if(!($result = $db->sql_query($request)))
+	if (!($result = $db->sql_query($request)))
 	{
 		$out = "La requéte : ".$request." est non exécutée, erreur de version!!!";
 		echo  $out;
 	}
 }
 ?>
-	<h3 align='center'><font color='yellow'>Mise &agrave; jour du serveur OGSMarket vers la version <?php echo $version;?> effectu&eacute;e avec succ&egrave;s</font></h3>
+	<h3 align='center'><font color='yellow'>Mise &agrave; jour du serveur OGSMarket vers la version <?php echo $version; ?> effectu&eacute;e avec succ&egrave;s</font></h3>
 	<center>
 	<b><i>Le script a seulement modifi&eacute; la base de donn&eacute;es, pensez &agrave; mettre &agrave; jour vos fichiers</i></b><br />
 <?php

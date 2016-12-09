@@ -24,42 +24,42 @@ if (!defined('IN_OGSMARKET')) {
 	</tr>
 	<?php
 	
-	if(!isset($pub_sortby)) $pub_sortby = "";
+	if (!isset($pub_sortby)) $pub_sortby = "";
 
-	switch ($pub_sortby){
+	switch ($pub_sortby) {
 		case "byname":
-			$orderby=" ORDER BY name asc";
+			$orderby = " ORDER BY name asc";
 		break;
 		
 		case "bymail":
-			$orderby=" ORDER BY email asc";
+			$orderby = " ORDER BY email asc";
 		break;
 		
 		case "bylastvisit":
-			$orderby=" ORDER BY lastvisit desc";
+			$orderby = " ORDER BY lastvisit desc";
 		break;
 		
 		case "byadmin":
-			$orderby=" ORDER BY is_admin desc";
+			$orderby = " ORDER BY is_admin desc";
 		break;
 		
 		case "bymod":
-			$orderby=" ORDER BY is_moderator desc";
+			$orderby = " ORDER BY is_moderator desc";
 		break;
 		
 		case "byactif":
-			$orderby=" ORDER BY is_active desc";
+			$orderby = " ORDER BY is_active desc";
 		break;
 			
 		default:
-			$orderby=" ORDER BY id";
+			$orderby = " ORDER BY id";
 		break;
 	}
 	
 	
 	$query = "SELECT `id`, `name`, `lastvisit`, `email`, `is_admin`, `is_moderator`, `is_active` from ".TABLE_USER." ".$orderby.";";
-	$result	=	$db->sql_query($query);
-	while (list( $id, $name, $lastvisit, $email, $is_admin, $is_moderator, $is_active) = $db->sql_fetch_row($result)){
+	$result = $db->sql_query($query);
+	while (list($id, $name, $lastvisit, $email, $is_admin, $is_moderator, $is_active) = $db->sql_fetch_row($result)) {
 		echo "<tr>";
 		//Première colonne
 			echo"<th>";
@@ -72,11 +72,11 @@ if (!defined('IN_OGSMARKET')) {
 			echo"</th>";
 		//Troisième colonne
 			echo"<th>";
-			echo strftime("%a %d %b %H:%M:%S",$lastvisit);
+			echo strftime("%a %d %b %H:%M:%S", $lastvisit);
 			echo"</th>";				
 		//Quatrième colonne
 			echo"<th>";
-			if ($is_admin==1)
+			if ($is_admin == 1)
 				{ echo "<font color=\"#00FF00\">Oui</font>"; 
 				//Bouton retirer le statut d'Administrateur
 					echo "<form method='POST' action='index.php?action=admin_unset_admin&user_id=".$id."' onsubmit=\"return confirm('Êtes-vous s&ucirc;r de vouloir retiter le statut d&rsquo;Admin &agrave; ".$name."');\">"."\n";
@@ -93,7 +93,7 @@ if (!defined('IN_OGSMARKET')) {
 				echo"</th>";
 		//Cinquième colonne
 			echo"<th>";
-			if ($is_moderator==1)
+			if ($is_moderator == 1)
 				{
 				echo "<font color=\"#00FF00\">Oui</font>";
 				//Bouton retirer le statut de modérateur
@@ -101,7 +101,7 @@ if (!defined('IN_OGSMARKET')) {
 			echo "\t"."<input type='image' src='images/usercheck.png' title='Retirer le statut de mod&eacute;rateur &agrave; ".$name."'>"."\n";
 			echo "</form>"."\n";
 				}
-			else 	{
+			else {
 				echo "<font color=\"#FF0000\">Non</font>";
 				//Bouton nommer un modérateur
 			echo "<form method='POST' action='index.php?action=admin_set_moderator&user_id=".$id."' onsubmit=\"return confirm('Etes-vous s&ucirc;r de vouloir donner le statut de mod&eacute;rateur &agrave; ".$name."');\">"."\n";
@@ -111,7 +111,7 @@ if (!defined('IN_OGSMARKET')) {
 			echo"</th>";
 		//Sixième colonne
 			echo"<th>";
-			if ($is_active==1)
+			if ($is_active == 1)
 				{
 				echo "<font color=\"#00FF00\">Oui</font>";
 				//Bouton Désactiver
@@ -119,7 +119,7 @@ if (!defined('IN_OGSMARKET')) {
 					echo "\t"."<input type='image' src='images/usercheck.png' title='D&eacute;sactiver  ".$name."'>"."\n";
 					echo "</form>"."\n";
 				}
-			else 	{
+			else {
 				echo "<font color=\"#FF0000\">Non</font>";
 				//Bouton activer
 					echo "<form method='POST' action='index.php?action=admin_set_active&user_id=".$id."' onsubmit=\"return confirm('Êtes-vous s&ucirc;r de vouloir activer ".$name."');\">"."\n";
