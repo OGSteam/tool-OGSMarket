@@ -25,7 +25,7 @@ require_once("views/page_header.php");
 	<td>
 		<table width="100%">
 		<tr align="center">
-			<td align="center"><a href='http://ogsteam.fr'>OGSMarket</a>: Le commerce Ogamien par l'<b>OGSTeam</b></td>
+			<td align="center"><a href='https://www.ogsteam.fr'>OGSMarket</a>: Le commerce Ogamien par l'<b>OGSTeam</b></td>
 		</tr>
 		</table>
 	</td>

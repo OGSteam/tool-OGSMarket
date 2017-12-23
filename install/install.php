@@ -2,7 +2,7 @@
 /***************************************************************************
 *	filename	: index.php
 *	desc.		:
-*	Author		: Kyser - http://ogsteam.fr/
+*	Author		: Kyser - https://ogsteam.fr/
 *	created		: 07/01/2006
 *	modified	: 06/08/2006 12:11:09
 ***************************************************************************/
@@ -66,23 +66,23 @@ isset($pub_admin_username) && isset($pub_admin_password) && isset($pub_admin_pas
 		<tr>
 			<th colspan='2'>Configuration de la base de donn&eacute;es</th>
 		</tr>
-	
+
 		<tr>
 			<td class='taille'>Nom du serveur de base de donn&eacute;es / SGBD</td>
 			<td><input name='sgbd_server' type='text' value='<?php echo isset($pub_sgbd_server) ? $pub_sgbd_server : ''; ?>' /></td>
-		</tr>	
+		</tr>
 		<tr>
 			<td>Nom de votre base de donn&eacute;es</td>
 			<td><input name='sgbd_dbname' type='text' value='<?php echo isset($pub_sgbd_dbname) ? $pub_sgbd_dbname : ''; ?>' /></td>
-		</tr>	
+		</tr>
 		<tr>
 			<td>Nom d'utilisateur de la base de donn&eacute;es</td>
 			<td><input name='sgbd_username' type='text' value='<?php echo isset($pub_sgbd_username) ? $pub_sgbd_username : ''; ?>' /></td>
-		</tr>	
+		</tr>
 		<tr>
 			<td>Mot de passe</td>
 			<td><input name='sgbd_password' type='password' /></td>
-		</tr>	
+		</tr>
 		<tr>
 			<td>Pr&eacute;fixe des tables (Merci de laisser market_ pour l'instant)</td>
 			<td><input name='sgbd_tableprefix' type='text' value='<?php echo isset($pub_sgbd_tableprefix) ? $pub_sgbd_tableprefix : 'market_'; ?>' /></td>
@@ -93,15 +93,15 @@ isset($pub_admin_username) && isset($pub_admin_password) && isset($pub_admin_pas
 		<tr>
 			<th colspan='2'>Configuration du compte administrateur</th>
 		</tr>
-	
+
 		<tr>
 			<td class='taille'>Nom d'utilisateur</td>
 			<td><input name='admin_username' type='text' value='<?php echo isset($pub_admin_username) ? $pub_admin_username : ''; ?>' /></td>
-		</tr>	
+		</tr>
 		<tr>
 			<td>Mot de passe</td>
 			<td><input name='admin_password' type='password' /></td>
-		</tr>	
+		</tr>
 		<tr>
 			<td>Confirmez le mot de passe</td>
 			<td><input name='admin_password2' type='password' /></td>
@@ -117,7 +117,7 @@ isset($pub_admin_username) && isset($pub_admin_password) && isset($pub_admin_pas
 </form>
 
 <p>
-	<a href='http://ogsteam.fr/OGSpynstall/' class='italic'>Besoin d'assistance ?</a>
+	<a href='https://forum.ogsteam.fr' class='italic'>Besoin d'assistance ?</a>
 </p>
 
 <script type='text/javascript' src='../js/prototype.js'></script>

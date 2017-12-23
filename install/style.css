@@ -8,10 +8,10 @@ body
 {
 	width : 468px;
 	height : 60px;
-	
+
 	margin : auto;
 	margin-bottom : 50px;
-	
+
 	background-image : url('../images/logo.jpg');
 }
 
@@ -76,7 +76,7 @@ label
 	font-size : 11px;
 }
 
-a[href="http://ogsteam.fr/OGSpynstall/"]
+a[href="https://forum.ogsteam.fr/"]
 {
 	color : orange;
 	font-size : 11px;

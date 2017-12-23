@@ -27,11 +27,11 @@ else
 		$order = "id";
 	else
 		$order = $pub_order;
-	
+
 	if (isset($pub_subaction) && $pub_subaction == "usertrades")
 	{
 		$action = "usertrades";
-		
+
 		if (isset($pub_user_id))
 		{
 			$action_id = $pub_user_id;
@@ -42,14 +42,14 @@ else
 			$action_id = $user_data["id"];
 			$user = $user_data;
 		}
-		
+
 		$title = "Liste des Offres de ".$user["name"];
 	}
 	else
 	{
 		$action = "unitrades";
 		$action_id = $current_uni["id"];
-		
+
 		$title = "March&eacute; de l'".$current_uni["name"];
 	}
 ?>
@@ -59,7 +59,7 @@ else
 	<td>
 		<table width="100%">
 		<tr align="center">
-			<td align="center"><a href='http://ogsteam.fr'>OGSMarket</a>: Le commerce Ogamien par l'<b>OGSTeam</b></td>
+			<td align="center"><a href='https://forum.ogsteam.fr'>OGSMarket</a>: Le commerce Ogamien par l'<b>OGSTeam</b></td>
 		</tr>
 		</table>
 	</td>
@@ -97,14 +97,14 @@ else
 		if ($trade["expiration_date"] < time()) {
 			echo " (Offre Expir&eacute;e)";
 ?>
-    <form action='index.php' methode='post'> 
-      <input type='hidden' name='action' value='reactive_trade'> 
-      <input type='hidden' name='id' value='<?php echo $trade["id"]; ?>'> 
+    <form action='index.php' methode='post'>
+      <input type='hidden' name='action' value='reactive_trade'>
+      <input type='hidden' name='id' value='<?php echo $trade["id"]; ?>'>
       <input type="submit" value="R&eacute;activer Offre">
       </th>
-    </form> 
-<?php     
-		} 
+    </form>
+<?php
+		}
 		echo"</font></b></td>\n";
 		echo "\t</tr>\n";
 		echo "\t<tr>\n";
@@ -126,9 +126,9 @@ else
 		echo "\t<td  class='c'>\n";
 		//Menu
 		echo "\t<div align='center'>";
-		if (isset($user_data)) { 
+		if (isset($user_data)) {
 			if (($user_data["id"] == $trade["traderid"] || $user_data["is_admin"]) && $trade["pos_user"] == 0 && $trade["expiration_date"] > time()) {
-				echo "\t<div align='center'>";		
+				echo "\t<div align='center'>";
 				if ($user_data["id"] != $trade["traderid"]) echo "[a]";
 				echo "\t<a href='index.php?action=modifytrade&amp;tradeid=".$trade["id"]."'>Modifier</a></div>";
 			}
@@ -149,9 +149,9 @@ else
 		}// Fin menu
 		if ($trade["pos_user"] <> 0) {
 			$user2 = $Users->get_user($trade["pos_user"]);
-			if (!$user2) 
+			if (!$user2)
 				echo "\tMembre Inconnu\n";
-			else 
+			else
 				echo "\t<a href='index.php?action=profile&amp;id=".$trade["pos_user"]."'>R&eacute;serv&eacute; par: ".$user2["name"]."</a>\n";
 		}
 		echo "\t</td>\n";
@@ -167,7 +167,7 @@ else
 		for ($i = 1; $i <= $trade["g"]; $i++) echo "<td>G".$i."</td>";
 		echo "</tr><tr>";
 		for ($i = 1; $i <= $trade["g"]; $i++) echo "<td>".affiche_icone($trade["refunding"][$i])."</td>";
-		echo "</tr></table>";        
+		echo "</tr></table>";
 		echo "\n\t</td>\n";
 		echo "\t</td>\n";
 		echo "\t</tr>\n";

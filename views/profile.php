@@ -14,7 +14,7 @@ require_once ('views/page_header.php');
 if (isset($pub_id) && $pub_id != "") {
 	$user = $Users->get_user($pub_id);
 
-	if (!$user) 
+	if (!$user)
 		echo '<p>Aucun profil n\'a &eacute;t&eacute; trouv&eacute; !</p>';
 	else {
 ?>
@@ -66,7 +66,7 @@ if (isset($pub_id) && $pub_id != "") {
 					if (empty($user["irc_nick"]))
 						echo 'Non renseign&eacute;';
 					else
-						echo "<a href='http://ogsteam.fr/OGSMarket/index.php?action=pjirc' target='_blank'>".$user["irc_nick"]."</a>";
+						echo "<a href='https://www.ogsteam.fr' target='_blank'>".$user["irc_nick"]."</a>";
 				?>
 		</td>
 	</tr>
@@ -129,7 +129,7 @@ if (isset($pub_id) && $pub_id != "") {
 				<br /><input type="button" id="inverse-deliver" name="valide" value="Inverser la sélection" />
 			</th>
 			<th>
-				<?php 
+				<?php
 					for ($i = 1; $i <= 18; $i++) {
 						echo 'G'.$i.'<input type="checkbox" value="'.$i.'" id="deliver['.$i.']" name="deliver['.$i.']" '.($user_data["deliver"][$i] == 1 ? '"checked="checked"' : '').'/>';
 						if (($i/3) == ceil($i/3)) echo "<br/>";
@@ -143,13 +143,13 @@ if (isset($pub_id) && $pub_id != "") {
 				<br /><input type="button" id="inverse-refunding" name="valide" value="Inverser la sélection" />
 			</th>
 			<th>
-				<?php 
+				<?php
 					for ($i = 1; $i <= 18; $i++) {
 						echo 'G'.$i.'<input type="checkbox" value="'.$i.'" id="refunding['.$i.']" name="refunding['.$i.']" '.($user_data["refunding"][$i] == 1 ? '"checked="checked"' : '').'/>';
 						if (($i/3) == ceil($i/3)) echo "<br/>";
-					} 
+					}
 				?>
-				
+
 			</th>
 		</tr>
 		<tr>
@@ -157,7 +157,7 @@ if (isset($pub_id) && $pub_id != "") {
 			<th><input type='text' name='skin' value='<?php echo $user_data["skin"]; ?>'/></th>
 		</tr>
 	</table>
-	
+
 	<input type='submit' value='Sauvegarder' />
 </form>
 <?php }

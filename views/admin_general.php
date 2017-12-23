@@ -1,7 +1,7 @@
-<?php 
+<?php
 /***************************************************************************
 *	filename	: Admin_general.php
-*	desc.		: 
+*	desc.		:
 *	Author		: Mirtador
 *	created		: 11/15/06
 ***************************************************************************/
@@ -31,7 +31,7 @@ $member_activ_auto = ($server_config["users_active"]) == 1 ? "checked" : "";
 					<th>Skin de base:</th>
 					<th><input type="text" name="skin" size="100%" value="<?php echo $server_config["skin"]?>"/></th>
 				</tr>
-				
+
 				<tr>
 					<th>Logo Serveur:</th>
 					<th><input type="text" name="logo_server" size="100%" value="<?php echo $server_config["logo_server"]?>"/></th>
@@ -41,7 +41,7 @@ $member_activ_auto = ($server_config["users_active"]) == 1 ? "checked" : "";
 					<th>Activation automatique des nouveaux membres:</th>
 					<th><input type="checkbox" name="member_auto_activ" value="1" <?php echo $member_activ_auto ?> /></th>
 				</tr>
-			
+
 <!--Forum-->
 				<tr>
 					<td class="c" colspan="2" align="center">Forum</td>
@@ -142,7 +142,7 @@ $member_activ_auto = ($server_config["users_active"]) == 1 ? "checked" : "";
 			</tr>
 			<tr>
 				<th>Password Base d'identification:</th>
-				<th><input type="text" name="users_auth_dbpasswor" size="100%" value="<?php echo $server_config["users_auth_dbpasswor"]?>"/></th>
+				<th><input type="text" name="users_auth_dbpassword" size="100%" value="<?php echo $server_config["users_auth_dbpassword"]?>"/></th>
 			</tr>
 			<tr>
 				<th>Table d'identification:</th>

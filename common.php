@@ -2,7 +2,7 @@
 /***************************************************************************
 *	filename	: common.php
 *	desc.		:
-*	Author		: Kyser - http://www.ogsteam.fr/
+*	Author		: Kyser - https://www.ogsteam.fr/
 *	created		: 15/11/2005
 *	modified	: 30/08/2006 00:00:00
 ***************************************************************************/
@@ -14,7 +14,7 @@
 *  @package OGSMarket
 *  @subpackage main
 *  @author Kyser
-*  @link http://ogsteam.fr
+*  @link https://ogsteam.fr
 */
 if (!defined('IN_OGSMARKET')) {
 	die("Hacking attempt");
@@ -34,6 +34,8 @@ if (!isset($HTTP_POST_VARS) && isset($_POST)) {
         $HTTP_SESSION_VARS = $_SESSION;
     }
 }
+
+setlocale(LC_TIME, "fr_FR");
 
 //Récupération des paramètres de connexion à la base de données
 if (file_exists("parameters/id.php")) {
@@ -75,24 +77,13 @@ foreach ($_POST as $secvalue) {
 extract($_REQUEST, EXTR_PREFIX_ALL|EXTR_REFS, 'pub');
 
 //Connexion à la base de données et chargement des configurations
-if (!defined("INSTALL_IN_PROGRESS") || defined("UPGRADE_IN_PROGRESS")) {
-	$db = false;
+if (!defined("INSTALL_IN_PROGRESS")) {
+    // appel de l instance en cours
+    $db = sql_db::getInstance($db_host, $db_user, $db_password, $db_database);
 
-	if (is_array($db_host)) { // Si plusieurs hosts, on prends le premier de la liste qui fonctionne
-		for ($i = 0; $i < sizeof($db_host); $i++) {
-			$db = new sql_db($db_host[$i], $db_user[$i], $db_password[$i], $db_database[$i]);
-			if ($db->db_connect_id) {
-				break;
-			}
-		}
-	}
-	else {
-		$db = new sql_db($db_host, $db_user, $db_password, $db_database);
-	}
-
-	if (!$db->db_connect_id) {
-		die("".$LANG["common_impo"]."");
-	}
+    if (!$db->db_connect_id) {
+        die("Impossible de se connecter à la base de données");
+    }
 
 
 	//Récupération et encodage de l'adresse ip

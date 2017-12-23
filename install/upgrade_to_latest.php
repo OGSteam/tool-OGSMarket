@@ -36,11 +36,11 @@ $up_to_date = false;
 // $version="0.2";
 
 switch ($version) {
-	
+
 	case "0.2a" :
 		$version = "0.2";
 	break;
-	
+
 	case "0.2b" :
 		$version = "0.2";
 	break;
@@ -55,7 +55,7 @@ switch ($version) {
 		$requests[] = "INSERT INTO `".TABLE_CONFIG."` VALUES('adresseforum','Adresse de votre forum')";
 		$requests[] = "INSERT INTO `".TABLE_CONFIG."` VALUES('nomforum','nom de votre forum')";
 		$requests[] = "INSERT INTO `".TABLE_CONFIG."` VALUES('menuautre','autre')";
-		
+
 		$version = "0.3";
 	break;
 
@@ -73,17 +73,17 @@ switch ($version) {
 	case "0.41" :
 		$version = "0.4";
 	break;
-	
+
 	case "0.4b" :
 		$version = "0.4";
 	break;
-	
+
 	case "0.4" :
 		$requests[] = "INSERT INTO ".TABLE_CONFIG." VALUES('users_active', '0')";
-		
+
 		$request = "SELECT *  FROM ".TABLE_INFOS." WHERE `name` = 'home'";
 		if (!($result = $db->sql_query($request))) {
-			
+
 			$requests[] = "CREATE TABLE `".TABLE_INFOS."` (".
 				"`id` int(11) NOT NULL auto_increment COMMENT 'Identificateur de la variable infos',".
 				"`name` varchar(20) NOT NULL default '' COMMENT 'Nom de la variable infos',".
@@ -92,7 +92,7 @@ switch ($version) {
 				")";
 			$requests[] = "INSERT INTO `".TABLE_INFOS."` SELECT * FROM `".TABLE_CONFIG."` WHERE `name` = 'home'";
 		}
-	
+
 		$requests[] = "DELETE FROM `".TABLE_CONFIG."` WHERE `name` = 'home'";
 		$requests[] = "UPDATE ".TABLE_CONFIG." SET value = '0.5' WHERE name = 'version'";
 		$version = "0.5";
@@ -119,14 +119,14 @@ switch ($version) {
 		$requests[] = "ALTER TABLE ".TABLE_USER." ADD `skin` VARCHAR( 50 ) DEFAULT 'skin/' NOT NULL";
 		$version = "0.7";
 	break;
-	
-	case "0.7" :	
+
+	case "0.7" :
 		$requests[] = "UPDATE ".TABLE_CONFIG." SET value = '0.8' WHERE name = 'version'";
 		$requests[] = "ALTER TABLE ".TABLE_USER." ADD `modepq` enum('p','q') DEFAULT 'p' NOT NULL";
 		$requests[] = "ALTER TABLE ".TABLE_USER." CHANGE `alert_mail` `alert_mail` enum('0','1') DEFAULT '1' NOT NULL";
 		$requests[] = "ALTER TABLE ".TABLE_UNIVERS." CHANGE `url` `info`";
 		$requests[] = "ALTER TABLE ".TABLE_TRADE." ADD `deliver` VARCHAR( 255 ) NOT NULL AFTER `note` ,
-						ADD `refunding` VARCHAR( 255 ) NOT NULL AFTER `deliver`"; 
+						ADD `refunding` VARCHAR( 255 ) NOT NULL AFTER `deliver`";
 		$requests[] = "ALTER TABLE ".TABLE_TRADE." DROP `deliver_g1` ,
 						DROP `deliver_g2` ,
 						DROP `deliver_g3` ,
@@ -146,7 +146,7 @@ switch ($version) {
 						DROP `refunding_g8` ,
 						DROP `refunding_g9`";
 		$requests[] = "ALTER TABLE ".TABLE_USER." ADD `deliver` VARCHAR( 255 ) NOT NULL AFTER `modepq` ,
-						ADD `refunding` VARCHAR( 255 ) NOT NULL AFTER `deliver`"; 
+						ADD `refunding` VARCHAR( 255 ) NOT NULL AFTER `deliver`";
 		$requests[] = "DROP TABLE ".$table_prefix."trade_deals";
 		$requests[] = "DROP TABLE ".$table_prefix."menu";
 		$requests[] = "ALTER TABLE ".TABLE_CONFIG." DROP `id`";
@@ -163,8 +163,13 @@ switch ($version) {
 		$requests[] = "ALTER TABLE ".TABLE_USER."  ADD `trade_closed` BOOLEAN DEFAULT 'false' AFTER `pos_date`";
 		$version = "0.81";
 		$up_to_date = true;
+	case "0.81" :
+	$requests[] = "UPDATE ".TABLE_CONFIG." SET value = '2017.1' WHERE name = 'version'";
+	$version = "2017.1";
+	$up_to_date = true;
+
 	break;
-	
+
 
 	default:
 		$up_to_date = true;

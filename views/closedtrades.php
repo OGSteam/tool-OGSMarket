@@ -2,10 +2,10 @@
 /***************************************************************************
 *	filename	: closedtrades.php
 *	desc.		:
-*	Author		: ACH - http://ogsteam.fr/
+*	Author		: DarkNoon - https://www.ogsteam.fr/
 *	created		: 12/11/2009
-*	modified	: 
-*	modified	: 
+*	modified	:
+*	modified	:
 ***************************************************************************/
 
 if (!defined('IN_OGSMARKET'))
@@ -27,13 +27,13 @@ else
 		$order = "id";
 	else
 		$order = $pub_order;
-		
-	  
+
+
 		$action = "userclosedtrades";
 		$action_id = $current_uni["id"];
-		
+
 		$title = "March&eacute; de l'".$current_uni["name"];
-	
+
 ?>
 
 <table width="100%">
@@ -41,7 +41,7 @@ else
 	<td>
 		<table width="100%">
 		<tr align="center">
-			<td align="center"><a href='http://ogsteam.fr'>OGSMarket</a>: Le commerce Ogamien par l'<b>OGSTeam</b></td>
+			<td align="center"><a href='https://www.ogsteam.fr'>OGSMarket</a>: Le commerce Ogamien par l'<b>OGSTeam</b></td>
 		</tr>
 		</table>
 	</td>
@@ -72,7 +72,7 @@ else
 	{
 	  $seller = $Users->get_user($trade["traderid"]);
 	  $buyer  = $Users->get_user($trade["pos_user"]);
-	  
+
 		echo "<tr style='height: 5px;' />"; //Espace entre chaque offre
 		echo "\t    <tr>\n";
 		echo "\t      <td class='k'  rowspan='2' align='center'><img src='".$seller["avatar_link"]."' alt='No avatar' /><br />";

@@ -2,7 +2,7 @@
 /***************************************************************************
 *	filename	: 	user.php
 *	desc.		:
-*	Author		:	ericalens 
+*	Author		:	ericalens
 *	created		:	mardi 6 juin 2006, 06:35:28 (UTC+0200)
 *	modified	:	vendredi 9 juin 2006, 23:26:39 (UTC+0200)
 ***************************************************************************/
@@ -23,10 +23,10 @@ class cUsers {
 		if (empty($user_id) || intval($user_id) != $user_id) {
 			return false;
 		}
-		
+
 		$sql = "SELECT * FROM ".TABLE_USER." WHERE id=$user_id limit 1";
 		$db->sql_query($sql);
-		return $db->sql_fetch_assoc();	
+		return $db->sql_fetch_assoc();
 	}
 
 	function OnlineUsers($last_seen_seconds = 60) {
@@ -40,49 +40,49 @@ class cUsers {
 		}
 		return $retval;
 	}
-	
+
 	function newaccount($password, $login, $repassword, $email, $email_msn, $pm_link, $irc_nick, $note, $alert_mail) {
 		global $db;
-		
+
 		$sql = "SELECT value FROM ".TABLE_CONFIG." WHERE name='users_active'";
 		$result = $db->sql_query($sql);
 		list($active) = $db->sql_fetch_row($result);
-		
+
 		//manque des info là!
         if ($password == "" || $login == "" || $email == "") {
         	return "Il manque des informations !";
         }
-		
+
 		//ah non, mot de passe trop court.
 		if (strlen($password) < 6) {
 			return "Mot de passe inf&eacute;rieur à 6 caract&egrave;res";
 		}
-		
+
 		//erreur mot de passe.
 		if ($password != $repassword) {
 			return "erreur mot de passe";
 		}
 
-		$sql = "SELECT COUNT(*) FROM ".TABLE_USER." WHERE name like '".mysql_real_escape_string($login)."' OR (email like '".mysql_real_escape_string($email)."' AND email != '')";
+		$sql = "SELECT COUNT(*) FROM ".TABLE_USER." WHERE name like '".$db->sql_escape_string($login)."' OR (email like '".$db->sql_escape_string($email)."' AND email != '')";
 		$db->sql_query($sql);
 		// L'utilisateur existe.
 		list($nb) = $db->sql_fetch_row();
 		if ($nb != 0) {
 			return "Nom ou email d'utilisateur d&eacute;j&agrave; utilis&eacute;";
 		}
-		
+
 		//Valeur de la checkbox
-        $_alert_mail = $_POST["alert_mail"]; 
+        $_alert_mail = $_POST["alert_mail"];
         $alert_mail_ = 1;
         if (!isset($_alert_mail)) {
         	$alert_mail_ = 0;
         }
 
         //enregistrement.
-        $sql = "INSERT INTO ".TABLE_USER." (name, password, regdate, email, msn, pm_link, irc_nick, note, is_active, alert_mail) VALUES ('".mysql_real_escape_string($login)."', '".md5($password)."', ".time().", '".mysql_real_escape_string($email)."', '".mysql_real_escape_string($email_msn)."', '".mysql_real_escape_string($pm_link)."', '".mysql_real_escape_string($irc_nick)."', '".mysql_real_escape_string($note)."', '".$active."', '".$alert_mail_."')";
+        $sql = "INSERT INTO ".TABLE_USER." (name, password, regdate, email, msn, pm_link, irc_nick, note, is_active, alert_mail) VALUES ('".$db->sql_escape_string($login)."', '".md5($password)."', ".time().", '".$db->sql_escape_string($email)."', '".$db->sql_escape_string($email_msn)."', '".$db->sql_escape_string($pm_link)."', '".$db->sql_escape_string($irc_nick)."', '".$db->sql_escape_string($note)."', '".$active."', '".$alert_mail_."')";
         $return = $db->sql_query($sql);
         if (!$return) {
-        	return "erreur fatale durant l'inscription";
+        	return "Ereur lors de la création du compte";
         }
         return true;
 	}
@@ -114,7 +114,7 @@ class cUsers {
 		if (!empty($user_id)) {
 			global $db;
 			$db->sql_query("UPDATE ".TABLE_USER." SET "." is_admin='0' "." WHERE id=".$user_id);
-			return "Le membre a perdu son status d'admin";
+			return "Le membre a perdu son statut administrateur";
 		}
 }
 
@@ -142,7 +142,7 @@ class cUsers {
 		}
 }
 
-	
+
 	function login($form_username, $form_userpass) {
 		global $db;
 		global $server_config;
@@ -152,7 +152,7 @@ class cUsers {
 		switch ($server_config["users_auth_type"]) {
 			//Utilisation du listing interne d'utilisateurs
 			case "internal":
-				$db->sql_query("SELECT id,is_active FROM ".TABLE_USER." WHERE name like '".mysql_real_escape_string($form_username)."'");
+				$db->sql_query("SELECT id,is_active FROM ".TABLE_USER." WHERE name like '". $db->sql_escape_string($form_username)."'");
 				// L'utilisateur existe pas
 				if (!(list($id, $is_active) = $db->sql_fetch_row())) {
 					return false;
@@ -161,7 +161,7 @@ class cUsers {
 					return false;
 				}
 
-				$sql = "SELECT * FROM ".TABLE_USER." WHERE id = '".$id."'";	
+				$sql = "SELECT * FROM ".TABLE_USER." WHERE id = '".$id."'";
 				$db->sql_query($sql);
 				$user = $db->sql_fetch_assoc();
 				if ($user["password"] != md5($form_userpass)) {
@@ -170,15 +170,15 @@ class cUsers {
 
 				break;
 
-			//Connection à partir de la liste utilisateurs de punbb	
+			//Connection à partir de la liste utilisateurs de punbb
 			case "punbb":
-				$db_connect_id = mysql_connect($server_config["users_adr_auth_db"], $server_config["users_auth_dbuser"], $server_config["users_auth_dbpasswor"], true);
+				$db_connect_id = mysql_connect($server_config["users_adr_auth_db"], $server_config["users_auth_dbuser"], $server_config["users_auth_dbpassword"], true);
 				if (!$db_connect_id) die("Impossible de se connecter &agrave; la base de donn&eacute;es. Contactez l\'Administrator");
 				if (!mysql_select_db($server_config["users_auth_db"])) {
 					mysql_close($db_connect_id);
-					die("Impossible de se trouver la base de donn&eacute;es. Contactez l\'Administrator");	
+					die("Impossible de se trouver la base de donn&eacute;es. Contactez l\'Administrator");
 				}
-				$sql = "SELECT password,email FROM ".$server_config["users_auth_table"]." WHERE username='".mysql_real_escape_string($form_username)."'";
+				$sql = "SELECT password,email FROM ".$server_config["users_auth_table"]." WHERE username='".$db->sql_escape_string($form_username)."'";
 				$result = mysql_query($sql, $db_connect_id) or die(mysql_error());
 				list($db_password_hash, $db_email) = mysql_fetch_row($result);
 
@@ -194,10 +194,10 @@ class cUsers {
 					$authorized = true;
 				}
 				if (!$authorized) return false;
-				
-				$sql = "SELECT id FROM ".TABLE_USER." WHERE name like '".mysql_escape_string($form_username)."'";
+
+				$sql = "SELECT id FROM ".TABLE_USER." WHERE name like '".$db->sql_escape_string($form_username)."'";
 				$db->sql_query($sql);
-				
+
 				if (!(list($id) = $db->sql_fetch_row())) {
 					//l'utilisateur n'est pas dans la base OGSMarket , on l'ajoute
 
@@ -206,23 +206,23 @@ class cUsers {
 					           ."'".time()."','".time()."')";
 					$db->sql_query($sql);
 					$id = $db->sql_insertid();
-						   
+
 				}
 
-				$sql = "SELECT * FROM ".TABLE_USER." WHERE id=$id";	
+				$sql = "SELECT * FROM ".TABLE_USER." WHERE id=$id";
 				$db->sql_query($sql);
 				$user = $db->sql_fetch_assoc();
 
 				break;
 			//Connection à partir de la liste utilisateurs de SMF Forum
 			case "smf":
-				$db_connect_id = mysql_connect($server_config["users_adr_auth_db"], $server_config["users_auth_dbuser"], $server_config["users_auth_dbpasswor"], true);
+				$db_connect_id = mysql_connect($server_config["users_adr_auth_db"], $server_config["users_auth_dbuser"], $server_config["users_auth_dbpassword"], true);
 				if (!$db_connect_id) die("Impossible de se connecter &agrave; la base de donn&eacute;es. Contactez l\'Administrator");
 				if (!mysql_select_db($server_config["users_auth_db"])) {
 					mysql_close($db_connect_id);
-					die("Impossible de se trouver la base de donn&eacute;es. Contactez l\'Administrator");	
+					die("Impossible de se trouver la base de donn&eacute;es. Contactez l\'Administrator");
 				}
-				$sql = "SELECT passwd,emailAddress FROM ".$server_config["users_auth_table"]." WHERE memberName='".mysql_real_escape_string($form_username)."'";
+				$sql = "SELECT passwd,emailAddress FROM ".$server_config["users_auth_table"]." WHERE memberName='".$db->sql_escape_string($form_username)."'";
 				$result = mysql_query($sql, $db_connect_id) or die(mysql_error());
 				list($db_password_hash, $db_email) = mysql_fetch_row($result);
 
@@ -242,7 +242,7 @@ class cUsers {
 
 				$sql = "SELECT id FROM ".TABLE_USER." WHERE name like '".mysql_escape_string($form_username)."'";
 				$db->sql_query($sql);
-				
+
 				if (!(list($id) = $db->sql_fetch_row())) {
 					//l'utilisateur n'est pas dans la base OGSMarket , on l'ajoute
 
@@ -251,63 +251,62 @@ class cUsers {
 					           ."'".time()."','".time()."')";
 					$db->sql_query($sql);
 					$id = $db->sql_insertid();
-						   
+
 				}
 
-				$sql = "SELECT * FROM ".TABLE_USER." WHERE id=$id";	
+				$sql = "SELECT * FROM ".TABLE_USER." WHERE id=$id";
 				$db->sql_query($sql);
 				$user = $db->sql_fetch_assoc();
 
 				break;
-				
+
 				//CONNECTION PHPBB2 by ChRom
 			case "phpbb2":
-				$db_connect_id = mysql_connect($server_config["users_adr_auth_db"], $server_config["users_auth_dbuser"], $server_config["users_auth_dbpasswor"], true);
+				$db_connect_id = mysqli_connect($server_config["users_adr_auth_db"], $server_config["users_auth_dbuser"], $server_config["users_auth_dbpassword"], true);
 				if (!$db_connect_id) die("Impossible de se connecter &agrave; la base de donn&eacute;es. Contactez l\'Administrator");
-				if (!mysql_select_db($server_config["users_auth_db"])) {
-					mysql_close($db_connect_id);
-					die("Impossible de se trouver la base de donn&eacute;es. Contactez l\'Administrator");	
+				if (!mysqli_select_db($server_config["users_auth_db"])) {
+					mysqli_close($db_connect_id);
+					die("Impossible de se trouver la base de donn&eacute;es. Contactez l\'Administrator");
 				}
-				$sql = "SELECT user_password,user_email FROM ".$server_config["users_auth_table"]." WHERE username='".mysql_real_escape_string($form_username)."'";
-				$result = mysql_query($sql, $db_connect_id) or die(mysql_error());
-				list($db_password_hash, $db_email) = mysql_fetch_row($result);
-					
+				$sql = "SELECT user_password,user_email FROM ".$server_config["users_auth_table"]." WHERE username='".sqli_escape_string($form_username)."'";
+				$result = mysqli_query($sql, $db_connect_id) or die(mysqli_error());
+				list($db_password_hash, $db_email) = mysqli_fetch_row($result);
+
 				if ($db_password_hash != md5($form_userpass)) return false;
 
-				$sql = "SELECT id FROM ".TABLE_USER." WHERE name like '".mysql_escape_string($form_username)."'";
-				$db->sql_query($sql);
-				
-				if (!(list($id) = $db->sql_fetch_row())) {
+				$sql = "SELECT id FROM ".TABLE_USER." WHERE name like '".mysqli_escape_string($form_username)."'";
+				sqli_query($sql);
+
+				if (!(list($id) = $db->sqli_fetch_row())) {
 					//l'utilisateur n'est pas dans la base OGSMarket , on l'ajoute
 
 					$sql = "INSERT INTO ".TABLE_USER." (name,email,regdate,lastvisit)"
-					    ."VALUES('".mysql_escape_string($form_username)."','".$db_email."',"."'".time()."','".time()."')";
+					    ."VALUES('".mysqli_escape_string($form_username)."','".$db_email."',"."'".time()."','".time()."')";
 					$db->sql_query($sql);
 					$id = $db->sql_insertid();
-						   
+
 				}
 
-				$sql = "SELECT * FROM ".TABLE_USER." WHERE id= '".$id."'";	
+				$sql = "SELECT * FROM ".TABLE_USER." WHERE id= '".$id."'";
 				$db->sql_query($sql);
 				$user = $db->sql_fetch_assoc();
-				
+
 			break;
-				
+
 			default:
 				return false;
 		}
 
 		setcookie("ogsmarket_session", serialize(Array("name" => $form_username, "password" => md5($form_userpass), "validate" => (time() + 60*60*24*365))), (time() + 60*60*24*365));
-		
 		// Création ou mise à jour de la session serveur
 		list($nb_id) = $db->sql_fetch_row($db->sql_query("SELECT COUNT(id) FROM ".TABLE_SESSIONS." WHERE id = '".$user["id"]."'"));
 		if ($nb_id == 0) {
-			$db->sql_query("INSERT INTO ".TABLE_SESSIONS." (`id`, `ip`, `last_connect`) VALUES ('".$user["id"]."', '$user_ip', '".time()."')");
+			$db->sql_query("INSERT INTO ".TABLE_SESSIONS." (`id`, `ip`, `last_connect`, `last_visit`) VALUES ('".$user["id"]."', '$user_ip', '".time()."', '".time()."')");
 		}
 		else {
 			$db->sql_query("UPDATE ".TABLE_SESSIONS." u, ".TABLE_USER." v SET u.ip = '$user_ip', u.last_connect = '".time()."',  u.last_visit = '".time()."', v.countconnect = v.countconnect + 1 WHERE  u.id = v.id AND u.id = '".$user["id"]."'");
 		}
-		
+
 		// Unserialize deliver informations
 		$deliver = explode('_', $user["deliver"]);
 		$user["deliver"] = Array();
@@ -319,7 +318,7 @@ class cUsers {
 				$user["deliver"][$i] = 0;
 			}
 		}
-		
+
 		// Unserialize refunding informations
 		$refunding = explode('_', $user["refunding"]);
 		$user["refunding"] = Array();
@@ -331,21 +330,21 @@ class cUsers {
 				$user["refunding"][$i] = 0;
 			}
 		}
-		
+
 		$user_data = $user;
 		return $user_data;
 	}
-	
+
 	function logout() {
 		global $db;
 		global $_COOKIE;
 		global $user_data;
-		
+
 		$db->sql_query("DELETE FROM ".TABLE_SESSIONS." WHERE id = '".$user_data['id']."'");
 		setcookie("ogsmarket_session", '', (time()));
 		setcookie("ogsmarket_uni", '', (time()));
 	}
-	
+
 	function profile_html($userid) {
 		global $db;
 
@@ -360,23 +359,23 @@ class cUsers {
 		global $user_data;
 
 		$sql = "UPDATE ".TABLE_USER." SET "
-			." email = '".mysql_escape_string($email)."' ,"
-			." pm_link = '".mysql_escape_string($pm_link)."' ,"
-			." msn = '".mysql_escape_string($email_msn)."' ,"
-			." irc_nick = '".mysql_escape_string($irc_nick)."', "
-			." avatar_link = '".mysql_escape_string($avatar_link)."', "
+			." email = '".$db->sql_escape_string($email)."' ,"
+			." pm_link = '".$db->sql_escape_string($pm_link)."' ,"
+			." msn = '".$db->sql_escape_string($email_msn)."' ,"
+			." irc_nick = '".$db->sql_escape_string($irc_nick)."', "
+			." avatar_link = '".$db->sql_escape_string($avatar_link)."', "
 			." alert_mail = '".intval($alert_mail)."', "
-			." note = '".mysql_escape_string($note)."', "
-			." skin = '".mysql_real_escape_string($skin)."', "
-			." modepq = '".mysql_escape_string($modepq)."', "
+			." note = '".$db->sql_escape_string($note)."', "
+			." skin = '".$db->sql_escape_string($skin)."', "
+			." modepq = '".$db->sql_escape_string($modepq)."', "
 			." deliver = '".implode('_', $deliver)."', "
 			." refunding = '".implode('_', $refunding)."'"
 			." WHERE id=".$user_data["id"];
-			
+
 		$db->sql_query($sql);
 		redirection('index.php?action=profile');
 	}
-	
+
 	function init_user() {
 		global $db;
 		global $_SERVER;
@@ -385,9 +384,9 @@ class cUsers {
 
 		if (isset($_COOKIE['ogsmarket_session'])) {
 			$cookie = unserialize(stripslashes($_COOKIE['ogsmarket_session']));
-			
+
 			$user_data = $db->sql_fetch_assoc($db->sql_query("SELECT u.* FROM ".TABLE_USER." as u, ".TABLE_SESSIONS." as v WHERE v.ip = '$user_ip' AND u.name = '".$cookie['name']."' AND u.password = '".$cookie['password']."'"));
-			
+
 			if (isset($user_data['id'])) {
 				$db->sql_query("UPDATE ".TABLE_USER." u, ".TABLE_SESSIONS." v SET u.lastvisit = '".time()."', v.last_visit = '".time()."' WHERE u.id = v.id AND u.id = '".$user_data['id']."'");
 			}
@@ -403,7 +402,7 @@ class cUsers {
 					$user_data["deliver"][$i] = 0;
 				}
 			}
-			
+
 			// Unserialise refunding informations
 			$refunding = explode('_', $user_data["refunding"]);
 			$user_data["refunding"] = Array();
@@ -415,7 +414,7 @@ class cUsers {
 					$user_data["refunding"][$i] = 0;
 				}
 			}
-			
+
 			return $user_data;
 		} else return false;
 	}

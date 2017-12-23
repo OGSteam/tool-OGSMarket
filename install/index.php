@@ -2,7 +2,7 @@
 	/***************************************************************************
 	*	filename	: index.php
 	*	desc.		:
-	*	Author		: Kyser - http://ogsteam.fr/
+	*	Author		: Kyser - https://www.ogsteam.fr/
 	*	created		: 07/01/2006
 	*	modified	: 06/08/2006 12:11:09
 	***************************************************************************/
@@ -10,11 +10,11 @@
 	define('IN_OGSMARKET', true);
 	define('INSTALL_IN_PROGRESS', true);
 	if (isset($_POST['upgrade']) && !defined("UPGRADE_IN_PROGRESS")) define("UPGRADE_IN_PROGRESS", true);
-  
+
 	require_once('../common.php');
 	require_once('functions.php');
 
-	$version = '0.81';
+	$version = '2017.1';
 
 	if (!isset($pub_redirection))
 		$pub_redirection = '';
@@ -28,12 +28,12 @@
 		<link rel='stylesheet' type='text/css' href='../skin/formate.css' />
 		<link rel='stylesheet' type='text/css' href='style.css' />
 	</head>
-	
+
 	<body>
 		<div id='logo'></div>
-		
+
 		<h2>Bienvenue dans l'installation d'OGSMarket v <?php echo $version; ?></h2>
-		
+
 		<?php
 			if ($pub_redirection == 'install')
 				include('install.php');
@@ -42,11 +42,11 @@
 			else
 			{
 		?>
-		
+
 		<p>
-			Si vous souhaitez plus d'information, rendez vous sur ce forum : <a href='http://board.ogsteam.fr/'>http://board.ogsteam.fr/</a>
+			Si vous souhaitez plus d'information, rendez vous sur ce forum : <a href='https://forum.ogsteam.fr/'>https://forum.ogsteam.fr/</a>
 		</p>
-		
+
 		<form action='index.php' method='post'>
 			<p>
 				<label for='redirection'>Choisissez quel action vous d&eacute;sirez effectuer :</label>
@@ -57,13 +57,13 @@
 				</select>
 			</p>
 		</form>
-			
+
 		<?php
 			}
 		?>
-		
+
 		<p>
-			<span class='italic'><span class='bold'>OGSMarket</span> is a <span class='bold'>OGSTeam Software</span> &copy; 2005-2010</span><br />
+			<span class='italic'><span class='bold'>OGSMarket</span> is a <span class='bold'>OGSTeam Software</span> &copy; 2005-2017</span><br />
 			v <?php echo $version; ?>
 		</p>
 	</body>

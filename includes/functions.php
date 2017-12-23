@@ -17,7 +17,7 @@ if (!defined('IN_OGSMARKET')) {
 function redirection($url){
 	if(headers_sent()) {
 		die('<meta http-equiv="refresh" content="2; URL='.$url.'">');
-	} 
+	}
 	else{
 		header("Location: ".$url);
 		exit();
@@ -103,7 +103,7 @@ function get_universe($universeid) {
 		$uni["info"] = $info;
 		$uni["name"] = $name;
 
-		return $uni;			
+		return $uni;
 	}
 	return false;
 }
@@ -125,7 +125,7 @@ function init_serverconfig() {
 
     $result_config = $db->sql_query("SELECT name,value FROM ".TABLE_CONFIG);
     while (list($name, $value) = $db->sql_fetch_row($result_config)) {
-        $server_config[$name] = $value;  
+        $server_config[$name] = $value;
     }
 
     $result_infos = $db->sql_query("SELECT name,value FROM ".TABLE_INFOS);
@@ -149,7 +149,7 @@ function text_datediff($fromtime, $totime = '') {
 function bib_datediff($fromtime, $totime = '') {
 	$ret = array();
 
-	if ($totime == '')        
+	if ($totime == '')
 		$totime = time();
 
 	// En cas d'inversion des from/to on remet à l'endroit
@@ -231,22 +231,59 @@ function write_file($file, $mode, $text) {
 }
 
 /**
-* Transforme une ip de la notation decimale en hexadecimale
-* @param string $ip L'ip en entr&eacute;e sous la forme '192.168.0.1'
-* @return string Encodage hexadecimale sous la forme 'B0AA0001'
-*/
-function encode_ip($ip) {
-	$ip_sep = explode('.', $ip);
-	return sprintf('%02x%02x%02x%02x', $ip_sep[0], $ip_sep[1], $ip_sep[2], $ip_sep[3]);
+ * Convert an IP in Hex Format
+ * @param string $ip format xxx.xxx.xxx.xxx in IPv4 and xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx in IPv6
+ * @return string IP in hex : HHHHHHHH for IPv4 and HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH for IPv6
+ */
+function encode_ip($ip)
+{
+    $d = explode('.', $ip);
+    if (count($d) == 4) {
+        return sprintf('%02x%02x%02x%02x', $d[0], $d[1], $d[2], $d[3]);
+    }
+
+    $d = explode(':', preg_replace('/(^:)|(:$)/', '', $ip));
+    $res = '';
+    foreach ($d as $x) {
+            $res .= sprintf('%0' . ($x == '' ? (9 - count($d)) * 4 : 4) . 's', $x);
+    }
+    return $res;
 }
+
 /**
-* Transforme une ip de la notation hexadecimale en deecimal
-* @param string $ip_encode L'ip en entr&eacute;e sous la forme 'B0AA0001'
-* @return string DesEncodage decimal sous la forme '192.168.0.1'
-*/
-function decode_ip($ip_encode) {
-	$hexipbang = explode('.', chunk_split($ip_encode, 2, '.'));
-	return hexdec($hexipbang[0]).'.'.hexdec($hexipbang[1]).'.'.hexdec($hexipbang[2]).'.'.hexdec($hexipbang[3]);
+ * Convert an IP in Hex format to an IPv4 or IPv6 format
+ * @param string $int_ip IP encoded
+ * @return string $ip format xxx.xxx.xxx.xxx in IPv4 and xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx in IPv6
+ */
+function decode_ip($int_ip)
+{
+    if (strlen($int_ip) == 32) {
+        $int_ip = substr(chunk_split($int_ip, 4, ':'), 0, 39);
+        $int_ip = ':' . implode(':', array_map("hexhex", explode(':', $int_ip))) . ':';
+        preg_match_all("/(:0)+/", $int_ip, $zeros);
+        if (count($zeros[0]) > 0) {
+            $match = '';
+            foreach ($zeros[0] as $zero) {
+                            if (strlen($zero) > strlen($match)) {
+                                                $match = $zero;
+                            }
+            }
+            $int_ip = preg_replace('/' . $match . '/', ':', $int_ip, 1);
+        }
+        return preg_replace('/(^:([^:]))|(([^:]):$)/', '$2$4', $int_ip);
+    }
+    $hexipbang = explode('.', chunk_split($int_ip, 2, '.'));
+    return hexdec($hexipbang[0]) . '.' . hexdec($hexipbang[1]) . '.' . hexdec($hexipbang[2]) . '.' . hexdec($hexipbang[3]);
+}
+
+/**
+ * Converts a hex value to another hew value (depnding of the current php version on the server)
+ * @param string $value The initial hexvalue
+ * @return string the new hew value
+ */
+function hexhex($value)
+{
+    return dechex(hexdec($value));
 }
 
 /*
@@ -260,13 +297,13 @@ function formate_number($number)
 
 /**
 * Verification des données envoyées par l'utilisateur
-* @return bool true si correct 
+* @return bool true si correct
 */
 function check_var($value, $type_check, $mask = "", $auth_null = true) {
 	if ($auth_null && $value == "") {
 		return true;
 	}
-	
+
 	switch ($type_check) {
 		//Pseudo des membres
 		case "Pseudo_Groupname" :
@@ -448,14 +485,14 @@ function affiche_liste($sortby, $current_uni) {
 */
 function admin_config_set() {
 	global $db;
-	global $pub_member_auto_activ, $pub_users_auth_type, $pub_users_adr_auth_db, $pub_users_auth_db, $pub_users_auth_dbuser, $pub_users_auth_dbpasswor, $pub_users_auth_table,
+	global $pub_member_auto_activ, $pub_users_auth_type, $pub_users_adr_auth_db, $pub_users_auth_db, $pub_users_auth_dbuser, $pub_users_auth_dbpassword, $pub_users_auth_table,
 		$pub_users_inscription_ur, $pub_mail_nom_expediteur, $pub_mail_expediteur, $pub_mail_object, $pub_mail_message, $pub_servername, $pub_skin, $pub_logo_server, $pub_menuprive, $pub_menulogout, $pub_menuautre,
 		$pub_menuforum, $pub_nomforum, $pub_adresseforum, $pub_home, $pub_market_read_access, $pub_market_write_access, $pub_market_password;
-	
+
   	if ($pub_users_auth_type == "" || $pub_skin == "" || $pub_servername == "") {
   		redirection("index.php?action=manque_info&goto=admin");
   	}
-	
+
 	$pub_users_active = (is_null($pub_member_auto_activ)) ? "0" : "1";
 
 	$queries = array();
@@ -463,7 +500,7 @@ function admin_config_set() {
 	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_adr_auth_db."' WHERE name='users_adr_auth_db' LIMIT 1;";
 	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_auth_db."' WHERE name='users_auth_db' LIMIT 1;";
 	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_auth_dbuser."' WHERE name='users_auth_dbuser' LIMIT 1;";
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_auth_dbpasswor."' WHERE name='users_auth_dbpasswor' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_auth_dbpassword."' WHERE name='users_auth_dbpassword' LIMIT 1;";
 	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_auth_table."' WHERE name='users_auth_table' LIMIT 1;";
 	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_inscription_ur."' WHERE name='users_inscription_ur' LIMIT 1;";
 
@@ -493,9 +530,9 @@ function admin_config_set() {
 
 	foreach ($queries as $query) {
 		$db->sql_query($query);
-		
+
 	}
-	
+
 	return "Param&egrave;tres mis &agrave; jour.";
 }
 
@@ -505,10 +542,10 @@ function admin_config_set() {
 function admin_market_set() {
 	global $db;
 	global $pub_max_trade_delay_hours, $pub_max_trade_by_univers, $pub_tauxmetal, $pub_tauxcristal, $pub_tauxdeuterium, $pub_view_trade;
-	
+
 	//Conversion en heures
 	$pub_max_trade_delay_seco = ($pub_max_trade_delay_hours)*60*60;
-			
+
 	$queries = array();
 	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_max_trade_by_univers."' WHERE name='max_trade_by_univers' LIMIT 1;";
 	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_max_trade_delay_seco."' WHERE name='max_trade_delay_seco' LIMIT 1;";
@@ -523,7 +560,7 @@ function admin_market_set() {
 	{
 		$result = $db->sql_query($query);
 	}
-	
+
 	return "Param&egrave;tres Commerciaux Mis &agrave; Jour";
 }
 
@@ -536,8 +573,8 @@ function market_create() {
 	global $pub_name, $pub_mdp, $pub_om, $pub_oc, $pub_od, $pub_dm, $pub_dc, $pub_dd, $pub_duree, $pub_note, $pub_id,
 		$pub_og1, $pub_og2, $pub_og3, $pub_og4, $pub_og5, $pub_og6, $pub_og7, $pub_og8, $pub_og9,
 		$pub_dg1, $pub_dg2, $pub_dg3, $pub_dg4, $pub_dg5, $pub_dg6, $pub_dg7, $pub_dg8, $pub_dg9;
-			
-	$sql = "SELECT id,is_active FROM ".TABLE_USER." WHERE name like '".mysql_real_escape_string($pub_name)."'";
+
+	$sql = "SELECT id,is_active FROM ".TABLE_USER." WHERE name like '".$db->sql_escape_string($pub_name)."'";
 	$db->sql_query($sql);
 
 	// L'utilisateur existe pas
@@ -546,10 +583,10 @@ function market_create() {
 	}
 
 	if ($is_active == 1) {
-		$sql = "SELECT * FROM ".TABLE_USER." WHERE id = '".$id."'";	
+		$sql = "SELECT * FROM ".TABLE_USER." WHERE id = '".$id."'";
 		$db->sql_query($sql);
 		$user = $db->sql_fetch_assoc();
-		if ($user["password"] != $pub_mdp) 
+		if ($user["password"] != $pub_mdp)
 			return false;
 	}
 	//$_SESSION["username"] = $form_username;
@@ -557,7 +594,7 @@ function market_create() {
 
 	$user_data = $user;
 	return $user_data;
-	
+
 	$Trades->insert_new($user_data["id"], $pub_id,
 									intval($pub_om),
 									intval($pub_oc),

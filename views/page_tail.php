@@ -26,7 +26,7 @@ $php_timing = $php_end - $php_start - $sql_timing;
 	<td>
 		<center>
 			<font size="2">
-				<i><b><a href="http://ogsteam.fr" target="_blank">OGSMarket</a></b> is a <b>OGSTeam Software</b> &copy; 2010</i><br />v <?php echo $server_config["version"]; ?><br />
+				<i><b><a href="https://www.ogsteam.fr" target="_blank">OGSMarket</a></b> is a <b>OGSTeam Software</b> &copy; 2017</i><br />v <?php echo $server_config["version"]; ?><br />
 				<i>Temps de génération <?php echo round($php_timing + $sql_timing, 3); ?> sec (<b>PHP</b> : <?php echo round($php_timing, 3); ?> / <b>SQL</b> : <?php echo round($sql_timing, 3); ?>)<br /></i>
 			</font>
 		</center>
@@ -35,4 +35,3 @@ $php_timing = $php_end - $php_start - $sql_timing;
 </table>
 </body>
 </html>
-

@@ -7,21 +7,20 @@ CREATE TABLE `market_user` (
 	`name` VARCHAR( 30 ) NOT NULL COMMENT 'Nom utilisateur',
 	`password` VARCHAR( 32 ) NOT NULL COMMENT 'md5 du mot de passe',
 	`regdate` INT( 11 ) NOT NULL COMMENT 'Date de creation',
-	`lastvisit` INT( 11 ) NOT NULL COMMENT 'Dernière visite',
+	`lastvisit` INT( 11 ) NOT NULL COMMENT 'Derniere visite',
 	`countconnect` INT( 11 ) NOT NULL COMMENT 'Decompte du nombre de connexion',
-	`email` VARCHAR( 250 ) NOT NULL COMMENT 'Email',
-	`msn` VARCHAR( 100 ) NOT NULL COMMENT 'Email MSN',
-	`pm_link` VARCHAR( 30 ) NOT NULL COMMENT 'Lien Message Prive',
-	`irc_nick` VARCHAR( 30 ) NOT NULL COMMENT 'Nick IRC',
-	`avatar_link` varchar(100) NOT NULL COMMENT 'Lien Avatar',
-	`note` VARCHAR( 250) NOT NULL COMMENT 'Description User',
+	`email` VARCHAR( 250 ) COMMENT 'Email',
+	`pm_link` VARCHAR( 30 ) COMMENT 'Lien Message Prive',
+	`irc_nick` VARCHAR( 30 ) COMMENT 'Nick IRC',
+	`avatar_link` varchar(100) COMMENT 'Lien Avatar',
+	`note` VARCHAR( 250) COMMENT 'Description User',
 	`account_type` VARCHAR( 10 ) NOT NULL DEFAULT 'internal' COMMENT 'Type de comptes',
 	`is_admin` ENUM('0','1') NOT NULL DEFAULT '0' COMMENT 'Administrateur',
-	`is_moderator` ENUM('0','1') NOT NULL DEFAULT '0' COMMENT 'Modérateur',
+	`is_moderator` ENUM('0','1') NOT NULL DEFAULT '0' COMMENT 'Moderateur',
 	`is_active` ENUM('0','1') NOT NULL DEFAULT '1' COMMENT 'Est Actif',
 	`alert_mail` enum('0','1') NOT NULL default '1',
 	`skin` VARCHAR(50) NOT NULL DEFAULT 'skin/' COMMENT 'Skin de l utilisateur',
-	`modepq` enum('p','q') NOT NULL DEFAULT 'p' COMMENT 'Présélection saisie',
+	`modepq` enum('p','q') NOT NULL DEFAULT 'p' COMMENT 'Preselection saisie',
 	`deliver` VARCHAR( 255 ) NOT NULL DEFAULT '0' COMMENT 'Livrable',
 	`refunding` VARCHAR( 255 ) NOT NULL DEFAULT '0' COMMENT 'Payable'
 );
@@ -35,7 +34,7 @@ CREATE TABLE `market_user` (
 CREATE TABLE `market_univers` (
 	`id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Identificateur Univers',
 	`info` VARCHAR( 255 ) NOT NULL COMMENT 'Description',
-	`name` VARCHAR( 40 ) NOT NULL COMMENT 'Nom userfriendly de l''univers',
+	`name` VARCHAR( 40 ) NOT NULL COMMENT 'Nom userfriendly de l univers',
 	`g` INT(3) NOT NULL
 );
 
@@ -45,21 +44,21 @@ CREATE TABLE `market_univers` (
 ##
 
 CREATE TABLE `market_trade` (
-	`id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Identificateur de l''Žchange',
+	`id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Identificateur de lechange',
 	`traderid` INT( 11 ) NOT NULL COMMENT 'Identificateur de l''utilisateur ',
-	`universid` INT( 11 ) NOT NULL COMMENT 'Identificateur de l''univers de l''Žchange',
-	`offer_metal` INT( 11 ) NOT NULL DEFAULT '0' COMMENT 'Offre en mŽtal',
+	`universid` INT( 11 ) NOT NULL COMMENT 'Identificateur de l''univers de lechange',
+	`offer_metal` INT( 11 ) NOT NULL DEFAULT '0' COMMENT 'Offre en metal',
 	`offer_crystal` INT( 11 ) NOT NULL DEFAULT '0' COMMENT 'Offre en crystal',
 	`offer_deuterium` INT( 11 ) NOT NULL DEFAULT '0' COMMENT 'Offre en deuterium',
-	`want_metal` INT( 11 ) NOT NULL DEFAULT '0' COMMENT 'Demande en mŽtal',
+	`want_metal` INT( 11 ) NOT NULL DEFAULT '0' COMMENT 'Demande en metal',
 	`want_crystal` INT( 11 ) NOT NULL DEFAULT '0' COMMENT 'Demande en crystal',
 	`want_deuterium` INT( 11 ) NOT NULL DEFAULT '0' COMMENT 'Demande en deuterium',
-	`creation_date` INT( 11 ) NOT NULL COMMENT 'Date de crŽation del''offre',
-	`expiration_date` INT( 11 ) NOT NULL COMMENT 'Date d''expiration de l''offre',
+	`creation_date` INT( 11 ) NOT NULL COMMENT 'Date de creation de loffre',
+	`expiration_date` INT( 11 ) NOT NULL COMMENT 'Date d''expiration de loffre',
 	`note` TEXT NULL COMMENT 'Note du vendeur pour son offre',
 	`deliver` VARCHAR( 255 ) NOT NULL DEFAULT '0' COMMENT 'Livrable',
 	`refunding` VARCHAR( 255 ) NOT NULL DEFAULT '0' COMMENT 'Payable',
-	`pos_user` INT NOT NULL DEFAULT '0' COMMENT 'Personne qui a réservé le trade',
+	`pos_user` INT NOT NULL DEFAULT '0' COMMENT 'Personne qui a reserve le trade',
 	`pos_date` INT NOT NULL COMMENT 'Date de Reservation',
   `trade_closed` TINYINT(1) DEFAULT '0' COMMENT '1 Si la transaction est terminee'
 );
@@ -72,8 +71,8 @@ CREATE TABLE `market_trade` (
 CREATE TABLE `market_comment` (
 	`id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Identificateur du commentaire',
 	`tradeid` INT( 11 ) NOT NULL COMMENT 'Identificateur du trade auquel se rapporte le commentaire',
-	`userid` INT( 11 ) NOT NULL COMMENT 'Identificateur de l''utilisateur',
-	`replyed_id` INT( 11 ) NOT NULL COMMENT 'Identificateur eventuel du commentaire auquel on répond',
+	`userid` INT( 11 ) NOT NULL COMMENT 'Identificateur de l utilisateur',
+	`replyed_id` INT( 11 ) NOT NULL COMMENT 'Identificateur eventuel du commentaire auquel on repond',
 	`post` TEXT NOT NULL COMMENT 'Le corps du commentaire'
 );
 
@@ -83,9 +82,9 @@ CREATE TABLE `market_comment` (
 
 CREATE TABLE `market_sessions` (
 	`id` int(11) NOT NULL COMMENT 'Identificateur BD',
-	`ip` varchar(13) NOT NULL COMMENT 'Adresse IP',
-	`last_connect` int(11) NOT NULL COMMENT 'Dernière connexion',
-	`last_visit` int(11) NOT NULL,
+	`ip` varchar(32) NOT NULL COMMENT 'Adresse IP',
+	`last_connect` int(11) NOT NULL COMMENT 'Derniere connexion',
+	`last_visit` int(11) NOT NULL COMMENT 'Derniere connexion',
 	PRIMARY KEY  (`id`)
 );
 
@@ -109,7 +108,7 @@ CREATE TABLE `market_ogspy_auth` (
 ## Initialisation de la configuration par defaut (2 tables : config et infos)
 ##
 CREATE TABLE `market_config` (
-	`name` VARCHAR( 20 ) NOT NULL COMMENT 'Nom de la variable config',
+	`name` VARCHAR( 50 ) NOT NULL COMMENT 'Nom de la variable config',
 	`value` VARCHAR( 255 ) NOT NULL COMMENT 'Valeur de la cariable config'
 );
 
@@ -139,17 +138,17 @@ INSERT INTO `market_config` ( `name` , `value` ) VALUES('forum','logout');
 ## le skin par defaut du serveur
 INSERT INTO `market_config` ( `name` , `value` ) VALUES('skin','skin/');
 
-## Nombre maximum de trade par utilisateur et par univers autorisŽ (0 pour infini, attention au spam)
+## Nombre maximum de trade par utilisateur et par univers autorisÃ© (0 pour infini, attention au spam)
 INSERT INTO `market_config` ( `name` , `value` ) VALUES('max_trade_by_universe','5');
 
-## Durée maximum d'un trade (5 jours.... qu'on se retrouve pas avec des trades datant de 3 mois...)
-INSERT INTO `market_config` ( `name` , `value` ) VALUES('max_trade_delay_seconds','432000');  
+## DurÃ©e maximum du trade (5 jours par dÃ©faut)
+INSERT INTO `market_config` ( `name` , `value` ) VALUES('max_trade_delay_seconds','432000');
 
 ##Purge automatique des trades expires et de leur commentaires (1=oui , 0 = Non)
-INSERT INTO `market_config` ( `name` , `value` ) VALUES('autopurgeexpiredtrade','1');   
+INSERT INTO `market_config` ( `name` , `value` ) VALUES('autopurgeexpiredtrade','1');
 
 ## Delai apres expiration pour effacer les trades et commentaires
-INSERT INTO `market_config` ( `name` , `value` ) VALUES('autopurgeexpiredtrade_delay','86400');   
+INSERT INTO `market_config` ( `name` , `value` ) VALUES('autopurgeexpiredtrade_delay','86400');
 
 ## Nom du serveur , Afficher en titre de page Web
 INSERT INTO `market_config` ( `name` , `value` ) VALUES('servername','OGSMARKET');
