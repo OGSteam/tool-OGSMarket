@@ -4,7 +4,7 @@ function inverse(idOfCheckBox)
 {
 	var checkboxes = $('[name^="' + idOfCheckBox + '"]');
 	
-	checkboxes.each(function(element)
+	checkboxes.each(function(index, element)
 	{
 		if (element.checked)
 			element.checked = false;
@@ -20,9 +20,9 @@ $( window ).on('load', function() {
 
 	/* Page "Nouvelle offre" -- Inversion des galaxie */
 	
-	$('input[id^="inverse"]').each(function(element)
+	$("[id^=inverse]").each(function( index, element)
 	{
-		element.click( function()
+        $( this ).click( function()
 		{
 			inverse(element.id.split('-')[1]);
 		});
@@ -47,16 +47,16 @@ $( window ).on('load', function() {
 
         $( this ).click( function()
 		{
-			$('#new_market').show();
+			$("#new_market").show();
 			
-			$('#admin_mid').val(id);
-			$('#admin_maction').val('admin_edit_univers_execute');
+			$("#admin_mid").val(id);
+			$("#admin_maction").val('admin_edit_univers_execute');
 			
-			$('#admin_mname').val ($('#name_' + id).text());
-			$('#admin_minfo').val ($('#info_' + id).text());
-			$('#admin_mg').val ($('#g_' + id).text());
+			$("#admin_mname").val ($('#name_' + id).text());
+			$("#admin_minfo").val ($('#info_' + id).text());
+			$("#admin_mg").val ($('#g_' + id).text());
 			
-			$('#action').val('Modifier');
+			$("#action").val('Modifier');
 		});
 	});
 	
