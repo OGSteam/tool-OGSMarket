@@ -84,7 +84,7 @@ class cTrades {
 		$expiration = $now + intval($secs_duration);
 		$sql = " INSERT INTO ".TABLE_TRADE
 			." (`id`,`traderid`,`universid`,`offer_metal`,`offer_crystal`,`offer_deuterium`,`want_metal`,`want_crystal`,`want_deuterium`,`creation_date`,`expiration_date`,`note`,`deliver`,`refunding`)"
-			." VALUES(null,".intval($traderid).",".intval($universid).",".intval($offer_metal).",".intval($offer_crystal).",".intval($offer_deuterium).",".intval($want_metal).",".intval($want_crystal).",".intval($want_deuterium).",$now,$expiration,'".mysql_escape_string($note)."','".implode("_", $deliver)."','".implode("_", $refunding)."')";
+			." VALUES(null,".intval($traderid).",".intval($universid).",".intval($offer_metal).",".intval($offer_crystal).",".intval($offer_deuterium).",".intval($want_metal).",".intval($want_crystal).",".intval($want_deuterium).",$now,$expiration,'".$db->sql_escape_string($note)."','".implode("_", $deliver)."','".implode("_", $refunding)."')";
 
 		$result = $db->sql_query($sql);	
 
@@ -112,7 +112,7 @@ class cTrades {
 		$sql = " UPDATE ".TABLE_TRADE." SET "
 			."`offer_metal`=".intval($offer_metal).",`offer_crystal`=".intval($offer_crystal).",`offer_deuterium`=".intval($offer_deuterium).","
 			."`want_metal`=".intval($want_metal).",`want_crystal`=".intval($want_crystal).",`want_deuterium`=".intval($want_deuterium).","
-			."`expiration_date`=".$expiration_date.",`note`='".mysql_escape_string($note)."',"
+			."`expiration_date`=".$expiration_date.",`note`='".$db->sql_escape_string($note)."',"
 			."`deliver`='".implode('_', $deliver)."', `refunding`='".implode('_', $refunding)."' WHERE `id`=".intval($id)." ";
 
 		if (!$result = $db->sql_query($sql)) {
@@ -407,7 +407,7 @@ function reactive_trade($trade_id) {
 	$trade = $Trades->trades_array("uniquetrade", $trade_id);
 	$now = time();
 	$period = intval($trade["expiration_date"]) - intval($trade["creation_date"]);
-	$expiration = ($period) > $server_config["max_trade_delay_seco"] ? $server_config["max_trade_delay_seco"] + $now : $period + $now;
+	$expiration = ($period) > $server_config["max_trade_delay_seconds"] ? $server_config["max_trade_delay_seconds"] + $now : $period + $now;
 	$Trades->reactive_trade($trade_id, $now, $expiration);
 	return "Offre r&eacute;activ&eacute;e - ".$current_uni["name"];
 	//$alert = "reactiver";
@@ -441,12 +441,12 @@ function update_trade() {
 					return "Le total des ressources demand&eacute;es est &eacute;gal à 0.<br>Vous devez fournir une valeur valide >0 pour , au moins, une de vos ressources demand&eacute;es";
 				}
 				else {
-					if (intval($pub_expiration_hours)*60*60 > $server_config["max_trade_delay_seco"]) {
-						return "Le d&eacute;lai de prolongation ne doit d&eacute;passer ".intval($server_config["max_trade_delay_seco"]/(60*60))." heures (".text_datediff(time() + $server_config["max_trade_delay_seco"]).")";
+					if (intval($pub_expiration_hours)*60*60 > $server_config["max_trade_delay_seconds"]) {
+						return "Le d&eacute;lai de prolongation ne doit d&eacute;passer ".intval($server_config["max_trade_delay_seconds"]/(60*60))." heures (".text_datediff(time() + $server_config["max_trade_delay_seco"]).")";
 					}
 					else {
 						// Calcul de la prolongation
-						$maxi = $server_config["max_trade_delay_seco"]*2;
+						$maxi = $server_config["max_trade_delay_seconds"]*2;
 
 						if ($pub_expiration_hours == '0') 
 							$expiration = $pub_expiration_date;
@@ -498,9 +498,9 @@ function add_trade() {
 				if ($totalressources <= 0)
 					return "Le total des ressources demandés est égal à 0.<br>Vous devez fournir une valeur valide >0 pour , au moins, une de vos ressources demandés";
 				else {
-					if (intval($pub_expiration_hours) < 1 || intval($pub_expiration_hours)*60*60 > $server_config["max_trade_delay_seco"])
-						return "Le delai de validité doit etre compris entre 1 heure et ".intval($server_config["max_trade_delay_seco"]/(60*60))." heures "
-						."(".text_datediff(time() + $server_config["max_trade_delay_seco"]).")";
+					if (intval($pub_expiration_hours) < 1 || intval($pub_expiration_hours)*60*60 > $server_config["max_trade_delay_seconds"])
+						return "Le delai de validité doit etre compris entre 1 heure et ".intval($server_config["max_trade_delay_seconds"]/(60*60))." heures "
+						."(".text_datediff(time() + $server_config["max_trade_delay_seconds"]).")";
 					else {							
 						$Trades->insert_new($user_data["id"], $current_uni["id"],
 									intval($pub_offer_metal),

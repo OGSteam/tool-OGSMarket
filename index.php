@@ -34,7 +34,7 @@ switch ($pub_action) {
 		break;
 
 	case "newaccount":
-		$result = $Users->newaccount($pub_password, $pub_name, $pub_repassword, $pub_email, $pub_email_msn, $pub_pm_link, $pub_irc_nick, $pub_note, $pub_active);
+		$result = $Users->newaccount($pub_password, $pub_name, $pub_repassword, $pub_email, $pub_pm_link, $pub_irc_nick, $pub_note, $pub_active);
 		if ($result !== true) {
 			$pub_info = $result;
 			include("views/inscription.php");
@@ -61,7 +61,7 @@ switch ($pub_action) {
 		break;
 		
 	case "set_profile" :
-		$Users->set_profile($pub_email, $pub_email_msn, $pub_pm_link, $pub_irc_nick, $pub_avatar_link, $pub_alert_mail, $pub_skin, $pub_note, $pub_modepq, $pub_deliver, $pub_refunding);
+		$Users->set_profile($pub_email, $pub_pm_link, $pub_irc_nick, $pub_avatar_link, $pub_alert_mail, $pub_skin, $pub_note, $pub_modepq, $pub_deliver, $pub_refunding);
 		break;
 		
 	case "logout":

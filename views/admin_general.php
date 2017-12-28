@@ -9,7 +9,7 @@ if (!defined('IN_OGSMARKET')) {
 	die("Hacking attempt");
 }
 //Conversion en heures (suite)
-$max_trade_delay = ($server_config["max_trade_delay_seco"])/60/60;
+$max_trade_delay = ($server_config["max_trade_delay_seconds"])/60/60;
 
 //Conversion des attributs des checkbox
 $member_activ_auto = ($server_config["users_active"]) == 1 ? "checked" : "";
@@ -150,7 +150,7 @@ $member_activ_auto = ($server_config["users_active"]) == 1 ? "checked" : "";
 			</tr>
 			<tr>
 				<th>URL d'inscription:</th>
-				<th><input type="text" name="users_inscription_ur" size="100%" value="<?php echo $server_config["users_inscription_ur"]?>"/></th>
+				<th><input type="text" name="users_inscription_url" size="100%" value="<?php echo $server_config["users_inscription_url"]?>"/></th>
 			</tr>
 
 <!--MOD MARKET-->

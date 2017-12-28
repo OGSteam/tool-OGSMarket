@@ -41,7 +41,7 @@ class cUsers {
 		return $retval;
 	}
 
-	function newaccount($password, $login, $repassword, $email, $email_msn, $pm_link, $irc_nick, $note, $alert_mail) {
+	function newaccount($password, $login, $repassword, $email, $pm_link, $irc_nick, $note, $alert_mail) {
 		global $db;
 
 		$sql = "SELECT value FROM ".TABLE_CONFIG." WHERE name='users_active'";
@@ -79,7 +79,7 @@ class cUsers {
         }
 
         //enregistrement.
-        $sql = "INSERT INTO ".TABLE_USER." (name, password, regdate, email, msn, pm_link, irc_nick, note, is_active, alert_mail) VALUES ('".$db->sql_escape_string($login)."', '".md5($password)."', ".time().", '".$db->sql_escape_string($email)."', '".$db->sql_escape_string($email_msn)."', '".$db->sql_escape_string($pm_link)."', '".$db->sql_escape_string($irc_nick)."', '".$db->sql_escape_string($note)."', '".$active."', '".$alert_mail_."')";
+        $sql = "INSERT INTO ".TABLE_USER." (name, password, regdate, email, pm_link, irc_nick, note, is_active, alert_mail) VALUES ('".$db->sql_escape_string($login)."', '".md5($password)."', ".time().", '".$db->sql_escape_string($email)."', '".$db->sql_escape_string($pm_link)."', '".$db->sql_escape_string($irc_nick)."', '".$db->sql_escape_string($note)."', '".$active."', '".$alert_mail_."')";
         $return = $db->sql_query($sql);
         if (!$return) {
         	return "Ereur lors de la création du compte";
@@ -202,7 +202,7 @@ class cUsers {
 					//l'utilisateur n'est pas dans la base OGSMarket , on l'ajoute
 
 					$sql = "INSERT INTO ".TABLE_USER." (name,email,regdate,lastvisit)"
-					    ."VALUES('".mysql_escape_string($form_username)."','".$db_email."',"
+					    ."VALUES('".$db->sql_escape_string($form_username)."','".$db_email."',"
 					           ."'".time()."','".time()."')";
 					$db->sql_query($sql);
 					$id = $db->sql_insertid();
@@ -240,14 +240,14 @@ class cUsers {
 				if (!$authorized) return false;
 
 
-				$sql = "SELECT id FROM ".TABLE_USER." WHERE name like '".mysql_escape_string($form_username)."'";
+				$sql = "SELECT id FROM ".TABLE_USER." WHERE name like '".$db->sql_escape_string($form_username)."'";
 				$db->sql_query($sql);
 
 				if (!(list($id) = $db->sql_fetch_row())) {
 					//l'utilisateur n'est pas dans la base OGSMarket , on l'ajoute
 
 					$sql = "INSERT INTO ".TABLE_USER." (name,email,regdate,lastvisit)"
-					    ."VALUES('".mysql_escape_string($form_username)."','".$db_email."',"
+					    ."VALUES('".$db->sql_escape_string($form_username)."','".$db_email."',"
 					           ."'".time()."','".time()."')";
 					$db->sql_query($sql);
 					$id = $db->sql_insertid();
@@ -354,14 +354,13 @@ class cUsers {
 		}
 	}
 
-	function set_profile($email, $email_msn, $pm_link, $irc_nick, $avatar_link, $alert_mail, $skin, $note, $modepq, $deliver, $refunding) {
+	function set_profile($email, $pm_link, $irc_nick, $avatar_link, $alert_mail, $skin, $note, $modepq, $deliver, $refunding) {
 		global $db;
 		global $user_data;
 
 		$sql = "UPDATE ".TABLE_USER." SET "
 			." email = '".$db->sql_escape_string($email)."' ,"
 			." pm_link = '".$db->sql_escape_string($pm_link)."' ,"
-			." msn = '".$db->sql_escape_string($email_msn)."' ,"
 			." irc_nick = '".$db->sql_escape_string($irc_nick)."', "
 			." avatar_link = '".$db->sql_escape_string($avatar_link)."', "
 			." alert_mail = '".intval($alert_mail)."', "

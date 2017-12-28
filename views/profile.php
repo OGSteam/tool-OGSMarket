@@ -41,16 +41,6 @@ if (isset($pub_id) && $pub_id != "") {
 		</td>
 	</tr>
 	<tr>
-		<td>Adresse MSN</td>
-		<td><?php
-				if (empty($user["msn"]))
-					echo 'Non renseign&eacute;';
-				else
-					echo $user['msn'];
-			?>
-		</td>
-	</tr>
-	<tr>
 		<td>Pseudo IG</td>
 		<td>	<?php
 					if (empty($user["pm_link"]))
@@ -91,10 +81,6 @@ if (isset($pub_id) && $pub_id != "") {
 		<tr>
 			<th>Adresse e-mail</th>
 			<th><input type='text' name='email' value='<?php echo $user_data["email"]; ?>' /></th>
-		</tr>
-		<tr>
-			<th>Adresse MSN</th>
-			<th><input type='text' name='email_msn' value='<?php echo $user_data["msn"]; ?>' /></th>
 		</tr>
 		<tr>
 			<th>Pseudo IG</th>

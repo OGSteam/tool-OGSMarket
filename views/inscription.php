@@ -30,7 +30,6 @@ require_once("views/page_header.php");
 <tr><th>r&eacute;p&eacute;tez le mot de passe*</th><th><input type="password" name="repassword" value="" /></tr>
 <tr><th>Email*</th><th><input type='text' name='email' value="<?php echo $pub_email; ?>" /></th></tr>
 <tr><td class="c" colspan="2" align="center">Votre profil</td></tr>
-<tr><th>Email MSN</th><th><input type='text' name='email_msn' value="<?php echo $pub_email_msn; ?>" /></th></tr>
 <tr><th>Msg Priv&eacute;</th><th><input type='text' name='pm_link' value="<?php echo $pub_pm_link; ?>" /></th></tr>
 <tr><th>Nom IRC</th><th><input type='text' name='irc_nick' value="<?php echo $pub_irc_nick; ?>" /></th></tr>
 <tr><th>Ma Description</th><th><textarea name='note'><?php echo $pub_note; ?></textarea></th></tr>

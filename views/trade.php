@@ -233,7 +233,7 @@ if ($ouvert == 1 && !isset($error)) {
 			<acronym title="Durée en nombre d'heures">Expiration</acronym>
 		</th>
 		<th colspan="2">
-			<input type='text' size="5" name='expiration_hours' value='24'>h (MAXI <?php echo intval($server_config["max_trade_delay_seco"]/(60*60)); ?> heures)
+			<input type='text' size="5" name='expiration_hours' value='24'>h (MAXI <?php echo intval($server_config["max_trade_delay_seconds"]/(60*60)); ?> heures)
 		</th>
 	</tr>
 	<tr>
@@ -344,7 +344,7 @@ elseif ($value == "Modifier")
 		if ($now < intval($trade["expiration_date"]) - $quartemps)
 			echo "\t<td class=\"l\" colspan=\"2\"><center><font color=\"lime\">A partir de ".strftime("%a %d %b %H:%M:%S", ($trade["expiration_date"] - $quartemps))."</font></centrer></td>\n";
 		else 
-			echo "\t<td align=\"center\" colspan=\"2\"><input type='text' size='5' name='expiration_hours' value='0'>h (MAXI ".intval($server_config["max_trade_delay_seco"]/(60*60))." heures)</td>\n";
+			echo "\t<td align=\"center\" colspan=\"2\"><input type='text' size='5' name='expiration_hours' value='0'>h (MAXI ".intval($server_config["max_trade_delay_seconds"]/(60*60))." heures)</td>\n";
 ?> 
 	</tr>
 	<tr>

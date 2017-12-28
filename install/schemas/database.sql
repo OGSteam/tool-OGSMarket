@@ -33,7 +33,7 @@ CREATE TABLE `market_user` (
 
 CREATE TABLE `market_univers` (
 	`id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Identificateur Univers',
-	`info` VARCHAR( 255 ) NOT NULL COMMENT 'Description',
+	`info` VARCHAR( 255 ) COMMENT 'Description',
 	`name` VARCHAR( 40 ) NOT NULL COMMENT 'Nom userfriendly de l univers',
 	`g` INT(3) NOT NULL
 );
@@ -59,7 +59,7 @@ CREATE TABLE `market_trade` (
 	`deliver` VARCHAR( 255 ) NOT NULL DEFAULT '0' COMMENT 'Livrable',
 	`refunding` VARCHAR( 255 ) NOT NULL DEFAULT '0' COMMENT 'Payable',
 	`pos_user` INT NOT NULL DEFAULT '0' COMMENT 'Personne qui a reserve le trade',
-	`pos_date` INT NOT NULL COMMENT 'Date de Reservation',
+	`pos_date` INT NOT NULL DEFAULT '0' COMMENT 'Date de Reservation',
   `trade_closed` TINYINT(1) DEFAULT '0' COMMENT '1 Si la transaction est terminee'
 );
 

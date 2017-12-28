@@ -2,7 +2,7 @@
 
 function inverse(idOfCheckBox)
 {
-	var checkboxes = $$('input[name^="' + idOfCheckBox + '"]');
+	var checkboxes = $('[name^="' + idOfCheckBox + '"]');
 	
 	checkboxes.each(function(element)
 	{
@@ -16,75 +16,53 @@ function inverse(idOfCheckBox)
 
 /* Code executer apres le chargement de la page */
 
-Event.observe(window, 'load', function()
-{
+$( window ).on('load', function() {
+
 	/* Page "Nouvelle offre" -- Inversion des galaxie */
 	
-	$$('input[id^="inverse"]').each(function(element)
+	$('input[id^="inverse"]').each(function(element)
 	{
-		element.observe('click', function()
+		element.click( function()
 		{
 			inverse(element.id.split('-')[1]);
 		});
 	});
-	
-	
-	/* Date pour le menu */
-	
-	var date, hour, min, sec, day, day_number, month,
-		days = new Array('Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'),
-		months = new Array('Jan', 'Fév', 'Mars', 'Avril', 'Mai', 'Juin', 'Jul', 'Août', 'Sep', 'Oct', 'Nov', 'Déc');
-	
-	new PeriodicalExecuter(function()
-	{
-		date = new Date,
-		hour = date.getHours(),
-		min = date.getMinutes(),
-		sec = date.getSeconds(),
-		day = days[date.getDay()],
-		day_number = date.getDate(),
-		month = months[date.getMonth()];
-		
-		if (sec < 10) sec = '0' + sec;
-		if (min < 10) min = '0' + min;
-		if (hour < 10) hour = '0' + hour;
-		
-		$('datetime').update(day + ' ' + day_number + ' ' + month +  ' ' + hour + ':' + min + ':' + sec);
-	}, 1);
-	
+
 	
 	/* Pop-up pour la creation/edition des marches */
 	
 	// Creation
-	$('create_market').observe('click', function()
+
+	$("#create_market").click( function()
 	{
-		$('new_market').style.display = 'block';
-		$('admin_maction').value = 'admin_new_univers_execute';
+		$('#new_market').show();
+		$('#admin_maction').value = 'admin_new_univers_execute';
 	});
 	
 	// Edition
-	$$('input[id*="edit_market_"]').each(function(element)
+
+	$("[id^=edit_market_]").each(function(index, element)
 	{
 		var id = element.id.split('_')[2];
-		
-		element.observe('click', function()
+
+        $( this ).click( function()
 		{
-			$('new_market').style.display = 'block';
+			$('#new_market').show();
 			
-			$('admin_mid').value = id;			
-			$('admin_maction').value = 'admin_edit_univers_execute';
+			$('#admin_mid').val(id);
+			$('#admin_maction').val('admin_edit_univers_execute');
 			
-			$('admin_mname').value = $('name_' + id).textContent;
-			$('admin_minfo').value = $('info_' + id).textContent;
-			$('admin_mg').value = $('g_' + id).textContent;
+			$('#admin_mname').val ($('#name_' + id).text());
+			$('#admin_minfo').val ($('#info_' + id).text());
+			$('#admin_mg').val ($('#g_' + id).text());
 			
-			$('action').value = 'Modifier';
+			$('#action').val('Modifier');
 		});
 	});
 	
 	// Cache la pop-up
-	$('hide_new_market').observe('click', function()
+	$("#hide_new_market").click( function()
 	{
-		$('new_market').hide();
+		$('#new_market').hide();
 	});
 });

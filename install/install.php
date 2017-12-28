@@ -14,7 +14,7 @@ if (substr(sprintf('%o', fileperms('../parameters')), -4) != '0777' && !preg_mat
 
 if ($error != '')
 {
-	echo "<b><font color='red'>Installation impossible :</font></b><br />";
+	echo "<b><span style=\"color: red; \">Installation impossible :</span></b><br />";
 	echo $error;
 	echo "<br /><br />";
 	echo "<i>Veuillez suivre la proc&eacute;dure d'installation dans son int&eacute;gralit&eacute; !!!</i>";
@@ -119,5 +119,3 @@ isset($pub_admin_username) && isset($pub_admin_password) && isset($pub_admin_pas
 <p>
 	<a href='https://forum.ogsteam.fr' class='italic'>Besoin d'assistance ?</a>
 </p>
-
-<script type='text/javascript' src='../js/prototype.js'></script>

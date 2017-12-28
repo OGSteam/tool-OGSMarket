@@ -541,14 +541,14 @@ function admin_config_set() {
 */
 function admin_market_set() {
 	global $db;
-	global $pub_max_trade_delay_hours, $pub_max_trade_by_univers, $pub_tauxmetal, $pub_tauxcristal, $pub_tauxdeuterium, $pub_view_trade;
+	global $pub_max_trade_delay_hours, $pub_max_trade_by_universe, $pub_tauxmetal, $pub_tauxcristal, $pub_tauxdeuterium, $pub_view_trade;
 
 	//Conversion en heures
-	$pub_max_trade_delay_seco = ($pub_max_trade_delay_hours)*60*60;
+	$pub_max_trade_delay_seconds = ($pub_max_trade_delay_hours)*60*60;
 
 	$queries = array();
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_max_trade_by_univers."' WHERE name='max_trade_by_univers' LIMIT 1;";
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_max_trade_delay_seco."' WHERE name='max_trade_delay_seco' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_max_trade_by_universe."' WHERE name='max_trade_by_universe' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_max_trade_delay_seconds."' WHERE name='max_trade_delay_seconds' LIMIT 1;";
 
 	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_tauxmetal."' WHERE name='tauxmetal' LIMIT 1;";
 	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_tauxcristal."' WHERE name='tauxcristal' LIMIT 1;";

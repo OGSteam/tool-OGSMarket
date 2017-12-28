@@ -43,7 +43,7 @@ class cUniverses
 			return 'Cet univers existe d&eacute;j&agrave;';
 
 		// Insertion dans la BDD
-		$sql = 'INSERT INTO '.TABLE_UNIVERS.' (\'info\', \'name\', \'g\')
+		$sql = 'INSERT INTO '.TABLE_UNIVERS.' (`info`, `name`, `g`)
 				VALUES(\''. $db->sql_escape_string($info).'\', \''.$db->sql_escape_string($name).'\', \''.intval($g).'\')';
 
 		// Renvoie des resultats
