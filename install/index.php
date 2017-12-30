@@ -14,7 +14,7 @@
 	require_once('../common.php');
 	require_once('functions.php');
 
-	$version = '2017.1';
+	$version = '2018.1';
 
 	if (!isset($pub_redirection))
 		$pub_redirection = '';
@@ -53,7 +53,7 @@
 				<select id='redirection' name='redirection' onchange='this.form.submit();' onkeyup='this.form.submit();'>
 					<option></option>
 					<option value='install'>Installation compl&egrave;te</option>
-					<option value='upgrade'>Mise &agrave; jour</option>
+					<!--<option value='upgrade'>Mise &agrave; jour</option>-->
 				</select>
 			</p>
 		</form>
@@ -63,7 +63,7 @@
 		?>
 
 		<p>
-			<span class='italic'><span class='bold'>OGSMarket</span> is a <span class='bold'>OGSTeam Software</span> &copy; 2005-2017</span><br />
+			<span class='italic'><span class='bold'>OGSMarket</span> is a <span class='bold'>OGSTeam Software</span> &copy; 2005-2018</span><br />
 			v <?php echo $version; ?>
 		</p>
 	</body>

@@ -126,9 +126,9 @@ INSERT INTO `market_config` ( `name` , `value` ) VALUES ( 'mail_nom_expediteur',
 
 ##menu
 INSERT INTO `market_config` ( `name` , `value` ) VALUES('menuprive','Prive');
-INSERT INTO `market_config` ( `name` , `value` ) VALUES('menulogout','Logout');
-INSERT INTO `market_config` ( `name` , `value` ) VALUES('adresseforum','Adresse de votre forum');
-INSERT INTO `market_config` ( `name` , `value` ) VALUES('nomforum','Nom de votre forum');
+INSERT INTO `market_config` ( `name` , `value` ) VALUES('menulogout','Déconnexion');
+INSERT INTO `market_config` ( `name` , `value` ) VALUES('adresseforum','https://forum.ogsteam.fr');
+INSERT INTO `market_config` ( `name` , `value` ) VALUES('nomforum','Forum OGSteam');
 INSERT INTO `market_config` ( `name` , `value` ) VALUES('menuforum','Forum et IRC');
 INSERT INTO `market_config` ( `name` , `value` ) VALUES('menuautre','Divers');
 

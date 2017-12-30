@@ -13,7 +13,7 @@ if (file_exists("../parameters/id.php")) {
 } else
   die("Config file id.php is not present");
 
-$db = new sql_db($db_host, $db_user, $db_password, $db_database);
+$db = new sqli_db($db_host, $db_user, $db_password, $db_database);
 
 if (!$db->db_connect_id)
 	error_sql('Impossible de se connecter &agrave; la base de donn&eacute;es');
@@ -164,8 +164,8 @@ switch ($version) {
 		$version = "0.81";
 		$up_to_date = true;
 	case "0.81" :
-	$requests[] = "UPDATE ".TABLE_CONFIG." SET value = '2017.1' WHERE name = 'version'";
-	$version = "2017.1";
+	$requests[] = "UPDATE ".TABLE_CONFIG." SET value = '2018.1' WHERE name = 'version'";
+	$version = "2018.1";
 	$up_to_date = true;
 
 	break;

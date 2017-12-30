@@ -17,85 +17,94 @@ require_once("views/page_header.php");
 	<td></td>
 </tr>
 </table>
-<br />
+<br>
 <table width="70%" border="1" cellpadding="0" cellspacing="5" align="center">
 <tr>
-	<td align="center" class="c" colspan="2"><font color="Yellow" size="2">Site internet :</font> <a href="http://ogsteam.fr" target="_blank">http://ogsteam.fr</a><br /><font color="Yellow" size="2">Channel IRC : </font><a href='irc://irc.ogamenet.net:6667/ogstratege'>irc://irc.ogamenet.net:6667/ogstratege</a></td>
+	<td align="center" class="c" colspan="2"><span style="color: Yellow; font-size: x-small; ">Site internet :</span> <a href="https://ogsteam.fr" target="_blank">https://ogsteam.fr</a><br></td>
 </tr>
 <tr>
-	<td width="100" height="100" align="center" valign="middle"><img src="http://ogsteam.fr/ogsteam/rica.jpg"></td>
+	<td width="100" height="100" align="center" valign="middle"><img height="80" width="80" src="./images/user-icon.png"></td>
 	<td class="l">
-		&nbsp;<a><font color="Yellow" size="2">Rica</font></a><br />
-		<center><b>Cr&eacute;ateur du d&eacute;pot SVN/Trac<br>
-		<center><b>Initiateur du projet</b><br/><br/></center>
+		&nbsp;<a><span style="color: Yellow; font-size: x-small; ">Rica</span></a><br>
+		<div style="text-align: center;"><b>Cr&eacute;ateur du d&eacute;pot SVN/Trac<br>
+		<div style="text-align: center;"><b>Initiateur du projet</b><br/><br/></div>
 	</td>
 </tr>
 <tr>
-	<td width="100" height="100" align="center" valign="middle"><img src="http://ogsteam.fr/ogsteam/ben_12.jpg"></td>
+    <td width="100" height="100" align="center" valign="middle"><img height="80" width="80" src="./images/user-icon.png"></td>
 	<td class="l">
-		&nbsp;<a><font color="Yellow" size="2">Ben.12</font></a><br />
-		<center><b>D&eacute;veloppeur sur le projet OGMarket</b><br /><br /></center>
-		<b>U6 => ange de la mort<br />
+		&nbsp;<a><span style="color: Yellow; font-size: x-small; ">Ben.12</span></a><br>
+		<div style="text-align: center;"><b>D&eacute;veloppeur sur le projet OGMarket</b><br><br></div>
+		<b>U6 => ange de la mort<br>
 	</td>
 </tr>
 <tr>
-	<td width="100" height="100" align="center" valign="middle"><img src="http://www.ogsteam.fr/forums/img/avatars/4498.jpg"></td>
+    <td width="100" height="100" align="center" valign="middle"><img height="80" width="80" src="./images/user-icon.png"></td>
 	<td class="l">
-		&nbsp;<b><font color="Yellow" size="2">Mirtador</font></b><br />
-		<center><b>Cr&eacute;ateur du tutoriel d'installation</b></center><br />
-		<center><b>D&eacute;veloppeur</b><br/><br/></center>
-		<center><b>Cr&eacute;ateur du convertiseur de ressources</b><br/><br/></center>
-		<b>U1 => Baal <br />
+		&nbsp;<b><span style="color: Yellow; font-size: x-small; ">Mirtador</span></b><br>
+		<div style="text-align: center;"><b>Cr&eacute;ateur du tutoriel d'installation</b></div><br>
+		<div style="text-align: center;"><b>D&eacute;veloppeur</b><br/><br/></div>
+		<div style="text-align: center;"><b>Cr&eacute;ateur du convertiseur de ressources</b><br/><br/></div>
+		<b>U1 => Baal <br>
 	</td>
 </tr>
 <tr>
-	<td width="100" height="100" align="center" valign="middle"><img src="http://www.ogsteam.fr/forums/img/avatars/1165.jpg"></td>
+    <td width="100" height="100" align="center" valign="middle"><img height="80" width="80" src="./images/user-icon.png"></td>
 	<td class="l">
-		&nbsp;<b><font color="Yellow" size="2">lildadou</font></b><br />
-		<center><b>A d&eacute;bug&eacute; la modification du profil</b></center><br />
+		&nbsp;<b><span style="color: Yellow; font-size: x-small; ">lildadou</span></b><br>
+		<div style="text-align: center;"><b>A d&eacute;bug&eacute; la modification du profil</b></div><br>
 	</td>
 </tr>
 <tr>
-	<td width="100" height="100" align="center" valign="middle"><img src="http://www.ogsteam.fr/forums/img/avatars/940.jpg"></td>
+    <td width="100" height="100" align="center" valign="middle"><img height="80" width="80" src="./images/user-icon.png"></td>
 	<td class="l">
-		&nbsp;<a><font color="Yellow" size="2">itea</font></a><br />
-		<center><b>Cr&eacute;ateur du tutoriel</b><br /><br /></center>
-		<br />
+		&nbsp;<a><span style="color: Yellow; font-size: x-small; ">itea</span></a><br>
+		<div style="text-align: center;"><b>Cr&eacute;ateur du tutoriel</b><br><br></div>
+		<br>
 	</td>
 </tr>
 <tr>
-	<td width="100" height="100" align="center" valign="middle">&nbsp;</td>
+    <td width="100" height="100" align="center" valign="middle"><img height="80" width="80" src="./images/user-icon.png"></td>
 	<td class="l">
-		&nbsp;<b><font color="Yellow" size="2">Jey2k</font></b><br />
-		<center><b>Cr&eacute;ateur du mod market</b></center><br />
-		<center><b>D&eacute;veloppeur</b></center><br />
+		&nbsp;<b><span style="color: Yellow; font-size: x-small; ">Jey2k</span></b><br>
+		<div style="text-align: center;"><b>Cr&eacute;ateur du mod market</b></div><br>
+		<div style="text-align: center;"><b>D&eacute;veloppeur</b></div><br>
 	</td>
 </tr>
 <tr>
-	<td width="100" height="100" align="center" valign="middle"><img src="http://www.ogsteam.fr/forums/img/avatars/228.jpg"></td>
+    <td width="100" height="100" align="center" valign="middle"><img height="80" width="80" src="./images/user-icon.png"></td>
 	<td class="l">
-		&nbsp;<b><font color="Yellow" size="2">Digiduck</font></b><br />
-		<center><b>Beta-testeur OGSpy et Mods</b><br/><br/></center>
-		<center><b>D&eacute;veloppeur sur le projet OGSMarket</b></center><br />
+		&nbsp;<b><span style="color: Yellow; font-size: x-small; ">Digiduck</span></b><br>
+		<div style="text-align: center;"><b>Beta-testeur OGSpy et Mods</b><br/><br/></div>
+		<div style="text-align: center;"><b>D&eacute;veloppeur sur le projet OGSMarket</b></div><br>
 	</td>
 </tr>
 <tr>
-	<td width="100" height="100" align="center" valign="middle"><img src="http://www.ogsteam.fr/forums/img/avatars/5182.png"></td>
+    <td width="100" height="100" align="center" valign="middle"><img height="80" width="80" src="./images/user-icon.png"></td>
 	<td class="l">
-		&nbsp;<b><font color="Yellow" size="2">Ninety</font></b><br />
-		<center><b>D&eacute;veloppeur sur le projet OGSMarket</b></center><br />
-		<center><b>Univers 3 - TOP 300 - Ninety [PLAYBOY]</b></center><br />
-		<center>&nbsp</center><br />
+		&nbsp;<b><span style="color: Yellow; font-size: x-small; ">Ninety</span></b><br>
+		<div style="text-align: center;"><b>D&eacute;veloppeur sur le projet OGSMarket</b></div><br>
+		<div style="text-align: center;"><b>Univers 3 - TOP 300 - Ninety [PLAYBOY]</b></div><br>
+		<div style="text-align: center;">&nbsp</div><br>
 	</td>
 </tr>
 <tr>
-	<td width="100" height="100" align="center" valign="middle"><img src="http://www.ogsteam.fr/forums/img/avatars/5290.gif"></td>
+    <td width="100" height="100" align="center" valign="middle"><img height="80" width="80" src="./images/user-icon.png"></td>
 	<td class="l">
-		&nbsp;<b><font color="Yellow" size="2">Naruto`kun</font></b><br />
-		<center><b>D&eacute;veloppeur sur le projet OGSMarket</b></center><br />
-		<center><b>Beta-testeur OGSpy et Mods</b><br/><br/></center>
+		&nbsp;<b><span style="color: Yellow; font-size: x-small; ">Naruto`kun</span></b><br>
+		<div style="text-align: center;"><b>D&eacute;veloppeur sur le projet OGSMarket</b></div><br>
+		<div style="text-align: center;"><b>Beta-testeur OGSpy et Mods</b><br/><br/></div>
 	</td>
 </tr>
+    <tr>
+        <td width="100" height="100" align="center" valign="middle"><img height="80" width="80" src="./images/user-icon.png"></td>
+        <td class="l">
+            &nbsp;<b><span style="color: Yellow; font-size: x-small; ">DarkNoon</span></b><br>
+            <div style="text-align: center;"><b>Administration OGSteam</b></div><br>
+            <div style="text-align: center;"><b>D&eacute;veloppeur sur le projet OGSMarket</b></div><br>
+            <div style="text-align: center;"><b>D&eacute;veloppeur OGSpy et Mods</b><br/><br/></div>
+        </td>
+    </tr>
 </table>
 
 <?php
