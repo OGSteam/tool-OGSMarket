@@ -99,59 +99,62 @@ $univers = $Universes->universes_array();
 		<td><div align="center"><a href="index.php?action=listtrade">Voir les Offres</a></div></td>
 	</tr>
 <?php if (isset($user_data)) { ?>
-	<tr>
-		<td>
-			<div align="center"><a href="index.php?action=listtrade&subaction=usertrades">Voir mes Offres</a></div>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<div align='center'>
-				<?php if ($univers == Array()) { ?>
-				<blink><font color="red"><b>Paramétrer Univers!</b></font></blink>
-				<?php } else { ?>
-				<a href='index.php?action=newtrade'>Nouvelle Offre</a>
-				<?php } ?>
-			</div>
-		</td>
-	</tr>
-		<tr>
-		<td>
-			<div align="center"><a href="index.php?action=closedtrades">Livre des Ventes</a></div>
-		</td>
-	</tr>
-	<tr>
-		<td  class='c' align="center">
-			<?php echo $server_config["menuprive"]; ?>
-		</td>
-	</tr>
-<?php if ($user_data["is_admin"] == 1) { ?>
-	<tr>
-		<td>
-			<div align='center'><a href='index.php?action=admin'>Administration</a></div>
-		</td>
-	</tr>
-<?php } ?>
-	<tr>
-		<td>
-			<div align='center'><a href='index.php?action=profile'>Profil</a></div>
-		</td>
-	</tr>
-<?php
-} else {
-//sinon Boite de login
-    echo "<form action='index.php' method='post'>\n"
-        ."\t<input type='hidden' name='action' value='login'>\n";
-    echo "\t<tr><th>Nom</th></tr><tr>\n\t<td align='center' class='c'><input type='text' name='name' value=''></td></tr>\n";
-    echo "\t<tr><th>Password</th></tr><tr>\n\t<td align='center' class='c'><input type='password' name='password'></td></tr>\n";
-    echo "\t<tr>\n\t<td align='center'><input type='submit' value='Envoyer'></td></tr>\n";
-    echo "</form>\n";
+    <tr>
+        <td>
+            <div align="center"><a href="index.php?action=listtrade&subaction=usertrades">Voir mes Offres</a></div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div align='center'>
+                <?php if ($univers == Array()) { ?>
+                    <blink><font color="red"><b>Paramétrer Univers!</b></font></blink>
+                <?php } else { ?>
+                    <a href='index.php?action=newtrade'>Nouvelle Offre</a>
+                <?php } ?>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div align="center"><a href="index.php?action=closedtrades">Livre des Ventes</a></div>
+        </td>
+    </tr>
+    <tr>
+        <td class='c' align="center">
+            <?php echo $server_config["menuprive"]; ?>
+        </td>
+    </tr>
+    <?php
 
-    if ($server_config["users_auth_type"] == "internal")
-		echo "<tr><td><div align=\"center\"><a href=\"index.php?action=inscription\">Inscription</a></div></td></tr>\n";
-    else
-		echo "\t<tr><td><div align=\"center\"><a href=\"".$server_config["users_inscription_ur"]."\" target=\"_blank\">Inscription</a></div></td></tr>\n";
-}
+        if ($user_data["is_admin"] == 1) { ?>
+            <tr>
+                <td>
+                    <div align='center'><a href='index.php?action=admin'>Administration</a></div>
+                </td>
+            </tr>
+        <?php } ?>
+        <tr>
+            <td>
+                <div align='center'><a href='index.php?action=profile'>Profil</a></div>
+            </td>
+        </tr>
+        <?php
+    } else {
+//sinon Boite de login
+        echo "<form action='index.php' method='post'>\n"
+            . "\t<input type='hidden' name='action' value='login'>\n";
+        echo "\t<tr><th>Nom</th></tr><tr>\n\t<td align='center' class='c'><input type='text' name='name' value=''></td></tr>\n";
+        echo "\t<tr><th>Password</th></tr><tr>\n\t<td align='center' class='c'><input type='password' name='password'></td></tr>\n";
+        echo "\t<tr>\n\t<td align='center'><input type='submit' value='Envoyer'></td></tr>\n";
+        echo "</form>\n";
+
+        if ($server_config["users_auth_type"] == "internal")
+            echo "<tr><td><div align=\"center\"><a href=\"index.php?action=inscription\">Inscription</a></div></td></tr>\n";
+        else
+            echo "\t<tr><td><div align=\"center\"><a href=\"" . $server_config["users_inscription_url"] . "\" target=\"_blank\">Inscription</a></div></td></tr>\n";
+    }
+
 ?>
 	<tr>
 		<td class='c' align="center">

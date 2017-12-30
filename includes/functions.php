@@ -486,7 +486,7 @@ function affiche_liste($sortby, $current_uni) {
 function admin_config_set() {
 	global $db;
 	global $pub_member_auto_activ, $pub_users_auth_type, $pub_users_adr_auth_db, $pub_users_auth_db, $pub_users_auth_dbuser, $pub_users_auth_dbpassword, $pub_users_auth_table,
-		$pub_users_inscription_ur, $pub_mail_nom_expediteur, $pub_mail_expediteur, $pub_mail_object, $pub_mail_message, $pub_servername, $pub_skin, $pub_logo_server, $pub_menuprive, $pub_menulogout, $pub_menuautre,
+		$pub_users_inscription_url, $pub_mail_nom_expediteur, $pub_mail_expediteur, $pub_mail_object, $pub_mail_message, $pub_servername, $pub_skin, $pub_logo_server, $pub_menuprive, $pub_menulogout, $pub_menuautre,
 		$pub_menuforum, $pub_nomforum, $pub_adresseforum, $pub_home, $pub_market_read_access, $pub_market_write_access, $pub_market_password;
 
   	if ($pub_users_auth_type == "" || $pub_skin == "" || $pub_servername == "") {
@@ -496,37 +496,37 @@ function admin_config_set() {
 	$pub_users_active = (is_null($pub_member_auto_activ)) ? "0" : "1";
 
 	$queries = array();
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_auth_type."' WHERE name='users_auth_type' LIMIT 1;";
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_adr_auth_db."' WHERE name='users_adr_auth_db' LIMIT 1;";
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_auth_db."' WHERE name='users_auth_db' LIMIT 1;";
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_auth_dbuser."' WHERE name='users_auth_dbuser' LIMIT 1;";
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_auth_dbpassword."' WHERE name='users_auth_dbpassword' LIMIT 1;";
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_auth_table."' WHERE name='users_auth_table' LIMIT 1;";
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_inscription_ur."' WHERE name='users_inscription_ur' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_users_auth_type)."' WHERE name='users_auth_type' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_users_adr_auth_db)."' WHERE name='users_adr_auth_db' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_users_auth_db)."' WHERE name='users_auth_db' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_users_auth_dbuser)."' WHERE name='users_auth_dbuser' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_users_auth_dbpassword)."' WHERE name='users_auth_dbpassword' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_users_auth_table)."' WHERE name='users_auth_table' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_users_inscription_url)."' WHERE name='users_inscription_url' LIMIT 1;";
 
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_mail_nom_expediteur."' WHERE name='mail_nom_expediteur' LIMIT 1;";
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_mail_expediteur."' WHERE name='mail_expediteur' LIMIT 1;";
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_mail_object."' WHERE name='mail_object' LIMIT 1;";
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_mail_message."' WHERE name='mail_message' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_mail_nom_expediteur)."' WHERE name='mail_nom_expediteur' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_mail_expediteur)."' WHERE name='mail_expediteur' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_mail_object)."' WHERE name='mail_object' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_mail_message)."' WHERE name='mail_message' LIMIT 1;";
 
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_servername."' WHERE name='servername' LIMIT 1;";
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_skin."' WHERE name='skin' LIMIT 1;";
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_logo_server."' WHERE name='logo_server' LIMIT 1;";
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_users_active."' WHERE name='users_active' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_servername)."' WHERE name='servername' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_skin)."' WHERE name='skin' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_logo_server)."' WHERE name='logo_server' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_users_active)."' WHERE name='users_active' LIMIT 1;";
 
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_menuprive."' WHERE name='menuprive' LIMIT 1;";
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_menulogout."' WHERE name='menulogout' LIMIT 1;";
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_menuautre."' WHERE name='menuautre' LIMIT 1;"; ;
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_menuforum."' WHERE name='menuforum' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_menuprive)."' WHERE name='menuprive' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_menulogout)."' WHERE name='menulogout' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_menuautre)."' WHERE name='menuautre' LIMIT 1;"; ;
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_menuforum)."' WHERE name='menuforum' LIMIT 1;";
 
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_nomforum."' WHERE name='nomforum' LIMIT 1;";
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_adresseforum."' WHERE name='adresseforum' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_nomforum)."' WHERE name='nomforum' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_adresseforum)."' WHERE name='adresseforum' LIMIT 1;";
 
-	$queries[] = "UPDATE ".TABLE_INFOS." SET value='".$pub_home."' WHERE name='home' LIMIT 100000;";
+	$queries[] = "UPDATE ".TABLE_INFOS." SET value='".$db->sql_escape_string($pub_home)."' WHERE name='home' LIMIT 100000;";
 
 	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_market_read_access."' WHERE name='market_read_access' LIMIT 1;";
 	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_market_write_access."' WHERE name='market_write_access' LIMIT 1;";
-	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_market_password."' WHERE name='market_password' LIMIT 1;";
+	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$db->sql_escape_string($pub_market_password)."' WHERE name='market_password' LIMIT 1;";
 
 	foreach ($queries as $query) {
 		$db->sql_query($query);
@@ -567,6 +567,9 @@ function admin_market_set() {
 /*
 *Création d'offres par le module market
 */
+/**
+ * @return array|bool|the
+ */
 function market_create() {
 	$user = array();
 	global $db, $server_config, $user_data;
@@ -622,6 +625,6 @@ function market_create() {
 									$pub_dg7,
 									$pub_dg8,
 									$pub_dg9);
-	$alert = "creer";
+	$alert = "Créer";
 	require_once("includes/mail.php");
 }

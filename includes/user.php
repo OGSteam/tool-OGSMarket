@@ -143,7 +143,12 @@ class cUsers {
 }
 
 
-	function login($form_username, $form_userpass) {
+    /**
+     * @param $form_username
+     * @param $form_userpass
+     * @return bool
+     */
+    function login($form_username, $form_userpass) {
 		global $db;
 		global $server_config;
 		global $user_data;
@@ -172,15 +177,15 @@ class cUsers {
 
 			//Connection à partir de la liste utilisateurs de punbb
 			case "punbb":
-				$db_connect_id = mysql_connect($server_config["users_adr_auth_db"], $server_config["users_auth_dbuser"], $server_config["users_auth_dbpassword"], true);
+				$db_connect_id = mysqli_connect($server_config["users_adr_auth_db"], $server_config["users_auth_dbuser"], $server_config["users_auth_dbpassword"], true);
 				if (!$db_connect_id) die("Impossible de se connecter &agrave; la base de donn&eacute;es. Contactez l\'Administrator");
-				if (!mysql_select_db($server_config["users_auth_db"])) {
-					mysql_close($db_connect_id);
+				if (!mysqli_select_db($server_config["users_auth_db"])) {
+					mysqli_close($db_connect_id);
 					die("Impossible de se trouver la base de donn&eacute;es. Contactez l\'Administrator");
 				}
 				$sql = "SELECT password,email FROM ".$server_config["users_auth_table"]." WHERE username='".$db->sql_escape_string($form_username)."'";
-				$result = mysql_query($sql, $db_connect_id) or die(mysql_error());
-				list($db_password_hash, $db_email) = mysql_fetch_row($result);
+				$result = mysqli_query($sql, $db_connect_id) or die(mysqli_error());
+				list($db_password_hash, $db_email) = mysqli_fetch_row($result);
 
 				$sha1_in_db = (strlen($db_password_hash) == 40) ? true : false;
 				$sha1_available = (function_exists('sha1') || function_exists('mhash')) ? true : false;
@@ -216,15 +221,15 @@ class cUsers {
 				break;
 			//Connection à partir de la liste utilisateurs de SMF Forum
 			case "smf":
-				$db_connect_id = mysql_connect($server_config["users_adr_auth_db"], $server_config["users_auth_dbuser"], $server_config["users_auth_dbpassword"], true);
+				$db_connect_id = mysqli_connect($server_config["users_adr_auth_db"], $server_config["users_auth_dbuser"], $server_config["users_auth_dbpassword"], true);
 				if (!$db_connect_id) die("Impossible de se connecter &agrave; la base de donn&eacute;es. Contactez l\'Administrator");
-				if (!mysql_select_db($server_config["users_auth_db"])) {
-					mysql_close($db_connect_id);
+				if (!mysqli_select_db($server_config["users_auth_db"])) {
+					mysqli_close($db_connect_id);
 					die("Impossible de se trouver la base de donn&eacute;es. Contactez l\'Administrator");
 				}
 				$sql = "SELECT passwd,emailAddress FROM ".$server_config["users_auth_table"]." WHERE memberName='".$db->sql_escape_string($form_username)."'";
-				$result = mysql_query($sql, $db_connect_id) or die(mysql_error());
-				list($db_password_hash, $db_email) = mysql_fetch_row($result);
+				$result = mysqli_query($sql, $db_connect_id) or die(mysqli_error());
+				list($db_password_hash, $db_email) = mysqli_fetch_row($result);
 
 				$sha1_in_db = (strlen($db_password_hash) == 40) ? true : false;
 				$sha1_available = (function_exists('sha1') || function_exists('mhash')) ? true : false;
@@ -350,7 +355,7 @@ class cUsers {
 
 		$user = $this->get_user($userid);
 		if (!$user) {
-			return "<div>Profil non trouv&eacute;</div>";
+			return "<div>Profil non trouvé</div>";
 		}
 	}
 
@@ -403,16 +408,18 @@ class cUsers {
 			}
 
 			// Unserialise refunding informations
-			$refunding = explode('_', $user_data["refunding"]);
-			$user_data["refunding"] = Array();
-			foreach ($refunding as $key=>$value) {
-				$user_data["refunding"][$value] = 1;
-			}
-			for ($i = 1; $i <= 128; $i++) {
-				if (!isset($user_data["refunding"][$i]) || $user_data["refunding"][$i] != 1) {
-					$user_data["refunding"][$i] = 0;
-				}
-			}
+            if( isset($user_data["refunding"])) {
+                $refunding = explode('_', $user_data["refunding"]);
+                $user_data["refunding"] = Array();
+                foreach ($refunding as $key=>$value) {
+                    $user_data["refunding"][$value] = 1;
+                }
+                for ($i = 1; $i <= 128; $i++) {
+                    if (!isset($user_data["refunding"][$i]) || $user_data["refunding"][$i] != 1) {
+                        $user_data["refunding"][$i] = 0;
+                    }
+                }
+            }
 
 			return $user_data;
 		} else return false;
