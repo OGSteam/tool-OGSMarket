@@ -40,7 +40,7 @@ background: #324B67;
 color:#628ABD;
 }
 
-#, td, th, textarea, body{
+td, th, textarea, body{
 font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
 font-size: 11px;
 text-align: center;

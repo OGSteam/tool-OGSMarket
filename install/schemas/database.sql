@@ -184,7 +184,7 @@ INSERT INTO `market_config` ( `name` , `value` )VALUES ('market_write_access', '
 INSERT INTO `market_config` ( `name` , `value` )VALUES ('market_password', '');
 
 ## Taux de Change
-INSERT INTO `market_config` (`name`, `value`) VALUES ('tauxmetal', '1'),('tauxcristal', '2'),('tauxdeuterium', '3');
+INSERT INTO `market_config` (`name`, `value`) VALUES ('tauxmetal', '3'),('tauxcristal', '2'),('tauxdeuterium', '1');
 
 ## Visualisation des offres limitee aux membres
 INSERT INTO `market_config` (`name` , `value` ) VALUES ('view_trade', '0');

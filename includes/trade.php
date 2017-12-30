@@ -138,9 +138,10 @@ class cTrades {
 	
 	//Tableau de trades d'un univers donnÈ, eventuellement classÈs 
 
-	/**
-	 * @param string $action_id
-	 */
+    /**
+     * @param string $action_id
+     * @return array|mixed
+     */
 	function trades_array($action, $action_id, $order="id") {
 		global $db;
 		global $user_data;
@@ -480,7 +481,7 @@ function update_trade() {
 
 //ajout d'un offre
 function add_trade() {
-	global $db, $user_data, $server_config, $Trades, $current_uni;
+	global $user_data, $server_config, $Trades, $current_uni;
 	global $pub_offer_metal, $pub_offer_crystal, $pub_offer_deuterium, $pub_want_metal, $pub_want_crystal, $pub_want_deuterium,
 		$pub_expiration_hours, $pub_note, $pub_deliver, $pub_refunding;
 	

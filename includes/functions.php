@@ -24,15 +24,6 @@ function redirection($url){
 	}
 }
 
-/* fonctions necessaires aux cookies */
-function serialise($data){
-	return str_replace('"', '`', serialize($data));
-}
-
-function unserialise($data){
-	return unserialize(str_replace('`', '"', $data));
-}
-
 /**
  * Verifie qu'il n'y a aucun code HTML dans la variable $secvalue.
  */
@@ -199,6 +190,11 @@ function bib_datediff($fromtime, $totime = '') {
 }
 
 /* Protection - Préparation des chaines pour les caractères HTML Complexes */
+/**
+ * @param $given
+ * @param int $quote_style
+ * @return string
+ */
 function get_htmlspecialchars($given, $quote_style = ENT_QUOTES) {
    return htmlspecialchars(html_entity_decode($given, $quote_style), $quote_style);
 }
@@ -391,58 +387,6 @@ function check_var($value, $type_check, $mask = "", $auth_null = true) {
 	return true;
 }
 
-
-
-/**
-* Liste des repertoires/fichiers selon un pattern donn&eacute;
-*/
-//safe_glob() by BigueNique at yahoo dot ca
-//Function glob() is prohibited on some servers for security reasons as stated on:
-//http://seclists.org/fulldisclosure/2005/Sep/0001.html
-//(Message "Warning: glob() has been disabled for security reasons in (script) on line (line)")
-//safe_glob() intends to replace glob() for simple applications
-//using readdir() & fnmatch() instead.
-//Since fnmatch() is not available on Windows or other non-POSFIX, I rely
-//on soywiz at php dot net fnmatch clone.
-//On the final hand, safe_glob() supports basic wildcards on one directory.
-//Supported flags: GLOB_MARK. GLOB_NOSORT, GLOB_ONLYDIR
-//Return false if path doesn't exist, and an empty array is no file matches the pattern
-function safe_glob($pattern, $flags = 0) {
-   $split = explode('/', $pattern);
-   $match = array_pop($split);
-   $path = implode('/', $split);
-   if (($dir = opendir($path)) !== false) {
-       $glob = array();
-       while (($file = readdir($dir)) !== false) {
-           if (fnmatch($match, $file)) {
-               if ((is_dir("$path/$file")) || (!($flags&GLOB_ONLYDIR))) {
-                   if ($flags&GLOB_MARK) $file .= '/';
-                   $glob[] = $file;
-               }
-           }
-       }
-       closedir($dir);
-       if (!($flags&GLOB_NOSORT)) sort($glob);
-       return $glob;
-   } else {
-       return false;
-   }
-}
-
-//thanks to soywiz for the following function, posted on http://php.net/fnmatch
-//soywiz at php dot net
-//17-Jul-2006 10:12
-//A better "fnmatch" alternative for windows that converts a fnmatch pattern into a preg one. It should work on PHP >= 4.0.0
-if (!function_exists('fnmatch')) {
-
-   /**
-    * @param string $string
-    */
-   function fnmatch($pattern, $string) {
-       return preg_match('/^'.strtr(addcslashes($pattern, '\\.+^$(){}=!<>|'), array('*' => '.*', '?' => '.?')).'$/i', $string);
-   }
-}
-
 /**
 * Fonction pour le xml
 */
@@ -572,10 +516,9 @@ function admin_market_set() {
  */
 function market_create() {
 	$user = array();
-	global $db, $server_config, $user_data;
+	global $db, $server_config, $user_data,$Trades;
 	global $pub_name, $pub_mdp, $pub_om, $pub_oc, $pub_od, $pub_dm, $pub_dc, $pub_dd, $pub_duree, $pub_note, $pub_id,
-		$pub_og1, $pub_og2, $pub_og3, $pub_og4, $pub_og5, $pub_og6, $pub_og7, $pub_og8, $pub_og9,
-		$pub_dg1, $pub_dg2, $pub_dg3, $pub_dg4, $pub_dg5, $pub_dg6, $pub_dg7, $pub_dg8, $pub_dg9;
+		$pub_deliver, $pub_refunding;
 
 	$sql = "SELECT id,is_active FROM ".TABLE_USER." WHERE name like '".$db->sql_escape_string($pub_name)."'";
 	$db->sql_query($sql);
@@ -596,7 +539,7 @@ function market_create() {
 	//$_SESSION["userpass"] = $form_userpass;
 
 	$user_data = $user;
-	return $user_data;
+	//return $user_data;
 
 	$Trades->insert_new($user_data["id"], $pub_id,
 									intval($pub_om),
@@ -604,27 +547,13 @@ function market_create() {
 									intval($pub_od),
 									intval($pub_dm),
 									intval($pub_dc),
-									intval($pub_dd),
-									intval(time())*60*60,
+			 						intval($pub_dd),
+                                    $pub_duree,
 									$pub_note,
-									$pub_og1,
-									$pub_og2,
-									$pub_og3,
-									$pub_og4,
-									$pub_og5,
-									$pub_og6,
-									$pub_og7,
-									$pub_og8,
-									$pub_og9,
-									$pub_dg1,
-									$pub_dg2,
-									$pub_dg3,
-									$pub_dg4,
-									$pub_dg5,
-									$pub_dg6,
-									$pub_dg7,
-									$pub_dg8,
-									$pub_dg9);
-	$alert = "Créer";
+									$pub_deliver,
+									$pub_refunding);
+
+	$alert = "creer";
 	require_once("includes/mail.php");
 }
+

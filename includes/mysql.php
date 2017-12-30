@@ -115,7 +115,7 @@ class sql_db
     function sql_close()
     {
         unset($this->result);
-        $result = @mysqli_close($this->db_connect_id); //deconnection
+        @mysqli_close($this->db_connect_id); //deconnection
         self::$_instance = false;
     }
 

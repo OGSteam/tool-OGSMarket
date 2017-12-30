@@ -9,6 +9,9 @@
 if (!defined('IN_OGSMARKET')) {
 	die("Hacking attempt");
 }
+
+global $db;
+
 require_once("includes/ogamecalc.php");
 
 //Définition de l'environnement
