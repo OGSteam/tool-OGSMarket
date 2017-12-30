@@ -27,7 +27,7 @@ require_once("views/page_header.php");
 			<br>
 
 			<?php if ($Utype == "internal") { ?>
-				<strong>Première chose à faire: s'inscrire sur la cartographie: <span style="color: #FF0000; "><?php echo $servername; ?></span><br><br>
+				<strong>Première chose à faire: s'inscrire sur la cartographie: <span style="color: #FF0000; "><?php echo $servername; ?></span></strong><br><br>
 				<img src="https://wiki.ogsteam.fr/lib/exe/fetch.php?media=fr:market:inscription.png" width="402" height="279"><br>
 				Rien de très compliqué<br><br>
 			<?php } else { ?>
