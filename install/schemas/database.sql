@@ -9,11 +9,11 @@ CREATE TABLE `market_user` (
 	`regdate` INT( 11 ) NOT NULL COMMENT 'Date de creation',
 	`lastvisit` INT( 11 ) NOT NULL COMMENT 'Derniere visite',
 	`countconnect` INT( 11 ) NOT NULL COMMENT 'Decompte du nombre de connexion',
-	`email` VARCHAR( 250 ) COMMENT 'Email',
+	`email` VARCHAR( 100 ) COMMENT 'Email',
 	`pm_link` VARCHAR( 30 ) COMMENT 'Lien Message Prive',
 	`irc_nick` VARCHAR( 30 ) COMMENT 'Nick IRC',
-	`avatar_link` varchar(100) COMMENT 'Lien Avatar',
-	`note` VARCHAR( 250) COMMENT 'Description User',
+	`avatar_link` varchar( 100 ) COMMENT 'Lien Avatar',
+	`note` VARCHAR( 200 ) COMMENT 'Description User',
 	`account_type` VARCHAR( 10 ) NOT NULL DEFAULT 'internal' COMMENT 'Type de comptes',
 	`is_admin` ENUM('0','1') NOT NULL DEFAULT '0' COMMENT 'Administrateur',
 	`is_moderator` ENUM('0','1') NOT NULL DEFAULT '0' COMMENT 'Moderateur',
@@ -21,8 +21,8 @@ CREATE TABLE `market_user` (
 	`alert_mail` enum('0','1') NOT NULL default '1',
 	`skin` VARCHAR(50) NOT NULL DEFAULT 'skin/' COMMENT 'Skin de l utilisateur',
 	`modepq` enum('p','q') NOT NULL DEFAULT 'p' COMMENT 'Preselection saisie',
-	`deliver` VARCHAR( 255 ) NOT NULL DEFAULT '0' COMMENT 'Livrable',
-	`refunding` VARCHAR( 255 ) NOT NULL DEFAULT '0' COMMENT 'Payable'
+	`deliver` VARCHAR( 100 ) NOT NULL DEFAULT '0' COMMENT 'Livrable',
+	`refunding` VARCHAR( 100 ) NOT NULL DEFAULT '0' COMMENT 'Payable'
 );
 
 
@@ -33,7 +33,7 @@ CREATE TABLE `market_user` (
 
 CREATE TABLE `market_univers` (
 	`id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Identificateur Univers',
-	`info` VARCHAR( 255 ) COMMENT 'Description',
+	`info` VARCHAR( 200 ) COMMENT 'Description',
 	`name` VARCHAR( 40 ) NOT NULL COMMENT 'Nom userfriendly de l univers',
 	`g` INT(3) NOT NULL
 );
@@ -56,8 +56,8 @@ CREATE TABLE `market_trade` (
 	`creation_date` INT( 11 ) NOT NULL COMMENT 'Date de creation de loffre',
 	`expiration_date` INT( 11 ) NOT NULL COMMENT 'Date d''expiration de loffre',
 	`note` TEXT NULL COMMENT 'Note du vendeur pour son offre',
-	`deliver` VARCHAR( 255 ) NOT NULL DEFAULT '0' COMMENT 'Livrable',
-	`refunding` VARCHAR( 255 ) NOT NULL DEFAULT '0' COMMENT 'Payable',
+	`deliver` VARCHAR( 100 ) NOT NULL DEFAULT '0' COMMENT 'Livrable',
+	`refunding` VARCHAR( 100 ) NOT NULL DEFAULT '0' COMMENT 'Payable',
 	`pos_user` INT NOT NULL DEFAULT '0' COMMENT 'Personne qui a reserve le trade',
 	`pos_date` INT NOT NULL DEFAULT '0' COMMENT 'Date de Reservation',
   `trade_closed` TINYINT(1) DEFAULT '0' COMMENT '1 Si la transaction est terminee'
@@ -93,11 +93,11 @@ CREATE TABLE `market_sessions` (
 ##
 CREATE TABLE `market_ogspy_auth` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
-	`url` VARCHAR( 255 ) NOT NULL ,
+	`url` VARCHAR( 150 ) NOT NULL ,
 	`read_access` ENUM( '0', '1' ) DEFAULT '1' NOT NULL ,
 	`write_access` ENUM( '0', '1' ) DEFAULT '1' NOT NULL ,
 	`active` ENUM( '0', '1' ) DEFAULT '1' NOT NULL ,
-	`description` VARCHAR( 255 ) NOT NULL ,
+	`description` VARCHAR( 200 ) NOT NULL ,
 	PRIMARY KEY ( `id` ) ,
 	 UNIQUE (`url`)
 );
@@ -109,7 +109,7 @@ CREATE TABLE `market_ogspy_auth` (
 ##
 CREATE TABLE `market_config` (
 	`name` VARCHAR( 50 ) NOT NULL COMMENT 'Nom de la variable config',
-	`value` VARCHAR( 255 ) NOT NULL COMMENT 'Valeur de la cariable config'
+	`value` VARCHAR( 200 ) NOT NULL COMMENT 'Valeur de la cariable config'
 );
 
 CREATE TABLE `market_infos` (

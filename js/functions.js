@@ -35,8 +35,9 @@ $( window ).on('load', function() {
 
 	$("#create_market").click( function()
 	{
-		$('#new_market').show();
-		$('#admin_maction').value = 'admin_new_univers_execute';
+		$("#new_market").show();
+        $("#admin_maction").val('admin_new_univers_execute');
+
 	});
 	
 	// Edition
