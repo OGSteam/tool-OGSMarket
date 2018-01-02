@@ -2,7 +2,7 @@
 
 function inverse(idOfCheckBox)
 {
-	var checkboxes = $('[name^="' + idOfCheckBox + '"]');
+	var checkboxes = $("[name^=\"" + idOfCheckBox + "\"]");
 	
 	checkboxes.each(function(index, element)
 	{
@@ -36,7 +36,7 @@ $( window ).on('load', function() {
 	$("#create_market").click( function()
 	{
 		$("#new_market").show();
-        $("#admin_maction").val('admin_new_univers_execute');
+        $("#admin_maction").val("admin_new_univers_execute");
 
 	});
 	
@@ -51,19 +51,19 @@ $( window ).on('load', function() {
 			$("#new_market").show();
 			
 			$("#admin_mid").val(id);
-			$("#admin_maction").val('admin_edit_univers_execute');
+			$("#admin_maction").val("admin_edit_univers_execute");
 			
-			$("#admin_mname").val ($('#name_' + id).text());
-			$("#admin_minfo").val ($('#info_' + id).text());
-			$("#admin_mg").val ($('#g_' + id).text());
+			$("#admin_mname").val ($("#name_" + id).text());
+			$("#admin_minfo").val ($("#info_" + id).text());
+			$("#admin_mg").val ($("#g_" + id).text());
 			
-			$("#action").val('Modifier');
+			$("#action").val("Modifier");
 		});
 	});
 	
 	// Cache la pop-up
 	$("#hide_new_market").click( function()
 	{
-		$('#new_market').hide();
+		$("#new_market").hide();
 	});
 });
