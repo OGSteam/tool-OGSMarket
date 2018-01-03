@@ -502,7 +502,7 @@ function admin_market_set() {
 
 	foreach ($queries as $query)
 	{
-		$result = $db->sql_query($query);
+		$db->sql_query($query);
 	}
 
 	return "Param&egrave;tres Commerciaux Mis &agrave; Jour";

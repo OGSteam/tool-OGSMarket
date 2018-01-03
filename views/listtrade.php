@@ -13,11 +13,11 @@ if (!defined('IN_OGSMARKET'))
 
 require_once("./views/page_header.php");
 
-if ($server_config["view_trade"] != 0 || empty($user_data))
+if ($server_config["view_trade"] != 0 && empty($user_data))
 {
 	echo "\t<table width=\"100%\">\n<tr>\n";
 	echo "\t<td>\n<table width=\"100%\">\n<tr><th>\n";
-	echo "\t<font size =\"4\" color = \"yellow\">Serveur Privé</font><br><br>Visualisation des offres limitée aux membres<br>Veuillez vous identifier.\n";
+	echo "\t<span size =\"4\" style=\"color: #ECFF00;\" >Serveur Privé</span><br><br>Visualisation des offres limitée aux membres<br>Veuillez vous identifier.\n";
 	echo "\t</th></tr>\n</table>\n</td>\n";
 	echo "\t</tr>\n</table>\n";
 }
@@ -72,11 +72,11 @@ else
 				<form method="post" name="order" action="index.php?action=listtrade">
 				<?php echo $title." - March&eacute; : ".$server_config["servername"]; ?>
 					<select name="order" onchange="document.forms['order'].submit();">
-						<option value="<?php echo $order; ?>">Trier</option>
+						<option value="<?php echo $order; ?>">Trier par</option>
 						<option value="<?php echo $order; ?>">-----------</option>
 						<option value="expiration_date">Expiration</option>
-						<option value="offer_metal DESC">Metal</option>
-						<option value="offer_crystal DESC">Crystal</option>
+						<option value="offer_metal DESC">Métal</option>
+						<option value="offer_crystal DESC">Cristal</option>
 						<option value="offer_deuterium DESC">Deuterium</option>
 						<option value="(offer_metal + offer_crystal + offer_deuterium) DESC">M+C+D</option>
 					</select>

@@ -109,7 +109,8 @@ CREATE TABLE `market_ogspy_auth` (
 ##
 CREATE TABLE `market_config` (
 	`name` VARCHAR( 50 ) NOT NULL COMMENT 'Nom de la variable config',
-	`value` VARCHAR( 200 ) NOT NULL COMMENT 'Valeur de la cariable config'
+	`value` VARCHAR( 200 ) NOT NULL COMMENT 'Valeur de la cariable config',
+	UNIQUE (`name`)
 );
 
 CREATE TABLE `market_infos` (
