@@ -128,10 +128,6 @@ switch ($pub_action) {
 			require_once("views/closedtrades.php");
 	break;
 	
-	case "pjirc":
-		require_once("views/pjirc.php");
-		break;
-		
 	case "upd_trade":
 		$message = update_trade();
 		$retour = "index.php?action=listtrade&subaction=usertrades";

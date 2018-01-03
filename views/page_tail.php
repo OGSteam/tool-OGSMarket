@@ -33,5 +33,11 @@ $php_timing = $php_end - $php_start - $sql_timing;
 	</td>
 </tr>
 </table>
+<script>
+    ((window.gitter = {}).chat = {}).options = {
+        room: 'OGSteam/Market'
+    };
+</script>
+<script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
 </body>
 </html>

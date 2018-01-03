@@ -171,16 +171,6 @@ $univers = $Universes->universes_array();
 			<div align='center'><a href='http://board.ogame.fr/board.php?boardid=291' target="_blank">Forums OGame</a></div>
 		</td>
 	</tr>
-	<tr>
-		<td>
-			<div align='center'><a href='index.php?action=pjirc' target="_blank">Java IRC</a></div>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<div align='center'><a href='irc://irc.sorcery.net/ogsmarket' target="_blank">Lien IRC</a></div>
-		</td>
-	</tr>
 
 <?php if (isset($user_data)) { ?>
 	<tr>
