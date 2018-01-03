@@ -50,7 +50,7 @@ else
 		$action = "unitrades";
 		$action_id = $current_uni["id"];
 
-		$title = "March&eacute; de l'".$current_uni["name"];
+		$title = "Marché de l'univers ".$current_uni["name"];
 	}
 ?>
 
@@ -85,6 +85,8 @@ else
 		</tr>
 
 <?php
+    if($Trades->count($current_uni["id"]) > 0) {
+
 	foreach ($Trades->trades_array($action, $action_id, $order) as $trade)
 	{
 		echo "<tr style='height: 5px;' />"; //Espace entre chaque offre
@@ -172,6 +174,16 @@ else
 		echo "\t</td>\n";
 		echo "\t</tr>\n";
 	}
+    } else {
+?>
+            <tr>
+			    <td class="c" align="center" colspan=12>
+                    <p>Aucune Offre disponible</p><br>
+                    <a href="index.php?action=newtrade">Soumettez une nouvelle offre maintenant !</a>
+                </td>
+            </tr>
+            <?php
+    }
 ?>
 		</table>
 	</td>
