@@ -91,7 +91,7 @@ else
 	{
 		echo "<tr style='height: 5px;' />"; //Espace entre chaque offre
 		echo "\t    <tr>\n";
-		echo "\t      <td class='k' colspan='1' rowspan='3' align='center'><img src='".$trade["avatar_link"]."' alt='No avatar' /><br />";
+		echo "\t      <td class='k' colspan='1' rowspan='3' align='center'><img src='".$trade["avatar_link"]."' alt='' /><br />";
 		echo "\t<a href='index.php?action=profile&amp;id=".$trade["traderid"]."'>".$trade["username"]."</a>\n";
 		echo "</td>\n";
 		echo "\t      <td class='c'><b>Date de cr&eacute;ation: ".strftime("%a %d %b", $trade["creation_date"])." ".strftime("%H:%M:%S", $trade["creation_date"])."</b></td>\n";

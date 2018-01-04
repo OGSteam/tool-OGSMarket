@@ -18,7 +18,7 @@ class cTrades {
 
 		$sql = "SELECT count(*) FROM ".TABLE_TRADE." WHERE universid=".intval($universeid);
 		if (!$include_expired) {
-			$sql .= " AND expiration_date>".time();
+			$sql .= " AND `trade_closed` <> '1' AND expiration_date>".time();
 		}
 		$result = $db->sql_query($sql);
 
@@ -146,20 +146,20 @@ class cTrades {
 		global $db;
 		global $user_data;
 		
-		$sql = "SELECT t.`id`, t.`traderid`, t.`universid`, v.`g`, t.`offer_metal`, t.`offer_crystal`, t.`offer_deuterium`, t.`want_metal`, t.`want_crystal`, t.`want_deuterium`, t.`creation_date`, t.`expiration_date`, t.`note`, u.`name` as username, u.`avatar_link`, t.`deliver`, t.`refunding`, t.`pos_user`, t.`pos_date` FROM ".TABLE_TRADE." t, ".TABLE_USER." u, ".TABLE_UNIVERS." v WHERE ";
+		$sql = "SELECT t.`id`, t.`traderid`, t.`universid`, v.`g`, t.`offer_metal`, t.`offer_crystal`, t.`offer_deuterium`, t.`want_metal`, t.`want_crystal`, t.`want_deuterium`, t.`creation_date`, t.`expiration_date`, t.`note`, u.`name` as username, u.`avatar_link`, t.`deliver`, t.`refunding`, t.`pos_user`, t.`pos_date` FROM ".TABLE_TRADE." t, ".TABLE_USER." u, ".TABLE_UNIVERS." v ";
 		if ($action == "unitrades"){
-			$sql .= "u.id = t.traderid AND v.id = '$action_id' AND t.universid = v.id AND expiration_date > '".time()."' AND t.`trade_closed` = 0 ORDER BY $order";
+			$sql .= "WHERE u.id = t.traderid AND v.id = '$action_id' AND t.universid = v.id AND expiration_date > '".time()."' AND t.`trade_closed` = 0 ORDER BY $order";
 		}
 		elseif ($action == "usertrades"){
-			$sql .= "u.id = '$action_id' AND u.id = t.traderid AND t.universid = v.id AND t.`trade_closed` = 0 "
+			$sql .= "WHERE u.id = '$action_id' AND u.id = t.traderid AND t.universid = v.id AND t.`trade_closed` = 0 "
 			.((isset($user_data) && ($user_data['id'] == $action_id || $user_data['is_admin'] == 1)) ? ("AND expiration_date > '".time()."' ") : '')
 			."ORDER BY $order";
 		}
 		elseif ($action == "uniquetrade"){
-			$sql .= "u.id = t.traderid  AND t.universid = v.id AND t.id = '$action_id' AND t.`trade_closed` = 0";
+			$sql .= "WHERE u.id = t.traderid  AND t.universid = v.id AND t.id = '$action_id' AND t.`trade_closed` = 0";
 		}
     	elseif ($action == "userclosedtrades"){
-      		$sql .= "u.id = t.traderid  AND t.universid = v.id AND t.`trade_closed` = 1";
+      		$sql .= "WHERE u.id = t.traderid  AND t.universid = v.id AND t.`trade_closed` = 1";
       	}
 		
 		$result = $db->sql_query($sql);
