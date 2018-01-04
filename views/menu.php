@@ -168,7 +168,7 @@ $univers = $Universes->universes_array();
 	</tr>
 	<tr>
 		<td>
-			<div align='center'><a href='http://board.ogame.fr/board.php?boardid=291' target="_blank">Forums OGame</a></div>
+			<div align='center'><a href='https://board.fr.ogame.gameforge.com/' target="_blank">Forums OGame</a></div>
 		</td>
 	</tr>
 
