@@ -78,14 +78,15 @@ body /* allg font etc. *//* option du fond et générales */{
   color                : #E4E4E4;
   margin-top           : 0px;
   margin-left          : 0px;
-  background: #000000;
-  background-image     : url("img/si-bg.jpg");
-  background-position : 0% 95%;
-  background-attachment: fixed;
-  background-repeat    : no-repeat;
+  background: #000000 url("img/si-bg.jpg") no-repeat fixed 0% 95%;
   font-family          : Trebuchet MS, Arial, Helvetica, sans-serif;
   text-align           : left;  
   font-size            : 11px;
+  background-position: top center!important;
+  -webkit-background-size: cover !important;
+  -o-background-size: cover !important;
+  background-size: cover !important;
+
 }
     
 body.style /* paramétrage barre de menu sur le côté */{
