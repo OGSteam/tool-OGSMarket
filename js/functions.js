@@ -3,7 +3,6 @@
 function inverse(idOfCheckBox)
 {
 	var checkboxes = $("[name^=\"" + idOfCheckBox + "\"]");
-	
 	checkboxes.each(function(index, element)
 	{
 		if (element.checked)
@@ -12,6 +11,28 @@ function inverse(idOfCheckBox)
 			element.checked = true;
 	});
 }
+
+function untick_all(idOfCheckBox)
+{
+    var checkboxes = $("[name^=\"" + idOfCheckBox + "\"]");
+
+    checkboxes.each(function(index, element)
+    {
+            element.checked = false;
+    });
+}
+
+
+function tick_all(idOfCheckBox)
+{
+    var checkboxes = $("[name^=\"" + idOfCheckBox + "\"]");
+
+    checkboxes.each(function(index, element)
+    {
+            element.checked = true;
+    });
+}
+
 
 
 /* Code executer apres le chargement de la page */

@@ -239,9 +239,9 @@ if ($ouvert == 1 && !isset($error)) {
 	<tr>
 		<th>
 			Je peux Livrer en :
-			<br><input type="button" id="inverse-deliver" name="valide" value="Inverser la sélection" />
+
 		</th>
-		<th colspan="2">
+		<th>
 			<?php 
 				for ($i = 1; $i <= $current_uni["g"]; $i++) {
 					echo 'G'.$i.'<input type="checkbox" value="'.$i.'" id="deliver['.$i.']" name="deliver['.$i.']" '.($user_data["deliver"][$i] == 1 ? '"checked="checked"' : '').'/>';
@@ -249,13 +249,18 @@ if ($ouvert == 1 && !isset($error)) {
 				} 
 			?>
 		</th>
+        <th>
+            <br><input type="button" id="inverse-deliver" name="valide" value="Inverser la sélection" /><br>
+            <br><input type="button" id="valide" name="valide" value="Tout cocher" onClick="tick_all('deliver');"><br>
+            <br><input type="button" id="valide" name="valide" value="Cocher Aucun" onClick="untick_all('deliver');"><br>
+
+        </th>
 	</tr>
 	<tr>
 		<th>
 			Je peux R&eacute;ceptioner en :
-			<br><input type="button" id="inverse-refunding" name="valide" value="Inverser la sélection" />
 		</th>
-		<th colspan="2">
+		<th>
 			<?php 
 				for ($i = 1; $i <= $current_uni["g"]; $i++) {
 					echo 'G'.$i.'<input type="checkbox" value="'.$i.'" id="refunding['.$i.']" name="refunding['.$i.']" '.($user_data["refunding"][$i] == 1 ? '"checked="checked"' : '').'/>';
@@ -263,6 +268,12 @@ if ($ouvert == 1 && !isset($error)) {
 				} 
 			?>
 		</th>
+        <th>
+            <br><input type="button" id="inverse-refunding" name="valide" value="Inverser la sélection" /><br>
+            <br><input type="button" id="valide" name="valide" value="Tout cocher" onClick="tick_all('refunding');"><br>
+            <br><input type="button" id="valide" name="valide" value="Cocher Aucun" onClick="untick_all('refunding');"><br>
+
+        </th>
 	</tr>
 	<tr>
 		<th>
@@ -274,7 +285,7 @@ if ($ouvert == 1 && !isset($error)) {
 	</tr>
 	<tr>
 		<th colspan="3">
-			<input type="submit" value="Creer cette offre!">
+			<input type="submit" value="Créer cette offre!">
 		</th>
 	</tr>
 </table>
@@ -357,9 +368,8 @@ elseif ($value == "Modifier")
 	<tr>
 		<td class='c'>
 			Livrable en:
-			<br><input type="button" id="valide" name="valide" value="Inverser la sélection" onClick="inverse('deliver');">
 		</td>
-		<td colspan='2'>
+		<td
 			<?php 
 				for ($i = 1; $i <= $trade["g"]; $i++) {
 					echo 'G'.$i.'<input type="checkbox" value="'.$i.'" id="deliver['.$i.']" name="deliver['.$i.']" '.($trade["deliver"][$i] == 1 ? '"checked="checked"' : '').'/>';
@@ -367,13 +377,18 @@ elseif ($value == "Modifier")
 				} 
 			?>
 		</td>
+        <td>
+            <br><input type="button" id="inverse-deliver" name="valide" value="Inverser la sélection" >
+            <br><input type="button" id="valide" name="valide" value="Tout cocher" onClick="tick_all('deliver');">
+            <br><input type="button" id="valide" name="valide" value="Cocher Aucun" onClick="untick_all('deliver');">
+
+        </td>
 	</tr>
 	<tr>	
 		<td class='c'>
 			Payable en:
-			<br><input type="button" id="valide" name="valide" value="Inverser la sélection" onClick="inverse('refunding');">
 		</td>
-		<td colspan='2'>
+		<td>
 			<?php 
 				for ($i = 1; $i <= $trade["g"]; $i++) {
 					echo 'G'.$i.'<input type="checkbox" value="'.$i.'" id="refunding['.$i.']" name="refunding['.$i.']" '.($trade["refunding"][$i] == 1 ? '"checked="checked"' : '').'/>';
@@ -381,6 +396,11 @@ elseif ($value == "Modifier")
 				} 
 			?>	
 		</td>
+        <td>
+            <br><input type="button" id="inverse-refunding" name="valide" value="Inverser la sélection" >
+            <br><input type="button" id="valide" name="valide" value="Tout cocher" onClick="tick_all('refunding');">
+            <br><input type="button" id="valide" name="valide" value="Cocher Aucun" onClick="untick_all('refunding');">
+        </td>
 	</tr>
 	<tr>
 		<td class='c' align='center' colspan="3">
