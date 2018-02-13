@@ -146,7 +146,7 @@ class cTrades {
 		global $db;
 		global $user_data;
 		
-		$sql = "SELECT t.`id`, t.`traderid`, t.`universid`, v.`g`, t.`offer_metal`, t.`offer_crystal`, t.`offer_deuterium`, t.`want_metal`, t.`want_crystal`, t.`want_deuterium`, t.`creation_date`, t.`expiration_date`, t.`note`, u.`name` as username, u.`avatar_link`, t.`deliver`, t.`refunding`, t.`pos_user`, t.`pos_date` FROM ".TABLE_TRADE." t, ".TABLE_USER." u, ".TABLE_UNIVERS." v ";
+		$sql = "SELECT t.`id`, t.`traderid`, t.`universid`, v.`g`, t.`offer_metal`, t.`offer_crystal`, t.`offer_deuterium`, t.`want_metal`, t.`want_crystal`, t.`want_deuterium`, t.`creation_date`, t.`expiration_date`, t.`note`, u.`name` as username, u.`avatar_link`, t.`deliver`, t.`refunding`, t.`pos_user`, t.`pos_date`, t.`trade_closed` FROM ".TABLE_TRADE." t, ".TABLE_USER." u, ".TABLE_UNIVERS." v ";
 		if ($action == "unitrades"){
 			$sql .= "WHERE u.id = t.traderid AND v.id = '$action_id' AND t.universid = v.id AND expiration_date > '".time()."' AND t.`trade_closed` = 0 ORDER BY $order";
 		}
@@ -159,14 +159,14 @@ class cTrades {
 			$sql .= "WHERE u.id = t.traderid  AND t.universid = v.id AND t.id = '$action_id' AND t.`trade_closed` = 0";
 		}
     	elseif ($action == "userclosedtrades"){
-      		$sql .= "WHERE u.id = t.traderid  AND t.universid = v.id AND t.`trade_closed` = 1";
+      		$sql .= "WHERE u.id = t.traderid  AND t.universid = v.id AND (t.`trade_closed` = 1 OR expiration_date > '".time()."')";
       	}
 		
 		$result = $db->sql_query($sql);
 		
 		$tradearray=Array();
 		
-		while(list($id,$traderid,$universid,$g,$offer_metal,$offer_crystal,$offer_deuterium,$want_metal,$want_crystal,$want_deuterium,$creation_date,$expiration_date,$note,$username,$avatar_link,$deliver,$refunding,$pos_user,$pos_date) = $db->sql_fetch_row($result)){
+		while(list($id,$traderid,$universid,$g,$offer_metal,$offer_crystal,$offer_deuterium,$want_metal,$want_crystal,$want_deuterium,$creation_date,$expiration_date,$note,$username,$avatar_link,$deliver,$refunding,$pos_user,$pos_date,$trade_closed) = $db->sql_fetch_row($result)){
 			$newvalues = Array();
 			
 			$newvalues["id"] 				= $id;
@@ -186,7 +186,8 @@ class cTrades {
 			$newvalues["avatar_link"]		= $avatar_link;
 			$newvalues["pos_user"]			= $pos_user;
 			$newvalues["pos_date"]			= $pos_date;
-			
+			$newvalues["trade_closed"]		= $trade_closed;
+
 			$newvalues["deliver"] = Array();
 			// Unserialise deliver value
 			$deliver = explode('_', $deliver);
@@ -257,7 +258,8 @@ class cTrades {
 		$xmlTrade .= "\t<refunding_g9>".$trade["refunding"][9]."</refunding_g9>\n";
 		$xmlTrade .= "\t<pos_user>".$trade["pos_user"]."</pos_user>\n";
 		$xmlTrade .= "\t<pos_date>".$trade["pos_date"]."</pos_date>\n";
-		
+		$xmlTrade .= "\t<trade_closed>".$trade["trade_closed"]."</trade_closed>\n";
+
 		return $xmlTrade;			
 	}
 
@@ -321,11 +323,9 @@ $Trades = new cTrades();
 
 //Réservation d'une offre
 function beton_trade($tradeid) {
-	global $db;
 	global $Users;
 	global $Trades;
 	global $user_data;
-	global $server_config;
 
 	$Trade = $Trades->trades_array("uniquetrade", $tradeid);
 
