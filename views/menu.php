@@ -52,7 +52,6 @@ $univers = $Universes->universes_array();
             }
         }
     }
-
     function Biper() {
         Timer();
         goblink();
@@ -108,7 +107,7 @@ $univers = $Universes->universes_array();
         <td>
             <div align='center'>
                 <?php if ($univers == Array()) { ?>
-                    <blink><font color="red"><b>Paramétrer Univers!</b></font></blink>
+                    <blink><span style="color: red; "><b>Paramétrer Univers!</b></span></blink>
                 <?php } else { ?>
                     <a href='index.php?action=newtrade'>Nouvelle Offre</a>
                 <?php } ?>
@@ -117,7 +116,7 @@ $univers = $Universes->universes_array();
     </tr>
     <tr>
         <td>
-            <div align="center"><a href="index.php?action=closedtrades">Livre des Ventes</a></div>
+            <div align="center"><a href="index.php?action=closedtrades">Archives de mes Ventes</a></div>
         </td>
     </tr>
     <tr>

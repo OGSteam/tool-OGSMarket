@@ -51,7 +51,7 @@ switch ($pub_action) {
 		} else {
 			unset($_SESSION["username"]);
 			unset($_SESSION["userpass"]);
-			$message = "<font color='yellow' size='4'><b>L'identifiant ou le mot de passe saisit est invalide</b></font>";
+			$message = "<span  style=\"color: yellow; font-size: medium; \"><b>L'identifiant ou le mot de passe saisit est invalide</b></span>";
 			require_once("views/message.php");
 		}
 		break;
@@ -119,14 +119,20 @@ switch ($pub_action) {
 		require_once("views/trade.php");
 		break;
 
-	case "deletetrade":
-		$message = del_trade($pub_tradeid);
+	case "closetrade":
+		$message = close_trade($pub_tradeid);
 		$retour = "index.php?action=listtrade";
 		require_once("views/message.php");
 		break;
 	case "closedtrades":
 			require_once("views/closedtrades.php");
 	break;
+
+    case "deletetrade":
+        $message = delete_trade($pub_tradeid);
+        $retour = "index.php?action=closedtrades";
+        require_once("views/message.php");
+        break;
 	
 	case "upd_trade":
 		$message = update_trade();

@@ -12,8 +12,14 @@ if (!defined('IN_OGSMARKET')) {
 
 //Classe gÈrant les diffÈrents trades
 class cTrades {
-	//Nombre de Trades dans la base de donnÈe pour un univers donnÈ
-	function count($universeid, $include_expired = false) {
+	//Nombre de Trades dans la base de donnÈe pour un univers donné
+
+    /**
+     * @param $universeid
+     * @param bool $include_expired
+     * @return int
+     */
+    function count($universeid, $include_expired = false) {
 		global $db;
 
 		$sql = "SELECT count(*) FROM ".TABLE_TRADE." WHERE universid=".intval($universeid);
@@ -27,20 +33,31 @@ class cTrades {
 		}
 
 		return 0;
-	}	
+	}
 
-	function last($universeid) {
+    /**
+     * @param $universeid
+     * @return mixed
+     */
+    function last($universeid) {
 		global $db;
 
-		$sql = "select t.*,u.name as username from ".TABLE_TRADE." t LEFT JOIN ".TABLE_USER." u ON u.id=t.traderid "
+		$sql = "SELECT t.*,u.name as username FROM ".TABLE_TRADE." t LEFT JOIN ".TABLE_USER." u ON u.id=t.traderid "
 			." WHERE t.universid=".intval($universeid)." AND expiration_date>".time()." AND t.`trade_closed` = 0"
 			." ORDER BY t.creation_date desc limit 1";
 		$db->sql_query($sql);
 
 		return $db->sql_fetch_assoc();
 	}
-//Reservation de l'offre	
-	function pos_new($tradeid, $userid) {
+//
+
+    /**
+     * Réservation de l'offre
+     * @param $tradeid
+     * @param $userid
+     * @return string
+     */
+    function pos_new($tradeid, $userid) {
 		global $db;
 
 		$now = time();
@@ -52,8 +69,13 @@ class cTrades {
 		}
 		return $out;
 	}
-//Annulation de la réservation	
-	function unpos_new($tradeid) {
+
+    /**
+     * Annulation de la réservation
+     * @param $tradeid
+     * @return string
+     */
+    function unpos_new($tradeid) {
 		global $db;
 
 		$out = "effectué";
@@ -64,8 +86,14 @@ class cTrades {
 		}
 		return $out;
 	}
- //Fin de la transaction et Archivage de l'offre.	
-	function close_trade($tradeid) {
+ //
+
+    /**
+     * Fin de la transaction et Archivage de l'offre.
+     * @param $tradeid
+     * @return string
+     */
+    function close_trade($tradeid) {
 		global $db;
 
 		$out = "Archivé";
@@ -86,7 +114,7 @@ class cTrades {
 			." (`id`,`traderid`,`universid`,`offer_metal`,`offer_crystal`,`offer_deuterium`,`want_metal`,`want_crystal`,`want_deuterium`,`creation_date`,`expiration_date`,`note`,`deliver`,`refunding`)"
 			." VALUES(null,".intval($traderid).",".intval($universid).",".intval($offer_metal).",".intval($offer_crystal).",".intval($offer_deuterium).",".intval($want_metal).",".intval($want_crystal).",".intval($want_deuterium).",$now,$expiration,'".$db->sql_escape_string($note)."','".implode("_", $deliver)."','".implode("_", $refunding)."')";
 
-		$result = $db->sql_query($sql);	
+		$db->sql_query($sql);
 
 		$newvalues = Array();
 		$newvalues["id"] = $db->sql_insertid();
@@ -105,8 +133,24 @@ class cTrades {
 		return $newvalues;
 	}
 	
-	//Mettre a jour une trade renvoie un tableau sur ce nouvel univers
-	function upd_trade($id, $traderid, $universid, $offer_metal, $offer_crystal, $offer_deuterium, $want_metal, $want_crystal, $want_deuterium, $expiration_date, $note, $deliver, $refunding) {
+    /**
+     * Mettre a jour une offre et renvoie un tableau sur ce nouvel univers
+     * @param $id
+     * @param $traderid
+     * @param $universid
+     * @param $offer_metal
+     * @param $offer_crystal
+     * @param $offer_deuterium
+     * @param $want_metal
+     * @param $want_crystal
+     * @param $want_deuterium
+     * @param $expiration_date
+     * @param $note
+     * @param $deliver
+     * @param $refunding
+     * @return int
+     */
+    function upd_trade($id, $traderid, $universid, $offer_metal, $offer_crystal, $offer_deuterium, $want_metal, $want_crystal, $want_deuterium, $expiration_date, $note, $deliver, $refunding) {
 		global $db;
 			
 		$sql = " UPDATE ".TABLE_TRADE." SET "
@@ -123,8 +167,15 @@ class cTrades {
 		}
 		
 	}
-	//Réactivation d'une offre
-	function reactive_trade($id, $creation_date, $expiration_date) {
+
+    /**
+     * Réactivation d'une offre
+     * @param $id
+     * @param $creation_date
+     * @param $expiration_date
+     * @return int
+     */
+    function reactive_trade($id, $creation_date, $expiration_date) {
 		global $db;
 		$sql = " UPDATE ".TABLE_TRADE." SET `creation_date`=".$creation_date.",`expiration_date`=".$expiration_date.",`pos_user`='0',`pos_date`='0' WHERE id = ".intval($id);
 		
@@ -135,11 +186,12 @@ class cTrades {
 			return 1;
 		}
 	}
-	
-	//Tableau de trades d'un univers donnÈ, eventuellement classÈs 
 
     /**
+     * Tableau de trades d'un univers donné, eventuellement classé
+     * @param $action
      * @param string $action_id
+     * @param string $order
      * @return array|mixed
      */
 	function trades_array($action, $action_id, $order="id") {
@@ -152,16 +204,16 @@ class cTrades {
 		}
 		elseif ($action == "usertrades"){
 			$sql .= "WHERE u.id = '$action_id' AND u.id = t.traderid AND t.universid = v.id AND t.`trade_closed` = 0 "
-			.((isset($user_data) && ($user_data['id'] == $action_id || $user_data['is_admin'] == 1)) ? ("AND expiration_date > '".time()."' ") : '')
+			.((isset($user_data) && ($user_data['id'] == $action_id || $user_data['is_admin'] == 1)) ? ("AND expiration_date < '".time()."' ") : '')
 			."ORDER BY $order";
 		}
 		elseif ($action == "uniquetrade"){
-			$sql .= "WHERE u.id = t.traderid  AND t.universid = v.id AND t.id = '$action_id' AND t.`trade_closed` = 0";
+			$sql .= "WHERE u.id = t.traderid  AND t.universid = v.id AND t.id = '$action_id' ";
 		}
     	elseif ($action == "userclosedtrades"){
-      		$sql .= "WHERE u.id = t.traderid  AND t.universid = v.id AND (t.`trade_closed` = 1 OR expiration_date > '".time()."')";
+      		$sql .= "WHERE u.id = t.traderid  AND t.universid = v.id AND t.`trade_closed` = 1";
       	}
-		
+
 		$result = $db->sql_query($sql);
 		
 		$tradearray=Array();
@@ -266,12 +318,12 @@ class cTrades {
 	// Affichage d'un trade sous format rss
 	function get_trade_rss($trade, $universe) {
 		$xmlTrade = "\n<item>";
-		$xmlTrade .= "\n\t<guid>"."http://".$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."?action=viewtrade&amp;tradeid=".$trade["id"]."</guid>";
+		$xmlTrade .= "\n\t<guid>"."https://".$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."?action=viewtrade&amp;tradeid=".$trade["id"]."</guid>";
 		$xmlTrade .= "\n\t<title>Vends ".$trade["offer_metal"]."M/".$trade["offer_crystal"]."C/".$trade["offer_deuterium"]."D sur ".$universe["name"]." par ".$trade["username"]."</title>";
-		$xmlTrade .= "\n\t<link>http://".$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."?action=viewtrade&amp;tradeid=".$trade["id"]."</link>";
+		$xmlTrade .= "\n\t<link>https://".$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."?action=viewtrade&amp;tradeid=".$trade["id"]."</link>";
 		//$xmlTrade .= "\n\t<author>"..$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."?action=viewtrade&amp;tradeid=".$trade["id"]."</author>";
-		$xmlTrade .= "\n\t<description>".utf8_encode("Dans ".$universe["name"].", ".$trade["username"]." vend ".$trade["offer_metal"]."M/".$trade["offer_crystal"]."C/".$trade["offer_deuterium"]."D contre ".$trade["want_metal"]."M/".$trade["want_crystal"]."C/".$trade["want_deuterium"]."D")."</description>";
-		$xmlTrade .= "\n\t<comments>".utf8_encode($trade["note"])."</comments>";
+		$xmlTrade .= "\n\t<description>"."Dans ".$universe["name"].", ".$trade["username"]." vend ".$trade["offer_metal"]."M/".$trade["offer_crystal"]."C/".$trade["offer_deuterium"]."D contre ".$trade["want_metal"]."M/".$trade["want_crystal"]."C/".$trade["want_deuterium"]."D"."</description>";
+		$xmlTrade .= "\n\t<comments>".$trade["note"]."</comments>";
 		$xmlTrade .= "\n\t<pubDate>".date("D, j F Y g:i:s T", $trade["creation_date"])."</pubDate>";
 		$xmlTrade .= "\n</item>";
 
@@ -298,7 +350,7 @@ class cTrades {
 		return $ret;
 	}
 	
-	// RÈcupÈration sous format RSS de la liste des offres d'un Univers
+	// Récupération sous format RSS de la liste des offres d'un Univers
 	function trades_array_all_uni_rss($limit = "LIMIT 30") {
 		$ret = "";
 		foreach ($this->trades_array(null, "creation_date desc", $limit, true) as $trade)
@@ -347,7 +399,7 @@ function beton_trade($tradeid) {
 				$out = $Trades->pos_new($Trade["id"], $user_data["id"]);
 				$alert = "booktrade";
 				require_once("includes/mail.php");
-				return "<b>La r&eacute;servation sur l'offre n° ".$tradeid." par l'utilisateur ".$user_data["name"]." est ".$out."</b>";
+				return "<b>La réservation sur l'offre n° ".$tradeid." par l'utilisateur ".$user_data["name"]." est ".$out."</b>";
 			}
 		}
 
@@ -361,7 +413,7 @@ function unbeton_trade($tradeid) {
 	global $Trades;
 	global $user_data;
 	global $server_config;
-	
+
 	$Trade = $Trades->trades_array("uniquetrade", $tradeid);
 	if ($Trade) {
 		if ($Trade["expiration_date"] < time()) {
@@ -372,14 +424,18 @@ function unbeton_trade($tradeid) {
 				$out = $Trades->unpos_new($Trade["id"]);
 				$alert = "liberer";
 				require_once("includes/mail.php");
-				return "<b>La lib&eacute;ration de l'offre n° ".$tradeid." par l'utilisateur ".$user_data["name"]." est ".$out."</b>";				
+				return "<b>La libération de l'offre n° ".$tradeid." par l'utilisateur ".$user_data["name"]." est ".$out."</b>";
 			}
 		}
 	}
 }
 
-//suppression d'offre
-function del_trade($tradeid) {
+/**
+ * Controlleur Fermeture Offre
+ * @param $tradeid
+ * @return string
+ */
+function close_trade($tradeid) {
 	global $db, $Trades, $user_data;
 	
 	$trade = $Trades->trades_array("uniquetrade", $tradeid);
@@ -389,15 +445,42 @@ function del_trade($tradeid) {
 			return "L'offre a été archivée";
 		} 
 		else {
-			return "Cette offre ($tradeid) ne vous appartient pas, vous ne pouvez donc pas l'&eacute;ffacer";
+			return "Cette offre ($tradeid) ne vous appartient pas, vous ne pouvez donc pas l'archiver";
 		}
 	} 
 	else {
-		return "Je ne trouve pas d'offre correspondant au numero $tradeid";
+		return "Je ne trouve pas d'offre correspondant au numéro $tradeid";
 	}
 }
 
+/**
+ * Controlleur Supression Offre
+ * @param $tradeid
+ * @return string
+ */
+function delete_trade($tradeid) {
+    global $db, $Trades, $user_data;
+
+    $trade = $Trades->trades_array("uniquetrade", $tradeid);
+    if ($trade) {
+        if ($trade["traderid"] == $user_data["id"] || $user_data["is_admin"]) {
+            $Trades->delete_trade($tradeid);
+            return "L'offre a été effacée";
+        }
+        else {
+            return "Cette offre ($tradeid) ne vous appartient pas, vous ne pouvez donc pas l'effacer";
+        }
+    }
+    else {
+        return "Je ne trouve pas d'offre correspondant au numéro $tradeid";
+    }
+}
+
 //reactivation de l'offre
+/**
+ * @param $trade_id
+ * @return string
+ */
 function reactive_trade($trade_id) {
 	global $db;
 	global $Trades;
@@ -410,7 +493,7 @@ function reactive_trade($trade_id) {
 	$period = intval($trade["expiration_date"]) - intval($trade["creation_date"]);
 	$expiration = ($period) > $server_config["max_trade_delay_seconds"] ? $server_config["max_trade_delay_seconds"] + $now : $period + $now;
 	$Trades->reactive_trade($trade_id, $now, $expiration);
-	return "Offre r&eacute;activ&eacute;e - ".$current_uni["name"];
+	return "Offre réactivée - ".$current_uni["name"];
 	//$alert = "reactiver";
 	//require_once("includes/mail.php");
 }

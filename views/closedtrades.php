@@ -28,12 +28,9 @@ else
 	else
 		$order = $pub_order;
 
-
 		$action = "userclosedtrades";
 		$action_id = $current_uni["id"];
-
-		$title = "March&eacute; de l'".$current_uni["name"];
-
+		$title = "Marché de l'".$current_uni["name"];
 ?>
 
 <table width="100%">
@@ -41,7 +38,7 @@ else
 	<td>
 		<table width="100%">
 		<tr align="center">
-			<td align="center"><a href='https://www.ogsteam.fr'>OGSMarket</a>: Le commerce Ogamien par l'<b>OGSTeam</b></td>
+			<td align="center"><a href='https://www.ogsteam.fr'>OGSMarket</a>: Le commerce OGamien par l'<b>OGSTeam</b></td>
 		</tr>
 		</table>
 	</td>
@@ -76,18 +73,19 @@ else
 		echo "<tr style='height: 5px;' />"; //Espace entre chaque offre
 		echo "\t    <tr>\n";
 		echo "\t      <td class='k'  rowspan='2' align='center'><img src='".$seller["avatar_link"]."' alt='' /><br />";
-		echo "\t<a href='index.php?action=profile&amp;id=".$seller["traderid"]."'>".$seller["name"]."</a>\n";
+		echo "\t<a href='index.php?action=profile&amp;id=".$seller["id"]."'>".$seller["name"]."</a><br>\n";
+		echo "\t<a href='index.php?action=deletetrade&amp;tradeid=".$trade["id"]."'>Supprimer définitivement</a><br>\n";
 		echo "</td>\n";
-		echo "\t      <td class='c' style='width: 40%;'><b>Date de cr&eacute;ation: ".strftime("%a %d %b", $trade["creation_date"])." ".strftime("%H:%M:%S", $trade["creation_date"])."</b></td>\n";
+		echo "\t      <td class='c' style='width: 40%;'><b>Date de création: ".strftime("%a %d %b", $trade["creation_date"])." ".strftime("%H:%M:%S", $trade["creation_date"])."</b></td>\n";
 		echo "\t      <td class='c' style='width: 40%;'><b>Date de vente: <font color=\"green\">".strftime("%a %d %b %H:%M:%S", $trade["pos_date"]);
 		echo"</font></b></td>\n";
 		//On affiche l'acheteur à droite
-    echo "\t      <td class='k'  rowspan='2' align='center'>Vendeur<img src='".$buyer["avatar_link"]."' alt='' /><br />";
+        echo "\t      <td class='k'  rowspan='2' align='center'>Acheteur<img src='".$buyer["avatar_link"]."' alt='' /><br />";
 		echo "\t<a href='index.php?action=profile&amp;id=".$buyer["pos_user"]."'>".$buyer["name"]."</a>\n";
 		echo "</td>\n";
-    echo "\t</tr>\n";
+        echo "\t</tr>\n";
 		echo "\t<tr>\n";
-		echo "\t<th colspan='2' class='c' style='width: 40%;font-size:normal;'>\n";
+		echo "\t<th colspan='2' class='c' style='width: 40%'>\n";
 		echo "\t".$trade["username"]." a échangé ";
 			if (intval($trade["offer_metal"]) > 0) echo number_format($trade["offer_metal"], 0, ',', ' ')." K de M&eacute;tal ";
 			if (intval($trade["offer_crystal"]) > 0) echo number_format($trade["offer_crystal"], 0, ',', ' ')." K de Cristal ";

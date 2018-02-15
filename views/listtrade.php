@@ -85,7 +85,7 @@ else
 		</tr>
 
 <?php
-    if($Trades->count($current_uni["id"]) > 0) {
+    if($Trades->count($current_uni["id"],true) > 0) {
 
 	foreach ($Trades->trades_array($action, $action_id, $order) as $trade)
 	{
@@ -94,7 +94,7 @@ else
 		echo "\t      <td class='k' colspan='1' rowspan='3' align='center'><img src='".$trade["avatar_link"]."' alt='' /><br />";
 		echo "\t<a href='index.php?action=profile&amp;id=".$trade["traderid"]."'>".$trade["username"]."</a>\n";
 		echo "</td>\n";
-		echo "\t      <td class='c'><b>Date de cr&eacute;ation: ".strftime("%a %d %b", $trade["creation_date"])." ".strftime("%H:%M:%S", $trade["creation_date"])."</b></td>\n";
+		echo "\t      <td class='c'><b>Date de création: ".strftime("%a %d %b", $trade["creation_date"])." ".strftime("%H:%M:%S", $trade["creation_date"])."</b></td>\n";
 		echo "\t      <td class='c' style='width: 40%;'><b>Date de fin: <font color=\"green\">".strftime("%a %d %b %H:%M:%S", $trade["expiration_date"]);
 		if ($trade["expiration_date"] < time()) {
 			echo " (Offre Expir&eacute;e)";
@@ -137,16 +137,16 @@ else
 			if ($user_data["id"] == $trade["traderid"] || $user_data["is_admin"] == 1) {
 				echo "\t<div align='center'>";
 				if ($user_data["id"] != $trade["traderid"]) echo "[a]";
-				echo "\t<a href='index.php?action=deletetrade&amp;tradeid=".$trade["id"]."'>Effacer</a></div>";
+				echo "\t<a href='index.php?action=closetrade&amp;tradeid=".$trade["id"]."'>Fermer</a></div>";
 			}
 			if ($user_data["id"] != $trade["traderid"] && $trade["pos_user"] == 0) {
 				echo "\t<div align='center'>";
-				echo "\t<a href='index.php?action=betontrade&amp;tradeid=".$trade["id"]."'>R&eacute;server</a></div>";
+				echo "\t<a href='index.php?action=betontrade&amp;tradeid=".$trade["id"]."'>Réserver</a></div>";
 			}
 			if (($user_data["id"] == $trade["pos_user"] || $user_data["is_admin"] == 1) && $trade["pos_user"] != 0) {
 				echo "\t<div align='center'>";
 				if ($user_data["id"] != $trade["traderid"] && $user_data["is_admin"] == 1) echo "[a]";
-				echo "\t<a href='index.php?action=unbetontrade&amp;tradeid=".$trade["id"]."'>Lib&eacute;rer</a></div>";
+				echo "\t<a href='index.php?action=unbetontrade&amp;tradeid=".$trade["id"]."'>Libérer</a></div>";
 			}
 		}// Fin menu
 		if ($trade["pos_user"] <> 0) {
@@ -154,7 +154,7 @@ else
 			if (!$user2)
 				echo "\tMembre Inconnu\n";
 			else
-				echo "\t<a href='index.php?action=profile&amp;id=".$trade["pos_user"]."'>R&eacute;serv&eacute; par: ".$user2["name"]."</a>\n";
+				echo "\t<a href='index.php?action=profile&amp;id=".$trade["pos_user"]."'>Réservé par: ".$user2["name"]."</a>\n";
 		}
 		echo "\t</td>\n";
 		echo "\t<td class='c' style='height: 0px; width: 40%;'>Livraison vers:<br />";
@@ -164,7 +164,7 @@ else
 		for ($i = 1; $i <= $trade["g"]; $i++) echo "<td>".affiche_icone($trade["deliver"][$i])."</td>";
 		echo "</tr></table>";
 		echo "\n\t</td>\n";
-		echo "\n\t<td class='c' style='height: 0px; width: 40%;'>R&eacute;ception possible en:<br />";
+		echo "\n\t<td class='c' style='height: 0px; width: 40%;'>Réception possible en:<br />";
 		echo "<table><tr>";
 		for ($i = 1; $i <= $trade["g"]; $i++) echo "<td>G".$i."</td>";
 		echo "</tr><tr>";
