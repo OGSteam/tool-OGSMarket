@@ -15,7 +15,7 @@ if (isset($pub_id) && $pub_id != "") {
 	$user = $Users->get_user($pub_id);
 
 	if (!$user)
-		echo '<p>Aucun profil n\'a &eacute;t&eacute; trouv&eacute; !</p>';
+		echo '<p>Aucun profil n\'a été trouvé !</p>';
 	else {
 ?>
 <table width='300' class='convertisseur'>
@@ -29,16 +29,6 @@ if (isset($pub_id) && $pub_id != "") {
 	<tr>
 		<td>Derni&egrave;re connexion</td>
 		<td><?php echo strftime("%a %d %b %H:%M:%S", $user["lastvisit"]); ?></td>
-	</tr>
-	<tr>
-		<td>Adresse e-mail</td>
-		<td><?php
-				if (empty($user['email']))
-					echo 'Non renseign&eacute;';
-				else
-					echo '<a href=\'mailto://'.$user['email'].'\'>'.$user['email'].'</a>';
-			?>
-		</td>
 	</tr>
 	<tr>
 		<td>Pseudo IG</td>
