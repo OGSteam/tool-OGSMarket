@@ -10,7 +10,7 @@ if (!defined('IN_OGSMARKET')) {
 }
 
 //Convertion en heures (suite)
-$max_trade_delay = ($server_config["max_trade_delay_seconds"])/60/60;
+$max_trade_delay = ($server_config["max_trade_delay_seconds"])/60/60/24;
 
 //Conversion des attributs des checkbox
 $member_view_trade = ($server_config["view_trade"]) == 1 ? "checked" : "";
@@ -29,7 +29,7 @@ $member_view_trade = ($server_config["view_trade"]) == 1 ? "checked" : "";
 					<th><input type="text" name="max_trade_by_universe" size="100%" value="<?php echo $server_config["max_trade_by_universe"]?>"/></th>
 				</tr>
 				<tr>
-					<th>Temps max. d'un &eacute;change (heures):</th>
+					<th>Temps max. d'un &eacute;change (Jours):</th>
 					<th><input type="text" name="max_trade_delay_hours" size="100%" value="<?php echo $max_trade_delay ?>"/></th>
 				</tr>
 

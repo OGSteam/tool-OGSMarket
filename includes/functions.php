@@ -488,7 +488,7 @@ function admin_market_set() {
 	global $pub_max_trade_delay_hours, $pub_max_trade_by_universe, $pub_tauxmetal, $pub_tauxcristal, $pub_tauxdeuterium, $pub_view_trade;
 
 	//Conversion en heures
-	$pub_max_trade_delay_seconds = ($pub_max_trade_delay_hours)*60*60;
+	$pub_max_trade_delay_seconds = ($pub_max_trade_delay_hours)*60*60*24;
 
 	$queries = array();
 	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_max_trade_by_universe."' WHERE name='max_trade_by_universe' LIMIT 1;";
