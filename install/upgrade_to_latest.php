@@ -16,7 +16,7 @@ if (file_exists("../parameters/id.php")) {
 $db = new sqli_db($db_host, $db_user, $db_password, $db_database);
 
 if (!$db->db_connect_id)
-	error_sql('Impossible de se connecter &agrave; la base de donn&eacute;es');
+	error_sql('Impossible de se connecter à la base de données');
 
 		define('TABLE_COMMENT', $table_prefix.'comment');
 		define('TABLE_CONFIG', $table_prefix.'config');
@@ -168,7 +168,13 @@ switch ($version) {
 	$version = "2018.1";
 	$up_to_date = true;
 
-	break;
+
+    case "2018.1" :
+        $requests[] = "UPDATE ".TABLE_CONFIG." SET value = '2018.2' WHERE name = 'version'";
+        $version = "2018.2";
+        $up_to_date = true;
+
+        break;
 
 
 	default:
@@ -189,12 +195,12 @@ foreach ($requests as $request) {
 	<b><i>Le script a seulement modifi&eacute; la base de donn&eacute;es, pensez &agrave; mettre &agrave; jour vos fichiers</i></b><br />
 <?php
 if ($up_to_date) {
-	echo "\t"."<b><i>Pensez &agrave; supprimer le dossier 'install'</i></b><br />"."\n";
+	echo "\t"."<b><i>Pensez à supprimer le dossier 'install'</i></b><br />"."\n";
 	echo "\t"."<br /><a href='../index.php'>Retour</a>"."\n";
 }
 else {
-	echo "\t"."<br><font color='orange'><b>Cette version n'est pas la derni&egrave;re en date, veuillez r&eacute;&eacute;x&eacute;cuter le script</font><br />"."\n";
-	echo "\t"."<a href=''>Recommencer l'op&eacute;ration</a>"."\n";
+	echo "\t". "<br><span style=\"color: orange; \"><b>Cette version n'est pas la dernière en date, veuillez réexecuter le script</span><br />" ."\n";
+	echo "\t"."<a href=''>Recommencer l'opération</a>"."\n";
 }
 ?>
 	</center>

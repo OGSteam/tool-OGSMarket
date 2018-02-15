@@ -143,7 +143,7 @@ INSERT INTO `market_config` ( `name` , `value` ) VALUES('skin','skin/');
 INSERT INTO `market_config` ( `name` , `value` ) VALUES('max_trade_by_universe','5');
 
 ## Durée maximum du trade (5 jours par défaut)
-INSERT INTO `market_config` ( `name` , `value` ) VALUES('max_trade_delay_seconds','432000');
+INSERT INTO `market_config` ( `name` , `value` ) VALUES('max_trade_delay_seconds','864000');
 
 ##Purge automatique des trades expires et de leur commentaires (1=oui , 0 = Non)
 INSERT INTO `market_config` ( `name` , `value` ) VALUES('autopurgeexpiredtrade','1');

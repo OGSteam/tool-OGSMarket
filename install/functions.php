@@ -9,7 +9,7 @@ function installation_db($sgbd_server, $sgbd_dbname, $sgbd_username, $sgbd_passw
 	$db = sql_db::getInstance($sgbd_server, $sgbd_username, $sgbd_password, $sgbd_dbname);
 
 	if (!$db->db_connect_id)
-	 	error_sql('Impossible de se connecter &agrave; la base de donn&eacute;es');
+        error_sql('Impossible de se connecter &agrave; la base de donn&eacute;es');
 
 	$admin_username = $db->sql_escape_string($admin_username);
 	$admin_password = md5($admin_password);
@@ -70,11 +70,11 @@ function generate_id($sgbd_server, $sgbd_dbname, $sgbd_username, $sgbd_password,
 		die("Echec installation, impossible de générer le fichier 'parameters/id.php'");
 	}
 
-	echo "<h3 align='center'><font color='yellow'>Installation du serveur OGSMarket ".$version." effectu&eacute;e avec succ&egrave;s</font></h3>";
-	echo "<center>";
-	echo "<b>Pensez &agrave; supprimer le dossier 'install'</b><br />";
+	echo "<h3 align='center'><span style=\"color: yellow; \">Installation du serveur OGSMarket " .$version. " effectu&eacute;e avec succ&egrave;s</span></h3>";
+	echo "<div style=\"text-align: center;\">";
+	echo "<b>Pensez à supprimer le dossier 'install'</b><br />";
 	echo "<a href='../index.php'>Retour</a>";
-	echo "</center>";
+	echo "</style>";
 	exit();
 }
 

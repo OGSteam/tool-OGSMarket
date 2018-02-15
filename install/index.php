@@ -14,7 +14,7 @@
 	require_once('../common.php');
 	require_once('functions.php');
 
-	$version = '2018.1';
+	$version = '2018.2';
 
 	if (!isset($pub_redirection))
 		$pub_redirection = '';
