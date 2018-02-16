@@ -55,7 +55,7 @@ class cUsers {
 
 		//ah non, mot de passe trop court.
 		if (strlen($password) < 6) {
-			return "Mot de passe inf&eacute;rieur à 6 caract&egrave;res";
+			return "Mot de passe inf&eacute;rieur à 6 caractères";
 		}
 
 		//erreur mot de passe.
@@ -68,7 +68,7 @@ class cUsers {
 		// L'utilisateur existe.
 		list($nb) = $db->sql_fetch_row();
 		if ($nb != 0) {
-			return "Nom ou email d'utilisateur d&eacute;j&agrave; utilis&eacute;";
+			return "Nom ou email d'utilisateur déjà utilisé";
 		}
 
 		//Valeur de la checkbox
@@ -79,10 +79,10 @@ class cUsers {
         }
 
         //enregistrement.
-        $sql = "INSERT INTO ".TABLE_USER." (name, password, regdate, email, pm_link, irc_nick, note, is_active, alert_mail) VALUES ('".$db->sql_escape_string($login)."', '".md5($password)."', ".time().", '".$db->sql_escape_string($email)."', '".$db->sql_escape_string($pm_link)."', '".$db->sql_escape_string($irc_nick)."', '".$db->sql_escape_string($note)."', '".$active."', '".$alert_mail_."')";
+        $sql = "INSERT INTO ".TABLE_USER." (name, password, regdate, lastvisit, email, pm_link, irc_nick, note, is_active, alert_mail) VALUES ('".$db->sql_escape_string($login)."', '".md5($password)."', ".time().", ".time()." , '".$db->sql_escape_string($email)."', '".$db->sql_escape_string($pm_link)."', '".$db->sql_escape_string($irc_nick)."', '".$db->sql_escape_string($note)."', '".$active."', '".$alert_mail_."')";
         $return = $db->sql_query($sql);
         if (!$return) {
-        	return "Ereur lors de la création du compte";
+        	return "Erreur lors de la création du compte";
         }
         return true;
 	}

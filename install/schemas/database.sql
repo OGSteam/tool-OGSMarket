@@ -8,7 +8,7 @@ CREATE TABLE `market_user` (
 	`password` VARCHAR( 32 ) NOT NULL COMMENT 'md5 du mot de passe',
 	`regdate` INT( 11 ) NOT NULL COMMENT 'Date de creation',
 	`lastvisit` INT( 11 ) NOT NULL COMMENT 'Derniere visite',
-	`countconnect` INT( 11 ) NOT NULL COMMENT 'Decompte du nombre de connexion',
+	`countconnect` INT( 11 ) NOT NULL DEFAULT '0' COMMENT 'Decompte du nombre de connexion',
 	`email` VARCHAR( 100 ) COMMENT 'Email',
 	`pm_link` VARCHAR( 30 ) COMMENT 'Lien Message Prive',
 	`irc_nick` VARCHAR( 30 ) COMMENT 'Nick IRC',

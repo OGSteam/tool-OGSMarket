@@ -51,7 +51,7 @@ switch ($pub_action) {
 		} else {
 			unset($_SESSION["username"]);
 			unset($_SESSION["userpass"]);
-			$message = "<span  style=\"color: yellow; font-size: medium; \"><b>L'identifiant ou le mot de passe saisit est invalide</b></span>";
+			$message = "<span  style=\"color: yellow; font-size: medium; \"><b>L'identifiant ou le mot de passe saisi est invalide</b></span>";
 			require_once("views/message.php");
 		}
 		break;

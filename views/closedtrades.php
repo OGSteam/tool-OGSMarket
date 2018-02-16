@@ -29,7 +29,7 @@ else
 		$order = $pub_order;
 
 		$action = "userclosedtrades";
-		$action_id = $current_uni["id"];
+		$action_id = $user_data["id"];
 		$title = "Marché de l'".$current_uni["name"];
 ?>
 

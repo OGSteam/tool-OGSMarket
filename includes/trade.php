@@ -211,7 +211,7 @@ class cTrades {
 			$sql .= "WHERE u.id = t.traderid  AND t.universid = v.id AND t.id = '$action_id' ";
 		}
     	elseif ($action == "userclosedtrades"){
-      		$sql .= "WHERE u.id = t.traderid  AND t.universid = v.id AND t.`trade_closed` = 1";
+      		$sql .= "WHERE u.id = '$action_id' AND u.id = t.traderid  AND t.universid = v.id AND t.`trade_closed` = 1";
       	}
 
 		$result = $db->sql_query($sql);
