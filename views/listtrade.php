@@ -31,6 +31,7 @@ else
 	if (isset($pub_subaction) && $pub_subaction == "usertrades")
 	{
 		$action = "usertrades";
+        $nb_trades = $Trades->count($current_uni["id"],true,false);
 
 		if (isset($pub_user_id))
 		{
@@ -48,9 +49,9 @@ else
 	else
 	{
 		$action = "unitrades";
-		$action_id = $current_uni["id"];
-
-		$title = "Marché de l'univers ".$current_uni["name"];
+	    $action_id = $current_uni["id"];
+		$title = "Marché de l'univers <span style='color: #ffff00;' >".$current_uni["name"]."</span>";
+        $nb_trades = $Trades->count($current_uni["id"],false,false);
 	}
 ?>
 
@@ -58,19 +59,10 @@ else
 <tr>
 	<td>
 		<table width="100%">
-		<tr align="center">
-			<td align="center"><a href='https://forum.ogsteam.fr'>OGSMarket</a>: Le commerce Ogamien par l'<b>OGSTeam</b></td>
-		</tr>
-		</table>
-	</td>
-</tr>
-<tr>
-	<td>
-		<table width="100%">
 		<tr>
 			<td class="l" align="center" colspan=12>
 				<form method="post" name="order" action="index.php?action=listtrade">
-				<?php echo $title." - March&eacute; : ".$server_config["servername"]; ?>
+				<span style="font-size: medium;"><?php echo $title." - Marché : ".$server_config["servername"]; ?></span>
 					<select name="order" onchange="document.forms['order'].submit();">
 						<option value="<?php echo $order; ?>">Trier par</option>
 						<option value="<?php echo $order; ?>">-----------</option>
@@ -85,7 +77,7 @@ else
 		</tr>
 
 <?php
-    if($Trades->count($current_uni["id"],true) > 0) {
+    if($nb_trades > 0) {
 
 	foreach ($Trades->trades_array($action, $action_id, $order) as $trade)
 	{
@@ -97,12 +89,12 @@ else
 		echo "\t      <td class='c'><b>Date de création: ".strftime("%a %d %b", $trade["creation_date"])." ".strftime("%H:%M:%S", $trade["creation_date"])."</b></td>\n";
 		echo "\t      <td class='c' style='width: 40%;'><b>Date de fin: <font color=\"green\">".strftime("%a %d %b %H:%M:%S", $trade["expiration_date"]);
 		if ($trade["expiration_date"] < time()) {
-			echo " (Offre Expir&eacute;e)";
+			echo " (Offre Expirée)";
 ?>
     <form action='index.php' methode='post'>
       <input type='hidden' name='action' value='reactive_trade'>
       <input type='hidden' name='id' value='<?php echo $trade["id"]; ?>'>
-      <input type="submit" value="R&eacute;activer Offre">
+      <input type="submit" value="Réactiver Offre">
       </th>
     </form>
 <?php
@@ -111,7 +103,7 @@ else
 		echo "\t</tr>\n";
 		echo "\t<tr>\n";
 		echo "\t<th colspan='2' rowspan='1' class='c' style='height: 50px; width: 40%;font-size:large;'>\n";
-		echo "\t".$trade["username"]." offre ";
+		echo "\t".$current_uni["name"]." : ".$trade["username"]." offre ";
 			if (intval($trade["offer_metal"]) > 0) echo number_format($trade["offer_metal"], 0, ',', ' ')." K de M&eacute;tal ";
 			if (intval($trade["offer_crystal"]) > 0) echo number_format($trade["offer_crystal"], 0, ',', ' ')." K de Cristal ";
 			if (intval($trade["offer_deuterium"]) > 0) echo number_format($trade["offer_deuterium"], 0, ',', ' ')." K de Deut&eacute;rium ";
@@ -137,7 +129,7 @@ else
 			if ($user_data["id"] == $trade["traderid"] || $user_data["is_admin"] == 1) {
 				echo "\t<div align='center'>";
 				if ($user_data["id"] != $trade["traderid"]) echo "[a]";
-				echo "\t<a href='index.php?action=closetrade&amp;tradeid=".$trade["id"]."'>Fermer</a></div>";
+				echo "\t<a href='index.php?action=closetrade&amp;tradeid=".$trade["id"]."'>Archiver</a></div>";
 			}
 			if ($user_data["id"] != $trade["traderid"] && $trade["pos_user"] == 0) {
 				echo "\t<div align='center'>";

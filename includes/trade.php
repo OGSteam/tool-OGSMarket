@@ -17,15 +17,19 @@ class cTrades {
     /**
      * @param $universeid
      * @param bool $include_expired
+     * @param bool $include_archived
      * @return int
      */
-    function count($universeid, $include_expired = false) {
+    function count($universeid, $include_expired = false, $include_archived = false) {
 		global $db;
 
 		$sql = "SELECT count(*) FROM ".TABLE_TRADE." WHERE universid=".intval($universeid);
 		if (!$include_expired) {
-			$sql .= " AND `trade_closed` <> '1' AND expiration_date>".time();
+			$sql .= " AND expiration_date>".time();
 		}
+        if (!$include_archived) {
+            $sql .= " AND `trade_closed` <> '1'";
+        }
 		$result = $db->sql_query($sql);
 
 		if (list($rowcount) = $db->sql_fetch_row($result)) {
