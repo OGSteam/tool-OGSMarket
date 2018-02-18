@@ -16,7 +16,6 @@ require_once("common.php");
 $php_start = benchmark();
 $sql_timing = 0;
 
-if (defined("MODE_DEBUG")) require_once("views/debug.php");
 
 if (!isset($pub_action)) {
 	$pub_action = "";
@@ -106,6 +105,9 @@ switch ($pub_action) {
 
 	//trades
 	case "listtrade":
+        if (isset($pub_uni)){
+            $Universes->init_current_uni();
+        }
 		require_once("views/listtrade.php");
 		break;
 	

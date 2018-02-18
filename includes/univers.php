@@ -158,15 +158,18 @@ class cUniverses
 	// Fonction utile mais on sait pas a quoi elle sert =D
 	public function init_current_uni()
 	{
-		global $pub_uni, $_COOKIE;
+		global $pub_uni, $_COOKIE,$current_uni;
 
 		if (isset($_COOKIE['ogsmarket_session']))
 		{
 			$cookie = unserialize(stripslashes($_COOKIE['ogsmarket_session']));
 			setcookie('ogsmarket_uni', $pub_uni, $cookie['validate']);
 		}
-		else
+		else {
 			setcookie('ogsmarket_uni', $pub_uni, time() + 3600*24);
+        }
+        $current_uni = $this->get_universe($pub_uni);
+
 	}
 }
 // Creation d'un objet cUniverses
