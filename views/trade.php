@@ -76,9 +76,9 @@ if ($ouvert == "1") {
 }
 ?>
 
-<table width="60%"  class='style'>
+<table align="center" width="60%"  class='style'>
 	<tr>
-		<td class="c" align="center"><?php echo $value; ?> une offre pour l'<?php echo $current_uni["name"]; ?></td>
+		<td class="c" ><?php echo $value; ?> une offre pour l'<?php echo $current_uni["name"]; ?></td>
 	</tr>
 	<tr>
 		<td>
@@ -91,13 +91,13 @@ if ($ouvert == "1") {
 <?php if ($value == "Creer") { ?>
 <form action="index.php?action=newtrade" method="post">
 	<input type="hidden" name="ouvert" value="1"/> 
-<table width="60%">
+<table align="center" width="60%">
 	<tr>
 		<td align="center">
 			<table>
 				<tr>
 					<td class="l" colspan="2">
-						<acronym title="Mettez ici, la quantit&eacute; de ressource que vous souhaitez &eacute;changer">Quantit&eacute;s</acronym> (K)
+						<acronym title="Mettez ici, la quantité de ressource que vous souhaitez 2changer">Quantit&eacute;s</acronym> (K)
 					</td>
 				</tr>
 				<tr>

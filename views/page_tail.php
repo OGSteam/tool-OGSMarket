@@ -16,10 +16,10 @@ $php_end = benchmark();
 $php_timing = $php_end - $php_start - $sql_timing;
 ?>
 	</td>
-</tr>
+<?php if (defined("MODE_DEBUG")) require_once("views/debug.php"); ?>
 <tr align="center" width="110">
 	<td>&nbsp;</td>
-	<td widh="110"><em><?php echo $Universes->count().' univers'; ?></em></td>
+	<td widh="110"><em><a href='https://forum.ogsteam.fr'>OGSMarket</a>: Le commerce Ogamien par l'<b>OGSTeam</b></td>
 </tr>
 <tr align="center">
 	<td>&nbsp;</td>
@@ -33,11 +33,6 @@ $php_timing = $php_end - $php_start - $sql_timing;
 	</td>
 </tr>
 </table>
-<script>
-    ((window.gitter = {}).chat = {}).options = {
-        room: 'OGSteam/Market'
-    };
-</script>
-<script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+
 </body>
 </html>

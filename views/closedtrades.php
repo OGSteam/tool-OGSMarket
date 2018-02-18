@@ -35,15 +35,6 @@ else
 
 <table width="100%">
 <tr>
-	<td>
-		<table width="100%">
-		<tr align="center">
-			<td align="center"><a href='https://www.ogsteam.fr'>OGSMarket</a>: Le commerce OGamien par l'<b>OGSTeam</b></td>
-		</tr>
-		</table>
-	</td>
-</tr>
-<tr>
 
 <tr>
 	<td>
@@ -51,12 +42,11 @@ else
 		<tr>
 			<td class="l" align="center" colspan=12>
 				<form method="post" name="order" action="index.php?action=closedtrades">
-				<?php echo $title." - March&eacute; : ".$server_config["servername"]; ?>
-					<select name="order" onchange="document.forms['order'].submit();">
+					Archives <select name="order" onchange="document.forms['order'].submit();">
 						<option value="<?php echo $order; ?>">Trier</option>
 						<option value="<?php echo $order; ?>">-----------</option>
 						<option value="offer_metal DESC">Metal</option>
-						<option value="offer_crystal DESC">Crystal</option>
+						<option value="offer_crystal DESC">Cristal</option>
 						<option value="offer_deuterium DESC">Deuterium</option>
 						<option value="(offer_metal + offer_crystal + offer_deuterium) DESC">M+C+D</option>
 					</select>
