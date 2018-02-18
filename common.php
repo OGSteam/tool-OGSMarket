@@ -20,22 +20,7 @@ if (!defined('IN_OGSMARKET')) {
 	die("Hacking attempt");
 }
 
-// PHP5 with register_long_arrays off?
-if (!isset($HTTP_POST_VARS) && isset($_POST)) {
-    $HTTP_POST_VARS   = $_POST;
-    $HTTP_GET_VARS 	  = $_GET;
-    $HTTP_SERVER_VARS = $_SERVER;
-    $HTTP_COOKIE_VARS = $_COOKIE;
-    $HTTP_ENV_VARS 	  = $_ENV;
-    $HTTP_POST_FILES  = $_FILES;
-
-    // _SESSION is the only superglobal which is conditionally set
-    if (isset($_SESSION)) {
-        $HTTP_SESSION_VARS = $_SESSION;
-    }
-}
-
-setlocale(LC_TIME, "fr_FR");
+ setlocale(LC_TIME, "fr_FR");
 
 //Récupération des paramètres de connexion à la base de données
 if (file_exists("parameters/id.php")) {
