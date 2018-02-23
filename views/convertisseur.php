@@ -16,255 +16,210 @@ $tauxm = $server_config['tauxmetal'];
 $tauxc = $server_config['tauxcristal'];
 $tauxd = $server_config['tauxdeuterium'];
 
-/* (1) - Initialisation des valeurs, radio aucun checked par defaut */
-	
-$valAucun = 'checked';
-$valPT = '';
-$valGT = '';
-	
-/* On defini si l'utilisateur a cliquer sur Calculer ! */
+/* Si Tradeid, on prérempli les champs*/
 
-if (isset ($pub_ouvert)) {
-	// --------------------------------------------------------
-	// On verifie les champs Quantites
-	// --------------------------------------------------------
-	
-	if (isset ($pub_metal) || isset ($pub_cristal) || isset ($pub_deuterium))
-	{
-		$metal = round($pub_metal);
-		$cristal = round($pub_cristal);
-		$deut = round($pub_deuterium);
-	}
-	else
-	{
-		echo '<p class="error">Vous devez mettre au moins une ressource que vous souhaitez &eacute;changer !</p>';
-		exit();
-	}
-	
-	// -----------------------------------------------------
-	// -- On verifie les champs Taux
-	// -----------------------------------------------------
-	
-	if (isset ($pub_tauxm) && isset ($pub_tauxc) && isset ($pub_tauxd))
-	{
-		$tauxm = $pub_tauxm;
-		$tauxc = $pub_tauxc;
-		$tauxd = $pub_tauxd;
-	}
-	else
-	{
-		echo '<p class="error">Vous devez remplir les champs correspondant au Taux !</p>';
-		exit();
-	}
-	
-	// -----------------------------------------------------------
-	// On verifie les champs Pourcentage
-	// -----------------------------------------------------------
-	
-	if (isset ($pub_combienm) || isset ($pub_combienc) || isset ($pub_combiend))
-	{
-		$totalPourcentage = $pub_combienm + $pub_combienc + $pub_combiend;
-		
-		if ($totalPourcentage == 100)
-		{
-			$combienm = intval($pub_combienm);
-			$combienc = intval($pub_combienc);
-			$combiend = intval($pub_combiend);
-			
-			$totalM = round(($combienm/100)*($metal + $cristal*($tauxm/$tauxc) + $deut*($tauxm/$tauxd)));
-			$totalC = round(($combienc/100)*($cristal + $metal*($tauxc/$tauxm) + $deut*($tauxc/$tauxd)));
-			$totalD = round(($combiend/100)*($deut + $metal*($tauxd/$tauxm) + $cristal*($tauxd/$tauxc)));
-		}
-		else
-		{
-			echo '<p class="error">Le total des pourcentages doit donner 100 !</p>';
-			exit();
-		}
-	}
-	
-	// ----------------------------------------------
-	// (1) - On determine quel radio sera selectionne
-	// ----------------------------------------------
-	
-	/* (1) - Initialisation des valeurs en fonction de ce que le gars a clique */
-	
-	if (isset ($pub_transporteur))
-	{
-		if ($pub_transporteur == "aucun")
-		{
-			$valAucun = 'checked';
-			$valPT = '';
-			$valGT = '';
-		}
-		elseif ($pub_transporteur == "PT")
-		{
-			$valAucun = '';
-			$valPT = 'checked';
-			$valGT = '';
-		}
-		elseif ($pub_transporteur == "GT")
-		{
-			$valAucun = '';
-			$valPT = '';
-			$valGT = 'checked';
-		}
-	}
-}
-	
-/* (1) - On cree la fonction qu'on utilisera dans le form */
-	
-function checkTranspo($valCheck)
-{
-	if ($valCheck != '')
-	{
-		echo 'checked="$valCheck"';
-	}
-}
-	
-/* Calcule des Transporteurs */
+if(isset($pub_tradeid)){
 
-$transporteur = (isset($pub_transporteur) ? $pub_transporteur : 0);
+    $trade = $Trades->trades_array("uniquetrade",$pub_tradeid);
+    $metal = $trade['offer_metal'] * 1000;
+    $cristal = $trade['offer_crystal'] * 1000;
+    $deut = $trade['offer_deuterium'] *1000;
+
+    $percentM = $trade['want_metal'];
+    $percentC = $trade['want_crystal'];
+    $percentD = $trade['want_deuterium'];
+}
 
 ?>
+<script>
+    $(document).ready(function() {
 
-<form action="index.php?action=Convertisseur" method="post">
-	<input type="hidden" name="ouvert" value="1" />
-<table class="convertisseur">
+        const config_taux_metal = '<?php echo($tauxm); ?>';
+        const config_taux_cristal = '<?php echo($tauxc); ?>';
+        const config_taux_deut = '<?php echo($tauxd); ?>';
+        const trade_id = '<?php if(isset($pub_tradeid)) echo($pub_tradeid); else echo 0; ?>';
+        const trade_metal = '<?php if(isset($metal)) echo($metal); else echo 0; ?>';
+        const trade_cristal = '<?php if(isset($cristal)) echo($cristal); else echo 0; ?>';
+        const trade_deut = '<?php if(isset($deut)) echo($deut); else echo 0; ?>';
+        const trade_wanted_metal = '<?php if(isset($percentM)) echo($percentM); else echo 0; ?>';
+        const trade_wanted_cristal = '<?php if(isset($percentC)) echo($percentC); else echo 0; ?>';
+        const trade_wanted_deut = '<?php if(isset($percentD)) echo($percentD); else echo 0; ?>';
+
+        function check_percentage_ok(){
+
+            var total_percentage = parseInt($('#combienm').val()) + parseInt($('#combienc').val()) + parseInt($('#combiend').val());
+            if(total_percentage != 100)
+            {
+                $('#metalwanted').val('-');
+                $('#cristalwanted').val('-');
+                $('#deutwanted').val('-');
+
+                return false;
+            }
+            return true;
+        }
+
+        function calculate_expected_ressources(){
+
+            let metal_sold = parseInt($('#metal').val(), 10);
+            let cristal_sold = parseInt($('#cristal').val(), 10);
+            let deuterium_sold = parseInt($('#deuterium').val(), 10);
+            let taux_m = parseFloat($('#tauxm').val());
+            let taux_c = parseFloat($('#tauxc').val());
+            let taux_d = parseFloat($('#tauxd').val());
+            let wanted_metal_m = $('#combienm').val();
+            let wanted_metal_c = $('#combienc').val();
+            let wanted_metal_d = $('#combiend').val();
+
+            let metal_asked = Math.round((wanted_metal_m / 100)*( metal_sold + cristal_sold *(taux_c/taux_m) + deuterium_sold *(taux_d /taux_m)));
+            let cristal_asked = Math.round((wanted_metal_c / 100)*( cristal_sold + metal_sold *(taux_m/taux_c) + deuterium_sold *(taux_d /taux_c)));
+            let deut_asked = Math.round((wanted_metal_d / 100)*( deuterium_sold + metal_sold *(taux_m/taux_d) + cristal_sold *(taux_c /taux_d)));
+
+
+            $('#metalwanted').text(metal_asked);
+            $('#cristalwanted').text(cristal_asked);
+            $('#deutwanted').text(deut_asked);
+
+            let total_wanted = metal_asked + cristal_asked + deut_asked;
+
+            if(total_wanted > 0){
+                let required_pt = Math.ceil(total_wanted / 5000);
+                let required_gt = Math.ceil(total_wanted / 25000);
+                $('#required_pt').text(required_pt);
+                $('#required_gt').text(required_gt);
+            }
+            if(check_percentage_ok()){
+                generate_bbcode(metal_sold,cristal_sold,deuterium_sold,taux_m,taux_c,taux_d,metal_asked,cristal_asked,deut_asked);
+            }
+
+        }
+
+        function check_taux(){
+
+            let taux_m = parseFloat($('#tauxm').val());
+            let taux_c = parseFloat($('#tauxc').val());
+            let taux_d = parseFloat($('#tauxd').val());
+
+            if (taux_m > taux_c || taux_m > taux_d || taux_c > taux_d)
+            {
+                $('#tauxm').val(config_taux_metal);
+                $('#tauxc').val(config_taux_cristal);
+                $('#tauxd').val(config_taux_deut);
+
+            }
+        }
+
+        function generate_bbcode(metal_sold, cristal_sold, deuterium_sold, taux_m = 0, taux_c = 0, taux_d = 0, metal_asked, cristal_asked, deut_asked ){
+
+            let trader_nb_pt = Math.ceil((metal_sold + cristal_sold +deuterium_sold)/5000);
+            let trader_nb_gt = Math.ceil((metal_sold + cristal_sold +deuterium_sold)/25000);
+
+            let receiver_nb_pt = Math.ceil((metal_asked + cristal_asked + deut_asked)/5000);
+            let receiver_nb_gt = Math.ceil((metal_asked + cristal_asked + deut_asked)/25000)
+
+            let bbcodetext = '';
+            bbcodetext += '[align=center][size=18][b][color=red]Offre via OGSMarket[/color][/b][/size]';
+            bbcodetext += '\n';
+            bbcodetext += '\n';
+            bbcodetext += '[i][b][color=green]Votre vendeur Offre[/color][/b][/i]\n';
+            bbcodetext += 'Métal : [b]' + metal_sold + '[/b]\n';
+            bbcodetext += 'Cristal : [b]' + cristal_sold + '[/b]\n';
+            bbcodetext += 'Deutérium : [b]' + deuterium_sold + '[/b]\n';
+            bbcodetext += 'Le nombre de transporteurs requis sera de ' + trader_nb_pt + 'PT ou ' + trader_nb_gt + ' GT (Hors Carburant)\n' ;
+            bbcodetext += '\n';
+            bbcodetext += '[i][b][color=green]Demande[/color][/b][/i]\n';
+            bbcodetext += 'Métal : [b]' + metal_asked + '[/b]\n';
+            bbcodetext += 'Cristal : [b]' + cristal_asked + '[/b]\n';
+            bbcodetext += 'Deutérium : [b]' +deut_asked + '[/b]\n';
+            bbcodetext += 'Le nombre de transporteurs requis sera de ' + receiver_nb_pt + 'PT ou ' + receiver_nb_gt + ' GT (Hors Carburant)\n' ;
+            bbcodetext += '\n';
+            if(taux_m !== 0 && taux_c !== 0 && taux_d !== 0 )
+            {
+                bbcodetext += 'Le taux constaté est (M/C/D) : [b]' + taux_m + ' / ' + taux_c +' / ' + taux_d + '[/b]\n';
+            }
+            bbcodetext += '[size=10][url=https://ogspy.fr/market]OGSMarket - Plateforme de Commerce[/url][/size]';
+            bbcodetext += '[/align]';
+
+            $('#bbcode').val(bbcodetext);
+
+        }
+
+        $('.convertisseur').change(function() {
+                if(trade_id != 0 ){
+                    $('#metal').val(parseInt(trade_metal));
+                    $('#cristal').val(parseInt(trade_cristal));
+                    $('#deuterium').val(parseInt(trade_deut));
+                    $('#metalwanted').val(parseInt(trade_wanted_metal));
+                    $('#cristalwanted').val(parseInt(trade_wanted_cristal));
+                    $('#deutwanted').val(parseInt(trade_wanted_deut));
+
+                    generate_bbcode(trade_metal,trade_cristal,trade_deut,0,0,0,trade_wanted_metal,trade_wanted_cristal,trade_wanted_deut);
+
+                }
+                check_taux();
+                check_percentage_ok();                     
+                calculate_expected_ressources();
+            }
+        )
+
+    });
+</script>
+
+<p>Le générateur de ressources permet de préparer votre offre pour les acheteurs. Le total de GT/PT nécessaires est une indication et n'inclue pas le carburant.</p>
+
+
+<table align="center" class="convertisseur">
 	<tr>
-		<td class="c" align="center" colspan="5"><b>Convertisseur de ressources<b></td>
+		<td class="c" align="center" colspan="8"><b>Convertisseur de ressources<b></td>
 	</tr>
 	<tr>
-		<th>Transporteurs</th>
 		<th>Ressources</th>
-		<th>Quantit&eacute;s (Unit&eacute;s)</th>
+		<th>Quantit&eacute;s Vendues (Unit&eacute;s)</th>
 		<th>Taux</th>
 		<th>Pourcentage</th>
-	</tr>
-	<tr>
-		<th><label><input type="radio" name="transporteur" value="aucun" <?php checkTranspo($valAucun); ?> /> Aucun</label></th>
-		<th>M&eacute;tal</th>
-		<th><input type="text" name="metal" value="<?php echo formate_number((isset($metal) ? $metal : 0)); ?>" tabindex="1" /></th>
-		<th><input type="text" name="tauxm" value="<?php echo $tauxm; ?>" tabindex="4" /></th>
-		<th><input type="text" name="combienm" value="<?php echo (isset($combienm) ? $combienm : 0); ?>" tabindex="7" /></th>
-	</tr>
-	<tr>
-		<th><label><input type="radio" name="transporteur" value="PT" <?php checkTranspo($valPT); ?> /> PT</label></th>
-		<th>Cristal</th>
-		<th><input type="text" name="cristal" value="<?php echo formate_number((isset($cristal) ? $cristal : 0)); ?>" tabindex="2" /></th>
-		<th><input type="text" name="tauxc" value="<?php echo $tauxc; ?>" tabindex="5" /></th>
-		<th><input type="text" name="combienc" value="<?php echo (isset($combienc) ? $combienc : 0); ?>" tabindex="8" /></th>
-	</tr>
-	<tr>
-		<th><label><input type="radio" name="transporteur" value="GT" <?php checkTranspo($valGT); ?> /> GT</label></th>
-		<th>Deut&eacute;rium</th>
-		<th><input type="text" name="deuterium" value="<?php echo formate_number((isset($deuterium) ? $deuterium : 0)); ?>" tabindex="3" /></th>
-		<th><input type="text" name="tauxd" value="<?php echo $tauxd; ?>" tabindex="6" /></th>
-		<th><input type="text" name="combiend" value="<?php echo (isset($combiend) ? $combiend : 0); ?>" tabindex="9" /></th>
-	</tr>
-	<tr>
-		<th align="center" colspan="5"><input type="submit" value="Calculer !" tabindex="10" /></th>
-	</tr>
-</table>
-</form>
-
-<?php
-
-if (isset($pub_ouvert)) // On defini si l'utilisateur a cliquer sur Calculer !
-{
-	?>
-<br>
-<table class="convertisseur">
-	<tr>
-		<td class="c" align="center" colspan="3"><b>Echange<b></td>
-	</tr>
-	<tr>
-		<th>Infos</th>
-		<th>Votre offre</th>
-		<th>Votre demande</th>
+        <th>Ressources demandées</th>
+        <th>PT Nécessaires</th>
+        <th>GT Nécessaires</th>
 	</tr>
 	<tr>
 		<th>M&eacute;tal</th>
-		<th><?php echo formate_number($metal); ?></th>
-		<th><?php echo formate_number($totalM); ?></th>
+		<th><input type="text" id="metal" name="metal" value="0" tabindex="1" /></th>
+		<th><input type="text" id="tauxm" name="tauxm" value="<?php echo $tauxm; ?>" tabindex="4" /></th>
+		<th><input type="text" id="combienm" name="combienm" value="0" tabindex="7" /></th>
+        <th><span id="metalwanted">0</span></th>
+        <th id="required_pt" rowspan="3">0</th>
+        <th id="required_gt" rowspan="3">0</th>
 	</tr>
 	<tr>
 		<th>Cristal</th>
-		<th><?php echo formate_number($cristal); ?></th>
-		<th><?php echo formate_number($totalC); ?></th>
+		<th><input type="text" id="cristal" name="cristal" value="0" tabindex="2" /></th>
+		<th><input type="text" id="tauxc" name="tauxc" value="<?php echo $tauxc; ?>" tabindex="5" /></th>
+		<th><input type="text" id="combienc" name="combienc" value="0" tabindex="8" /></th>
+        <th><span id="cristalwanted">0</span></th>
+
 	</tr>
 	<tr>
 		<th>Deut&eacute;rium</th>
-		<th><?php echo formate_number($deut); ?></th>
-		<th><?php echo formate_number($totalD); ?></th>
+		<th><input type="text" id="deuterium" name="deuterium" value="0" tabindex="3" /></th>
+		<th><input type="text" id="tauxd" name="tauxd" value="<?php echo $tauxd; ?>" tabindex="6" /></th>
+		<th><input type="text" id="combiend" name="combiend" value="100" tabindex="9" /></th>
+        <th><span id="deutwanted">0</span></th>
+
 	</tr>
-	
-	<?php
-		if ($transporteur != "aucun")
-		{
-			$totalaenvoyer = $metal + $cristal + $deuterium;
-			$totalaressevoir = $totalM + $totalC + $totalD;
-			
-			if ($transporteur == "PT")
-			{
-				$transporteurenvoyer = ceil($totalaenvoyer/5000);
-				$transporteurressus = ceil($totalaressevoir/5000);
-			}
-			elseif ($transporteur == "GT")
-			{
-				$transporteurenvoyer = ceil($totalaenvoyer/25000);
-				$transporteurressus = ceil($totalaressevoir/25000);
-			}
-	?>
-	
-	<tr>
-		<th>Nombre de <?php echo $transporteur; ?></th>
-		<th><?php echo $transporteurenvoyer; ?></th>
-		<th><?php echo $transporteurressus; ?></th>
-	</tr>
-	
-<?php } ?>	
 </table>
+
 <br>
-<table width="60%">
+<br>
+<table align="center" width="60%">
 	<tr>
 		<td class="c" align="center"><b>Offre en BBCode pour les forums</b></td>
 	</tr>
 	<tr>
 		<th>
-			<?php $BBcode = '[center][size=18][b][color=red]Offre via OGSMarket[/color][/b][/size]';	
-			$BBcode .= "\n";
-			$BBcode .= "\n";
-			$BBcode .= '[i][b][color=green]Offre[/color][/b][/i]'."\n";
-			$BBcode .= 'M&eacute;tal : [b]'.formate_number($metal).'[/b]'."\n";
-			$BBcode .= 'Cristal : [b]'.formate_number($cristal).'[/b]'."\n";
-			$BBcode .= 'Deut&eacute;rium : [b]'.formate_number($deut).'[/b]'."\n";
-
-			if ($transporteur == "PT")
-				$BBcode .= 'Le nombre de [b]PT[/b] n&eacute;ccessaires est de [b]'.$transporteurenvoyer.'[/b].'."\n";
-			elseif ($transporteur == "GT")
-				$BBcode .= 'Le nombre de [b]GT[/b] n&eacute;ccessaires est de [b]'.$transporteurenvoyer.'[/b].'."\n";
-				
-			$BBcode .= "\n";
-			$BBcode .= '[i][b][color=green]Demande[/color][/b][/i]'."\n";
-			$BBcode .= 'M&eacute;tal : [b]'.formate_number($totalM).'[/b]'."\n";
-			$BBcode .= 'Cristal : [b]'.formate_number($totalC).'[/b]'."\n";
-			$BBcode .= 'Deut&eacute;rium : [b]'.formate_number($totalD).'[/b]'."\n";
-
-			if ($transporteur == "PT")
-				$BBcode .= 'Le nombre de [b]PT[/b] n&eacute;ccessaires est de [b]'.$transporteurressus.'[/b].'."\n";
-			elseif ($transporteur == "GT")
-				$BBcode .= 'Le nombre de [b]GT[/b] n&eacute;ccessaires est de [b]'.$transporteurressus.'[/b].'."\n";
-				
-			$BBcode .= "\n";
-			$BBcode .= 'Le taux impos&eacute; est : [b]'.$tauxm.' / '.$tauxc.' / '.$tauxd.'[/b].'."\n";
-			$BBcode .= "\n"."\n"."\n".'[size=6][url=ogsteam.fr]OGSMarket - Plateforme de Commerce[/url][/size]';
-			$BBcode .= '[/center]'; ?>
-			<textarea name="bbcode" rows="10" cols="20"><?php echo $BBcode; ?></textarea>
+            <textarea id="bbcode" rows="15" cols="20">Veuillez compléter votre offre et les pourcentages souhaités dans le tableau ci-dessus</textarea>
 		</th>
 	</tr>
 </table>
 <?php
-} 
-
 require_once("views/page_tail.php");
 ?>

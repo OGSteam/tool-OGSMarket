@@ -140,6 +140,11 @@ else
 				if ($user_data["id"] != $trade["traderid"] && $user_data["is_admin"] == 1) echo "[a]";
 				echo "\t<a href='index.php?action=unbetontrade&amp;tradeid=".$trade["id"]."'>Libérer</a></div>";
 			}
+            if ($user_data["id"] == $trade["traderid"] || $user_data["is_admin"] == 1) {
+                echo "\t<div align='center'>";
+                if ($user_data["id"] != $trade["traderid"]) echo "[a]";
+                echo "\t<a href='index.php?action=convertisseur&amp;tradeid=".$trade["id"]."'>Export Convertisseur BBCode</a></div>";
+            }
 		}// Fin menu
 		if ($trade["pos_user"] <> 0) {
 			$user2 = $Users->get_user($trade["pos_user"]);

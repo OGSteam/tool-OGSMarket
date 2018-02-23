@@ -190,7 +190,7 @@ $univers = $Universes->universes_array();
 	</tr>
 	<tr>
 		<td>
-			<div align='center'><a href='index.php?action=Convertisseur'>Convertisseur</a></div>
+			<div align='center'><a href='index.php?action=convertisseur'>Convertisseur BBCode</a></div>
 		</td>
 	</tr>
 	<tr>

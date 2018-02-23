@@ -167,7 +167,7 @@ switch ($pub_action) {
 		break;
 
 	//Convertisseur de ressources
-	case "Convertisseur":
+	case "convertisseur":
 		require_once("views/convertisseur.php");
 		break;
 
