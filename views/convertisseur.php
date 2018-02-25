@@ -71,9 +71,9 @@ if(isset($pub_tradeid)){
             let wanted_metal_c = $('#combienc').val();
             let wanted_metal_d = $('#combiend').val();
 
-            let metal_asked = Math.round((wanted_metal_m / 100)*( metal_sold + cristal_sold *(taux_c/taux_m) + deuterium_sold *(taux_d /taux_m)));
-            let cristal_asked = Math.round((wanted_metal_c / 100)*( cristal_sold + metal_sold *(taux_m/taux_c) + deuterium_sold *(taux_d /taux_c)));
-            let deut_asked = Math.round((wanted_metal_d / 100)*( deuterium_sold + metal_sold *(taux_m/taux_d) + cristal_sold *(taux_c /taux_d)));
+            let metal_asked = Math.round((wanted_metal_m / 100)*( metal_sold + cristal_sold *(taux_m/taux_c) + deuterium_sold *(taux_m/taux_d)));
+            let cristal_asked = Math.round((wanted_metal_c / 100)*( cristal_sold + metal_sold *(taux_c/taux_m) + deuterium_sold *(taux_c/taux_d)));
+            let deut_asked = Math.round((wanted_metal_d / 100)*( deuterium_sold + metal_sold *(taux_d/taux_m) + cristal_sold *(taux_d /taux_c)));
 
 
             $('#metalwanted').text(metal_asked);
@@ -100,7 +100,7 @@ if(isset($pub_tradeid)){
             let taux_c = parseFloat($('#tauxc').val());
             let taux_d = parseFloat($('#tauxd').val());
 
-            if (taux_m > taux_c || taux_m > taux_d || taux_c > taux_d)
+            if (taux_m < taux_c || taux_m < taux_d || taux_c < taux_d)
             {
                 $('#tauxm').val(config_taux_metal);
                 $('#tauxc').val(config_taux_cristal);
@@ -165,7 +165,7 @@ if(isset($pub_tradeid)){
     });
 </script>
 
-<p>Le générateur de ressources permet de préparer votre offre pour les acheteurs. Le total de GT/PT nécessaires est une indication et n'inclue pas le carburant.</p>
+<p>Le générateur de ressources permet de préparer votre offre pour les acheteurs. Il facilite le calcul et l'export en BBCode</p>
 
 
 <table align="center" class="convertisseur">
