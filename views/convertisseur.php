@@ -125,13 +125,13 @@ if(isset($pub_tradeid)){
             bbcodetext += 'Métal : [b]' + metal_sold + '[/b]\n';
             bbcodetext += 'Cristal : [b]' + cristal_sold + '[/b]\n';
             bbcodetext += 'Deutérium : [b]' + deuterium_sold + '[/b]\n';
-            bbcodetext += 'Le nombre de transporteurs requis sera de ' + trader_nb_pt + 'PT ou ' + trader_nb_gt + ' GT (Hors Carburant)\n' ;
+            bbcodetext += 'Le nombre de transporteurs requis sera de ' + trader_nb_pt + ' PT ou ' + trader_nb_gt + ' GT \n' ;
             bbcodetext += '\n';
-            bbcodetext += '[i][b][color=green]Demande[/color][/b][/i]\n';
+            bbcodetext += '[i][b][color=green]et vous demande en échange:[/color][/b][/i]\n';
             bbcodetext += 'Métal : [b]' + metal_asked + '[/b]\n';
             bbcodetext += 'Cristal : [b]' + cristal_asked + '[/b]\n';
             bbcodetext += 'Deutérium : [b]' +deut_asked + '[/b]\n';
-            bbcodetext += 'Le nombre de transporteurs requis sera de ' + receiver_nb_pt + 'PT ou ' + receiver_nb_gt + ' GT (Hors Carburant)\n' ;
+            bbcodetext += 'Le nombre de transporteurs requis sera de ' + receiver_nb_pt + ' PT ou ' + receiver_nb_gt + ' GT \n' ;
             bbcodetext += '\n';
             if(taux_m !== 0 && taux_c !== 0 && taux_d !== 0 )
             {
