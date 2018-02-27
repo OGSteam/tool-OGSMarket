@@ -25,9 +25,9 @@ if(isset($pub_tradeid)){
     $cristal = $trade['offer_crystal'] * 1000;
     $deut = $trade['offer_deuterium'] *1000;
 
-    $percentM = $trade['want_metal'];
-    $percentC = $trade['want_crystal'];
-    $percentD = $trade['want_deuterium'];
+    $wanted_metal = $trade['want_metal'] * 1000;
+    $want_cristal = $trade['want_crystal'] * 1000;
+    $want_deut = $trade['want_deuterium'] * 1000;
 }
 
 ?>
@@ -41,9 +41,9 @@ if(isset($pub_tradeid)){
         const trade_metal = '<?php if(isset($metal)) echo($metal); else echo 0; ?>';
         const trade_cristal = '<?php if(isset($cristal)) echo($cristal); else echo 0; ?>';
         const trade_deut = '<?php if(isset($deut)) echo($deut); else echo 0; ?>';
-        const trade_wanted_metal = '<?php if(isset($percentM)) echo($percentM); else echo 0; ?>';
-        const trade_wanted_cristal = '<?php if(isset($percentC)) echo($percentC); else echo 0; ?>';
-        const trade_wanted_deut = '<?php if(isset($percentD)) echo($percentD); else echo 0; ?>';
+        const trade_wanted_metal = '<?php if(isset($wanted_metal)) echo($wanted_metal); else echo 0; ?>';
+        const trade_wanted_cristal = '<?php if(isset($want_cristal)) echo($want_cristal); else echo 0; ?>';
+        const trade_wanted_deut = '<?php if(isset($want_deut)) echo($want_deut); else echo 0; ?>';
 
         function check_percentage_ok(){
 
@@ -145,25 +145,30 @@ if(isset($pub_tradeid)){
         }
 
         $('.convertisseur').change(function() {
-                if(trade_id != 0 ){
-                    $('#metal').val(parseInt(trade_metal));
-                    $('#cristal').val(parseInt(trade_cristal));
-                    $('#deuterium').val(parseInt(trade_deut));
-                    $('#metalwanted').val(parseInt(trade_wanted_metal));
-                    $('#cristalwanted').val(parseInt(trade_wanted_cristal));
-                    $('#deutwanted').val(parseInt(trade_wanted_deut));
 
-                    generate_bbcode(trade_metal,trade_cristal,trade_deut,0,0,0,trade_wanted_metal,trade_wanted_cristal,trade_wanted_deut);
-
-                }
                 check_taux();
                 check_percentage_ok();                     
                 calculate_expected_ressources();
             }
         )
 
+        if(trade_id != 0 ){
+            $('#metal').val(parseInt(trade_metal));
+            $('#cristal').val(parseInt(trade_cristal));
+            $('#deuterium').val(parseInt(trade_deut));
+            $('#metalwanted').val(parseInt(trade_wanted_metal));
+            $('#cristalwanted').val(parseInt(trade_wanted_cristal));
+            $('#deutwanted').val(parseInt(trade_wanted_deut));
+
+            generate_bbcode(trade_metal,trade_cristal,trade_deut,0,0,0,trade_wanted_metal,trade_wanted_cristal,trade_wanted_deut);
+
+        }
+
     });
 </script>
+<?php
+    if(!isset($pub_tradeid)){
+        ?>
 
 <p>Le générateur de ressources permet de préparer votre offre pour les acheteurs. Il facilite le calcul et l'export en BBCode</p>
 
@@ -209,6 +214,8 @@ if(isset($pub_tradeid)){
 </table>
 
 <br>
+
+<?php } ?>
 <br>
 <table align="center" width="60%">
 	<tr>
