@@ -125,69 +125,27 @@ function init_serverconfig() {
     }
 }
 
-/* Calcul d'une durée entre 2 date (today par défaut) & formatage en "00j 00h 00min 00sec" */
+/**
+ * Calcul d'une durée entre 2 date (today par défaut) & formatage en "00j 00h 00min 00sec
+ * @param $fromtime
+ * @param string $totime
+ * @return string
+ */
 function text_datediff($fromtime, $totime = '') {
-	$Delay = bib_datediff($fromtime, $totime);
-	$retvals = '';
-	if ($Delay["days"])    $retvals .= $Delay["days"]." j ";
-	if ($Delay["hours"])   $retvals .= $Delay["hours"]." h ";
-	if ($Delay["minutes"]) $retvals .= $Delay["minutes"]." min ";
-	if ($Delay["seconds"]) $retvals .= $Delay["seconds"]." sec ";
-	return $retvals;
+
+    if($totime == '' ){ $totime= time(); }
+
+    $datetime1 = new DateTime();
+    $datetime2 = new DateTime();
+    $datetime1->setTimestamp(intval($fromtime));
+    $datetime2->setTimestamp(intval($totime));
+
+    $interval = $datetime1->diff($datetime2);
+    $retvalue = $interval->format('%aj %Hh %Imin %Ssec');
+
+	return $retvalue;
 }
 
-// http://fr3.php.net/manual/fr/function.mktime.php#61259
-function bib_datediff($fromtime, $totime = '') {
-	$ret = array();
-
-	if ($totime == '')
-		$totime = time();
-
-	// En cas d'inversion des from/to on remet à l'endroit
-	if ($fromtime > $totime) {
-		$tmp = $totime;
-		$totime = $fromtime;
-		$fromtime = $tmp;
-	}
-
-	$timediff = $totime - $fromtime;
-
-	//Vérification des années bissextiles
-	for ($i = date('Y', $fromtime); $i <= date('Y', $totime); $i++) {
-		if ((($i%4 == 0) && ($i%100 != 0)) || ($i%400 == 0)) {
-			$timediff -= 24*60*60; // Si elle est bissextiles, elle conptera un jour de plus
-		}
-	}
-
-	$remain = $timediff;
-	$ret['years']   = intval($remain/(365*24*60*60));
-	$remain         = $remain%(365*24*60*60);
-	$ret['days']    = intval($remain/(24*60*60));
-	$remain         = $remain%(24*60*60);
-
-	$m = array();
-	$m[0]    = 31; $m[1]    = 28; $m[2]    = 31; $m[3]    = 30;
-	$m[4]    = 31; $m[5]    = 30; $m[6]    = 31; $m[7]    = 31;
-	$m[8]    = 30; $m[9]    = 31; $m[10] = 30; $m[11] = 31;
-	//if leap year, february has 29 days
-	if (((date('Y', $totime)%4 == 0) && (date('Y', $totime)%100 != 0)) || (date('Y', $totime)%400 == 0)) {
-		$m[1] = 29;
-	}
-	$ret['months'] = 0;
-	foreach ($m as $value) {
-		if ($ret['days'] > $value) {
-			$ret['months']++;
-			$ret['days'] -= $value;
-		} else {
-			break;
-		}
-	}
-	$ret['hours'] = intval($remain/(60*60));
-	$remain            = $remain%(60*60);
-	$ret['minutes']    = intval($remain/60);
-	$ret['seconds']    = $remain%60;
-	return $ret;
-}
 
 /* Protection - Préparation des chaines pour les caractères HTML Complexes */
 /**
@@ -485,10 +443,10 @@ function admin_config_set() {
 */
 function admin_market_set() {
 	global $db;
-	global $pub_max_trade_delay_hours, $pub_max_trade_by_universe, $pub_tauxmetal, $pub_tauxcristal, $pub_tauxdeuterium, $pub_view_trade;
+	global $pub_max_trade_delay, $pub_max_trade_by_universe, $pub_tauxmetal, $pub_tauxcristal, $pub_tauxdeuterium, $pub_view_trade;
 
 	//Conversion en heures
-	$pub_max_trade_delay_seconds = ($pub_max_trade_delay_hours)*60*60*24;
+	$pub_max_trade_delay_seconds = ($pub_max_trade_delay)*60*60*24;
 
 	$queries = array();
 	$queries[] = "UPDATE ".TABLE_CONFIG." SET value='".$pub_max_trade_by_universe."' WHERE name='max_trade_by_universe' LIMIT 1;";
