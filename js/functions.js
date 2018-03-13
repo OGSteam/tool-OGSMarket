@@ -5,10 +5,12 @@ function inverse(idOfCheckBox)
 	var checkboxes = $("[name^=\"" + idOfCheckBox + "\"]");
 	checkboxes.each(function(index, element)
 	{
-		if (element.checked)
+		if (element.checked) {
 			element.checked = false;
-		else
+        }
+		else {
 			element.checked = true;
+        }
 	});
 }
 
@@ -37,7 +39,7 @@ function tick_all(idOfCheckBox)
 
 /* Code executer apres le chargement de la page */
 
-$( window ).on('load', function() {
+$( window ).on("load", function() {
 
 	/* Page "Nouvelle offre" -- Inversion des galaxie */
 	
@@ -45,7 +47,7 @@ $( window ).on('load', function() {
 	{
         $( this ).click( function()
 		{
-			inverse(element.id.split('-')[1]);
+			inverse(element.id.split("-")[1]);
 		});
 	});
 
@@ -65,7 +67,7 @@ $( window ).on('load', function() {
 
 	$("[id^=edit_market_]").each(function(index, element)
 	{
-		var id = element.id.split('_')[2];
+		var id = element.id.split("_")[2];
 
         $( this ).click( function()
 		{

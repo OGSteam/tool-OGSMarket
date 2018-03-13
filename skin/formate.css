@@ -78,14 +78,13 @@ body /* allg font etc. *//* option du fond et générales */{
   color                : #E4E4E4;
   margin-top           : 0px;
   margin-left          : 0px;
-  background: #000000 url("img/si-bg.jpg") no-repeat fixed 0% 95%;
   font-family          : Trebuchet MS, Arial, Helvetica, sans-serif;
   text-align           : left;  
   font-size            : 11px;
-  background-position: top center!important;
-  -webkit-background-size: cover !important;
-  -o-background-size: cover !important;
-  background-size: cover !important;
+  background: #000000 url("img/si-bg.jpg") no-repeat fixed top center;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 
 }
     
@@ -93,12 +92,11 @@ body.style /* paramétrage barre de menu sur le côté */{
 color                : #E4E4E4;
 margin-top           : 1px;
 margin-left          : 1px;
-background-color     : #000000;
-/* background-image     : url("img/pic.png");
- */background-repeat    : no-repeat;
-background-position :  14% 7%;
-/* font-family          : Tahoma, Helvetica, sans-serif;
- */font-size            : 11px; 
+  /* background-image     : url("img/pic.png");
+   */
+  background: #000000 no-repeat 14% 7%;
+  /* font-family          : Tahoma, Helvetica, sans-serif;
+   */font-size            : 11px;
 text-align           : left;  
 width                : 172px;     
 } 
@@ -225,7 +223,6 @@ td.m{
 
 td.n{
   /*font-weight          : bold;*/
-  text-align           : right;
   width                : 88px;
   text-align           : center;
   color                : #B6C6E5;
@@ -301,7 +298,7 @@ a:hover {
 {
 
 color                : #08A4FF;
-  border-top            : 0px; 
+  border-top            : 0px;
   font-size            : 11px;
 font-family          : Tahoma,sans-serif;
 }

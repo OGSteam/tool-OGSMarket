@@ -77,7 +77,7 @@ if (isset($user_data["id"])) {
 		{
 			echo "<td class='c'>".$Trades->count($uni["id"])." offres.</td>";
 			
-			if ($server_config["view_trade"] == "1" AND empty($user_data))
+			if ($server_config["view_trade"] == "1" && empty($user_data))
 				echo "<td class='c' align='center'><font size =\"2\" color = \"yellow\">Serveur Priv&eacute;</font><br />Visualisation des offres limit&eacute;e aux membres<br />Veuillez vous identifier.</td>";
 			else
 			{
@@ -98,7 +98,7 @@ if (isset($user_data["id"])) {
 					echo " ".number_format($LastTrade["want_metal"], 0, ',', ' ')." k M&eacute;tal ";
 				
 				if ($LastTrade["want_crystal"] > 0)
-					echo " ".number_format($LastTrade["want_crystal"], 0, ',', ' ')." k Crystal ";
+					echo " ".number_format($LastTrade["want_crystal"], 0, ',', ' ')." k Cristal ";
 				
 				if ($LastTrade["want_deuterium"] > 0)
 					echo " ".number_format($LastTrade["want_deuterium"], 0, ',', ' ')." k Deut ";

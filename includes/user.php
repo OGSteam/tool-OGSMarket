@@ -72,7 +72,7 @@ class cUsers {
 		}
 
 		//Valeur de la checkbox
-        $_alert_mail = $_POST["alert_mail"];
+        $_alert_mail = $alert_mail;
         $alert_mail_ = 1;
         if (!isset($_alert_mail)) {
         	$alert_mail_ = 0;

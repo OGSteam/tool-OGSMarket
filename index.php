@@ -33,7 +33,7 @@ switch ($pub_action) {
 		break;
 
 	case "newaccount":
-		$result = $Users->newaccount($pub_password, $pub_name, $pub_repassword, $pub_email, $pub_pm_link, $pub_irc_nick, $pub_note, $pub_active);
+		$result = $Users->newaccount($pub_password, $pub_name, $pub_repassword, $pub_email, $pub_pm_link, $pub_irc_nick, $pub_note, $pub_active, $pub_alert_mail);
 		if ($result !== true) {
 			$pub_info = $result;
 			include("views/inscription.php");

@@ -30,7 +30,7 @@ $member_view_trade = ($server_config["view_trade"]) == 1 ? "checked" : "";
 				</tr>
 				<tr>
 					<th>Temps max. d'un &eacute;change (Jours):</th>
-					<th><input type="text" name="max_trade_delay_hours" size="100%" value="<?php echo $max_trade_delay ?>"/></th>
+					<th><input type="text" name="max_trade_delay" size="100%" value="<?php echo $max_trade_delay ?>"/></th>
 				</tr>
 
 <!--Taux-->
