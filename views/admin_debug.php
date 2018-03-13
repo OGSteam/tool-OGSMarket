@@ -25,7 +25,7 @@ $val_phpinfo = str_replace('<td class="v">', '<td class="c">', $val_phpinfo);
 
 <table width="80%" align="center">
 	<tr>
-		<td width="100%" align="center" border="1">
+		<td width="100%">
 			<?php
 			echo $val_phpinfo;
 			?>

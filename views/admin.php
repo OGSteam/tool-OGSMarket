@@ -98,7 +98,7 @@ if ($user_data["is_admin"] == 1) {
 		</table>
 	</td>
 </tr>
-</tr>
+</table>
 <?php
 switch ($pub_subaction) {
 	case "debug":

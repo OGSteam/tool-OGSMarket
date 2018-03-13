@@ -26,7 +26,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" type="text/css" href="<?php echo $link_css; ?>formate.css" />
 		<link rel="alternate" type="application/rss+xml" title="Flux RSS des Offres" href="http://<?php echo $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']; ?>?action=rss" />
-        <script type='text/javascript' src='js/jquery-3.2.1.min.js'></script>
+        <script type='text/javascript' src='js/jquery-3.3.1.min.js'></script>
 		<script type='text/javascript' src='js/functions.js'></script>
 	</head>
 	
