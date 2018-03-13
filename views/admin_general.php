@@ -20,7 +20,7 @@ $member_activ_auto = ($server_config["users_active"]) == 1 ? "checked" : "";
 		<form action="index.php?action=admin_config_set" method="post">
 		<table width="100%">
 				<tr>
-					<td class="c" colspan="2" align="center">Configuration G&eacute;n&eacute;ral</td>
+					<td class="c" colspan="2" align="center">Configuration G&eacute;n&eacute;rale</td>
 				</tr>
 				<tr>
 					<th>Nom du serveur:</th>

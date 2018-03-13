@@ -19,7 +19,7 @@ if ($user_data["is_admin"] != 1) {
 if (!isset($pub_subaction)) $pub_subaction = "";
 require_once("views/page_header.php");
 ?>
-<table width="80%">
+<table width="80%" align="center">
 <tr>
 	<td class="l">Administration</td>
 </tr>

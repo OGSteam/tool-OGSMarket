@@ -201,7 +201,7 @@ if ($ouvert == 1 && !isset($error)) {
 ?> 
 <form action="index.php" method="post">
 	<input type='hidden' name='action' value='addtrade'>	
-<table width="60%">
+<table width="60%" align="center">
 	<tr>
 		<td colspan="3" class="c">Calcul de votre Offre - Vous pouvez encore modifier votre offre &agrave; votre convenance.</td>
 	</tr>
